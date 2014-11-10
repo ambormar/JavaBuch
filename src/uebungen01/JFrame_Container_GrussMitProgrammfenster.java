@@ -17,7 +17,7 @@ public class JFrame_Container_GrussMitProgrammfenster extends JFrame {
 	public JFrame_Container_GrussMitProgrammfenster() { 
 	   super("Juuhuu");				// anscheinend kann man bei JFrame mit super(string) die überschrift bestimmen (text im rahmen neben icon)
 
-	   Icon icon = new ImageIcon("java-logo.jpg"); 	// N.B. ImageIcon ist unterklasse von klasse Icon 
+	   Icon icon = new ImageIcon("images/java-logo.jpg"); 	// N.B. ImageIcon ist unterklasse von klasse Icon 
 	   JLabel label1 = new JLabel("Viel Erfolg beim", JLabel.CENTER);	// objekte label 1-3 vom typ JLabel erzeugen
 	   JLabel label2 = new JLabel("Programmieren mit Java!", JLabel.CENTER);
 	   JLabel label3 = new JLabel(icon);
