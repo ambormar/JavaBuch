@@ -1,5 +1,9 @@
 /* TODO 12.3.2.   s.368, (IN) Daten aus datei ins program einlesen  (zurück ins programm/dialogfenster einlesen)
  * 
+ * AB HIER WEITERMACHEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * kommentar analog Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern machen (= alles rüber kopieren & in-spezifische kommentare analog neu erstellen)
+ * 
+ * 
  * class In_FileReader_BufferedReader_KontaktlisteMitSpeichern		(CODE	==	12.3.1.   Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern )
  * 
  * 			OUT:	SIEHE:	 12.3.1.   Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern		s.364, (OUT) Daten aus programm in Datei ausschreiben  

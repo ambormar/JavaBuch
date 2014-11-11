@@ -9,7 +9,7 @@
  * 
  * 		1. GitHub - projektname erstellen:	 startseite unten rechts bei your repositorys: 	=> new repository (grün button) klick
  * 																							> repository - name ausfüllen	(JavaBuch)
- * 																							> description ausfüllen (optional (z.b. programmieren lernen mit java))
+ * 																							> description ausfüllen (optional (z.b. programmieren lernen mit java => readme file-inhalt))
  * 																							> o public anwählen
  * 																							> initialize with readme anwählen
  * 																							> add git.ignore : java auswählen
@@ -20,11 +20,21 @@
  * 
  * 		3. java-projekt in eclipse erstellen:		=> 	eclipse öffnen mit dem oben gewählten / erstellten workspace:	
  * 													=> 	rechts-klick im package explorer der java-standard-ansicht > import
- * 														> im import-fenster Git öffnen > project from Git > next button > 
- * 
- * 														> ab hier MAJA FRAGEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * 														
- * 					
+ * 														> im import-fenster Git öffnen > project from Git > next-button > 
+ * 														> clone URI wählen & next > 
+ * 														> im fenster (import projects from git): URI ausfüllen mit pfad aus Github:
+ * 														> auf GitHub-seite den schon erstellten neuen projektnamen anklicken
+ * 														> unten re HTTPS clone URL: den Pfad copieren
+ * 														> ins fenster zurück: den pfad ins URI einfüllen
+ * 														> der rest füllt sich fast alles selber aus (host, rep.-path, protocoll, username)
+ * 														> port leer lassen, store in secure angehakt lassen, passwort von GitHub (Standard) einfüllen
+ * 														> finish
+ * 														> im nächsten popup-fenster NICHT: standard projekt wählen, SONDERN: selber projekt erstellen
+ * 														> ab da alles ausfüllen als ob man ein normales neues Java-Project in eclipse erstellen würde
+ * 															(die verknüpfung mit Git ist damit schon vorhanden)
+ * 														> Projektnamen etc. ausfüllen, wie man's will 
+ *														fertig
+ *
  */
 package uebungen04;
 

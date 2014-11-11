@@ -1,44 +1,75 @@
 /* TODO 12.3.1.   s.364, (OUT) Daten aus programm in Datei ausschreiben  
- * 
  * class Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern		(CODE	==	12.3.2.   In_FileReader_BufferedReader_KontaktlisteMitSpeichern)
  * 
- * 			IN:		SIEHE:	12.3.2.   In_FileReader_BufferedReader_KontaktlisteMitSpeichern		s.368, (IN) Daten aus datei ins program einlesen  (zurück ins programm/dialogfenster einlesen) 
+ *	CODE VON Out_FileWrite.. & In_FileReader.. IST IDENTISCH (inkl. in & out), DIE KOMMENTARE OBEN SIND ABER JEWEILS NUR FÜR OUT oder IN 	!!!!!!!!!!!!!!!!
  * 
- *		ACHTUNG:	IN - OUT immer aus perspektive des PROGGRAMMS verwenden:
+ * 				IN:		SIEHE:	12.3.2.   In_FileReader_BufferedReader_KontaktlisteMitSpeichern		s.368, (IN) Daten aus datei ins program einlesen  (zurück ins programm/dialogfenster einlesen) 
+ * 
+ *				ACHTUNG:	IN - OUT immer aus perspektive des PROGGRAMMS verwenden:
+ * 							OUT:	= WRITE OUT 	= DATEN AUS PROGRAMM AUS-LESEN
+ *	 						IN:		= READ IN		= DATEN INS PROGRAMM SCHREIBEN 	!!!!!!!!
+ *							ALLGEMEINE BEGRIFFS-VERWIRRUNG:		- daten in datei schreiben / aus datei auslesen etc.	==>> IGNORIEREN !!!!!!!!!!!!!!!!!!!!!
  *
- * 				OUT:	= WRITE OUT 	= DATEN AUS PROGRAMM AUS-LESEN
- *	 			IN:		= READ IN		= DATEN INS PROGRAMM SCHREIBEN 	!!!!!!!!
+ *	12.3.1.	WRITE OUT - DATEN AUS PROGRAMM AUS-SCHREIBEN (IN EINE DATEI)
  *
- *				ALLGEMEINE BEGRIFFS-VERWIRRUNG:		- daten in datei schreiben / aus datei auslesen etc.	==>> IGNORIEREN !!!!!!!!!!!!!!!!!!!!!
+ * 	OUT ZU BEACHTEN VORWEG:		- speichern von daten auf datenträger ist fehler-anfällig		=>  Exception-handling grundsätzlich wichtig		[datenträger können voll, schreibgeschützt oder fehlerhaft sein]
+ * 								- hier: speichern von textdaten			=> zeichen-orientierte Streams -> writer:	=> FileWriter		(import: java.io.FileWriter)
+ * 								- da vermutlich viel text/einträge	 	=> viel schreibvorgänge 	-> puffern:		=> BufferedWriter 	(import: java.io.BufferedWriter)
+ * 								
+ * 	IMPORT:			java.io.FileWriter		& 	java.io.BufferedWriter
+ * 
+ * 	OUT VORGEHEN:	=> Daten aus dialogfenster ausschreiben mit BufferedWriter / Filewriter in der  methode jBtnEnde....()
+ * 					 > eine datei wird in den projektordner (hier JavaBuch) gespeichert 		((datei ist dort mit dem normalen dokumenten-explorer einsehbar))
+ * 					 > mit BufferedWriter/FileWriter werden textdaten mit dem schliessen des dialogfensters in die datei ausgeschrieben, 
+ *					 > mit der methode write() von Bufferedwriter werden die strings zeilenweise in die datei geschrieben	
  *				
+ *	OUT (KERN-CODE): 
  * 
- * 	!!! HIER WEITERMACHEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * 		DATEINAME ERZEUGEN MIT PFAD ZUM PROJEKTORDNER (schema):
+ * 
+ * 			public class Out_FileWriter...{											// stringvariable dateinamen als variable des frames:..
+ * 				...																	// ...für datei, in der die kontaktdaten beim schliessen gespeichert werden (siehe methode jBtnEndeA..() )
+ * 				private String dateiname = "." + File.separator + "kontakte.dat";	// ...initialisieren mit dem relativen pfad zum aktuellen verzeichnis (aus dem auch das programm gestartet wird)
+ *				...																	// "relativer pfad" besteht aus: "." (=aktuelles verzeichnis) + File.separator (= plattformunabhängiges trennzeichen) + dateiname.dat
+ *																					// [NB statt "." -> "./dokumente/" & ein dokumentordner in JavaBuch, dann kann man auch im Package explorer die dateien sehen	]
+ * 																					
+ * 		WRITE OUT DER DATEN & ERZEUGEN DER DATEI (schema):
+ *				...															
+ *				private void jBtnEndeActionPerformed(ActionEvent evt) {				// vor beenden des programms wird datei erzeugt in der die vorhandenen daten gespeichert werden. [existenz der datei kontakte.dat: siehe projektordner (JavaBuch) im explorer!!!] 
+ *					BufferedWriter out = null;										// ein BufferedWriter-Objekt mit dem namen out wird erzeugt und vorerst mit null initialisiert, initialisierung mit null bei objektdatentypen (bei basisdatentypen wär s: 0 oder false etc.)
+ *					try {															// ...das BufferedWriter-objekt wird ausserhalb des try-blocks erzeugt, weil s in finally auch gebraucht wird
+ *						out = new BufferedWriter(new FileWriter(dateiname));		// BufferedWriter-objekt initialisieren & dem konstruktor ein FileWriter-objekt übergeben, das gleichzeitig erzeugt wird & dem wiederum als argument der name der Zieldatei übergeben
+ *						for (int i = 0; i < jListKontakteModel.getSize(); i++) { 	// for-schleife um zeilenweise die einträge des listmodels mit der write()-methode in die datei zu schreiben,  
+ *							out.write(jListKontakteModel.get(i).toString()); 		// .get(i) liefert eintrag mit index i als objekt, .toString() weil write() einen String erwartet
+ *							out.newLine(); 											// .. und nach jedem zeileneintrag ein zeilenvorschub
+ *						}
+ *					} catch (Exception e) {						// Exception-handling wichtig wegen anfälligem speichern von daten auf datenträger
+ *						e.printStackTrace();																						// consolen-fehler-text für allfälliges e		
+ *					} finally { 								// finally => auf jeden fall (auch wenn oben fehler aufgetreten sind soll stream geschlossen werden, desshalb wird close() ins finally ausgelagert)
+ *						if (out != null){ 						// falls out nicht null ist, also wirklich ein bufferedWriter-objekt erzeugt wurde..
+ *							try { 
+ *								out.close();					// ...schliessen des streams mit close() [auch bei obigen fehlern], evtl. gebufferte einträge werden fertig ausgeschrieben [close() beinhaltet flush()]
+ *							} catch (IOException e){ 			// ...oder zusätzliches Exceptionhandlicng wenn beim schliessen selber (des streams) ein fehler auftritt
+ *								e.printStackTrace();
+ *							}
+ *						}
+ *					}
+ *					System.exit(0); 							// programm beenden
+ *				}
  * 
  * 
+ * PROGRAMM:	Erweiterung in diesem programm ist:
+ * 					(out) Beim Beenden des Programms werden die Kontaktdaten der Listbox in eine datei ausgeschrieben / = in einer datei gespeichert. 
+ * 					(in) Beim Programmstart werden die Daten aus der Datei in die Listbox eingelesen. 
  * 
- * Daten aus dialogfenster auslesen mit BufferedWriter, Filewriter siehe methode jBtnEnde....()
- * 		// mit BufferedWriter/FileWriter werden textdaten vor dem schliessen eines dialogfensters in eine datei 
- * 		// ausgelesen, die im selben projektordner gespeichert wird (datei dort mit normalem editor einsehbar)
- *		// mit der methode write() von Bufferedwriter werden die strings zeilenweise in die datei geschrieben
- * 
- * Daten aus datei in s dialogfenster einlesen mit BufferedReader, FileReader siehe ende methode initGUI()
- * 		// File datei mit dateinamen wird im programm erzeugt und verglichen, ob die die datei (hier kontakte.dat)
- * 		// ...real im dateisystem existiert, wenn nein, wird sie mit datei.createNewFile() erzeugt, wenn ja..
- *		// wird ein Eingabestream erzeugt (analog zum oben beschriebenen ausgabestrom) und in einer while-schleife..
- *		// ..mit .addElement() zeile für zeile der listbox angefügt bis keine zeile mehr in der datei vorhanden ist
- * 
- * PROGRAMM:	erweiterung von:	11.3.   	JScrollListBox_substring_ohneArrayList_Kontaktliste_MitBearbeiten		Aufgabe 7, s.347
+ * 				erweiterung von:	11.3.   	JScrollListBox_substring_ohneArrayList_Kontaktliste_MitBearbeiten		Aufgabe 7, s.347
  * 									[	Die Kontakdaten Name, Vorname, Telefonnummer und Email-Adresse können in Textfeldern eingegeben 
  * 										und von dort in eine Listbox übernommen werden. Markierte Einträge können aus der Listbox gelöscht werden. 
  * 										Ein markierter Eintrag kann zum Bearbeiten aus der Listbox zurück in die Textfelder übertragen werden.	]
  * 
  * 									LISTBOX SIEHE:		11.2.2.   Listbox_ArrayList_Basics_Notenbilanz		s.335 uf		
  *									SCROLL-LISTBOX:	 	11.2.3.   ScrollListbox_JScrollPane_SelectionMode_ArrayList_Notenbilanz		s.340 uf (JScrollPane => scrollbalken)		
- * 
- * 
- * 				Erweiterung in diesem programm ist:
- * 				(out) Beim Beenden des Programms werden die Kontaktdaten der Listbox in eine datei ausgelesen / = in einer datei gespeichert. 
- * 				(in) Beim Programmstart werden die Daten aus der Datei in die Listbox eingelesen.
+ * 				
  */
 
 package uebungen12;
@@ -89,7 +120,7 @@ public class Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern extends java
 	// String dateiname wird initialisiert mit dem relativen pfad zum aktuellen verzeichnis (aus dem auch das programm gestartet wird)
 	// "relativer pfad" besteht aus: "." für aktuelles verzeichnis + platformunabhängiges trennzeichen (File.separator) + dateiname.dat
 	private String dateiname = "." + File.separator + "kontakte.dat";
-		// statt "." -> "./dokumente/" & ein dokumentordner im Javauebungen12, dann kann man auch im Package explorer die dateien sehen
+		// statt "." -> "./dokumente/" & ein dokumentordner in JavaBuch, dann kann man auch im Package explorer die dateien sehen
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -342,7 +373,7 @@ public class Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern extends java
 				out.write(jListKontakteModel.get(i).toString()); // .get(i) liefert eintrag mit index i als objekt, .toString() weil write() einen String erwartet
 				out.newLine(); // .. und nach jedem zeileneintrag ein zeilenvorschub
 			}
-		} catch (Exception e) {	// falls fehler beim file ausschreiben / file erzesugen
+		} catch (Exception e) {	// falls es fehler gibt beim file ausschreiben / file erzeugen
 			e.printStackTrace();
 		} finally { // finally => auf jeden fall (auch wenn oben fehler aufgetreten sind wird stream geschlossen)
 			if (out != null){ // wenn out nicht null ist, also wirklich ein bufferedWriter-objekt erzeugt wurde
