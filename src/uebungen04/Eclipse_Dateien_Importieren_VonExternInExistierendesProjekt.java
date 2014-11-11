@@ -16,7 +16,15 @@ package uebungen04;
  * 				> file im dokumenten-geäst suchen > ok
  * 
  * 
- * ALTERNATIV: 	evtl. geht auch einfach file reinziehen (drag'n'drop), hab ich aber noch nicht getestet
+ * ALTERNATIV CTRL C & CTRL V (EINFACHER):
+ * 
+ * 			=> zu kopierende Klasse bzw. datei in der explorer- hierarchie suchen:	Klassen im ordner src
+ * 				> zu kopierende klasse im ordner src anwählen & control c
+ * 				> in einem existierenden project in Eclipse package anwählen & ctrl v
+ * 				> meist noch den angezeigten fehler wegen fehlender package-anweisung beheben (richtiges package anpassen/ergänzen)
+ * 				> ACHTUNG: wenn images & andere dateien:	-> für images einen extra ordner mit namen images machen (projekt-name anklicken & neuer ordner)
+ * 															-> image dort rein-ziehen & wenn nötig im code den den pfad anpassen
+ * 															-> für andere dateien den richtigen ordner (auch auf projekt-name ebene) machen (maja fragen welchen ordner)
  * 
  */
 
