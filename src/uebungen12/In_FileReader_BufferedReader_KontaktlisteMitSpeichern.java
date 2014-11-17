@@ -1,24 +1,15 @@
 /* TODO 12.3.2.   s.368, (IN) Daten aus datei ins program einlesen  (zurück ins programm/dialogfenster einlesen)
- * 
- * AB HIER WEITERMACHEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * kommentar analog Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern machen (= alles rüber kopieren & in-spezifische kommentare analog neu erstellen)
- * 
- * 
  * class In_FileReader_BufferedReader_KontaktlisteMitSpeichern		(CODE	==	12.3.1.   Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern )
  * 
- * 			OUT:	SIEHE:	 12.3.1.   Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern		s.364, (OUT) Daten aus programm in Datei ausschreiben  
+ *	CODE VON Out_FileWrite.. & In_FileReader.. IST IDENTISCH (inkl. in & out), DIE KOMMENTARE OBEN SIND ABER JEWEILS NUR FÜR OUT oder IN 	!!!!!!!!!!!!!!!!
  * 
- *		ACHTUNG:	IN - OUT immer aus perspektive des PROGGRAMMS verwenden:
- *
- * 				OUT:	= WRITE OUT 	= DATEN AUS PROGRAMM AUS-LESEN
- *	 			IN:		= READ IN		= DATEN INS PROGRAMM SCHREIBEN 	!!!!!!!!
- *
- *				ALLGEMEINE BEGRIFFS-VERWIRRUNG:		- daten in datei schreiben / aus datei auslesen etc.	==>> IGNORIEREN !!!!!!!!!!!!!!!!!!!!!
+ * 				OUT:	SIEHE:	 12.3.1.   Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern		s.364, (OUT) Daten aus programm in Datei ausschreiben  
  * 
- * Daten aus dialogfenster auslesen mit BufferedWriter, Filewriter siehe methode jBtnEnde....()
- * 		// mit BufferedWriter/FileWriter werden textdaten vor dem schliessen eines dialogfensters in eine datei 
- * 		// ausgelesen, die im selben projektordner gespeichert wird (datei dort mit normalem editor einsehbar)
- *		// mit der methode write() von Bufferedwriter werden die strings zeilenweise in die datei geschrieben
+ *				ACHTUNG:	IN - OUT immer aus perspektive des PROGGRAMMS verwenden:
+ * 							OUT:	= WRITE OUT 	= DATEN AUS PROGRAMM AUS-LESEN
+ *	 						IN:		= READ IN		= DATEN INS PROGRAMM SCHREIBEN 	!!!!!!!!
+ *							ALLGEMEINE BEGRIFFS-VERWIRRUNG:		- daten in datei schreiben / aus datei auslesen etc.	==>> IGNORIEREN !!!!!!!!!!!!!!!!!!!!!
+ * 
  * 
  * Daten aus datei in s dialogfenster einlesen mit BufferedReader, FileReader siehe ende methode initGUI()
  * 		// File datei mit dateinamen wird im programm erzeugt und verglichen, ob die die datei (hier kontakte.dat)
@@ -26,19 +17,80 @@
  *		// wird ein Eingabestream erzeugt (analog zum oben beschriebenen ausgabestrom) und in einer while-schleife..
  *		// ..mit .addElement() zeile für zeile der listbox angefügt bis keine zeile mehr in der datei vorhanden ist
  * 
+ *	12.3.1.	READ IN - DATEN INS PROGRAMM EIN-LESEN (VON EINE DATEI)
  *
- * PROGRAMM:	erweiterung von:	11.3.   	JScrollListBox_substring_ohneArrayList_Kontaktliste_MitBearbeiten		Aufgabe 7, s.347
+ * 	IN ZU BEACHTEN VORWEG:		- speichern von daten auf datenträger ist fehler-anfällig		=>  Exception-handling grundsätzlich wichtig		[datenträger können voll, schreibgeschützt oder fehlerhaft sein]
+ * 								- hier: speichern von textdaten			=> zeichen-orientierte Streams -> writer:	=> FileReader		(import: java.io.FileReader)
+ * 								- da vermutlich viel text/einträge	 	=> viel schreibvorgänge 	-> puffern:		=> BufferedReader 	(import: java.io.BufferedReader)
+ * 								
+ * 	IMPORT:			java.io.FileReader		& 	java.io.BufferedReader
+ * 
+ * 	IN VORGEHEN:	=> Daten aus datei in's dialogfenster (jListKontakteModel) einlesen mit BufferedReader / FileReader 	=> siehe ende methode initGUI()	
+ * 						(-> idealer ort für den import der gespeicherten daten:		beim programmstart, ende initGUI(), wo Listbox bereits erzeugt ist)
+ *					// File datei mit dateinamen wird im programm erzeugt und verglichen, ob die die datei (hier kontakte.dat)
+ * 					// ...real im dateisystem existiert, wenn nein, wird sie mit datei.createNewFile() erzeugt, wenn ja..
+ *					// wird ein Eingabestream erzeugt (analog zum oben beschriebenen ausgabestrom) und in einer while-schleife..
+ *					// ..mit .addElement() zeile für zeile der listbox angefügt bis keine zeile mehr in der datei vorhanden ist
+ * 
+ * 
+ * 
+ * 					 //> eine datei wird in den projektordner (hier JavaBuch) gespeichert 		((datei ist dort mit dem normalen dokumenten-explorer einsehbar))
+ * 					 //> mit BufferedWriter/FileWriter werden textdaten mit dem schliessen des dialogfensters in die datei ausgeschrieben, 
+ *					 //> mit der methode write() von Bufferedwriter werden die strings zeilenweise in die datei geschrieben	
+ *				
+ *	IN (KERN-CODE): 
+ * 
+ * 		DATEINAME ERZEUGEN MIT PFAD ZUM PROJEKTORDNER (schema):
+ * 
+ * 			public class Out_FileReader...{											// stringvariable dateinamen als variable des frames:..
+ * 				...																	// ...für datei, in der die kontaktdaten beim schliessen gespeichert werden (siehe methode jBtnEndeA..() )
+ * 				private String dateiname = "." + File.separator + "kontakte.dat";	// ...initialisieren mit dem relativen pfad zum aktuellen verzeichnis (aus dem auch das programm gestartet wird)
+ *				...																	// "relativer pfad" besteht aus: "." (=aktuelles verzeichnis) + File.separator (= plattformunabhängiges trennzeichen) + dateiname.dat
+ *																					// [NB statt "." -> "./dokumente/" & ein dokumentordner in JavaBuch, dann kann man auch im Package explorer die dateien sehen	]
+ * 																					
+ * 		READ IN DER DATEN (schema):													// Daten in programm einlesen mit BufferedReader & FileReader (IN)
+ * 																					
+ * 				private void initGUI() {											
+ *					...																// am ende von initGUI() weil hier schon ListBox mit Listmodel erzeugt ist und die einträge zeilenweise eingetragen werden können
+ *					{																// Eine art vergleichs- File datei mit argument dateiname wird innerhalb der methode (!!!) erzeugt, damit man es nachher mit den... 		
+ *						File datei = new File(dateiname); 							// ...Files im dateisystem vergleichen kann. das bedeutet nicht, dass diese datei im dateisystem real erzeugt wird!!!!
+ *						BufferedReader in = null; 									// Buffererreader-objekt in (weil ins Prog. EINgelesen wird) wird ausserhalb vom try-catch-block erzeugt weil er so überall verwendet werden kann
+ *						if (!datei.exists()) {										// falls das File datei mit dateiname im Dateisystem nicht existiert...
+ *							datei.createNewFile();									// ... wird ein neues File mit dateiname im dateisystem real (!!) erzeugt (eigtl. total überflüssig für die programmlogik, file wird sowieso erzeugt in jBtnEnde.. beim write out)
+ *						} else { 													// sonst, wenn File mit dateiname (kontaktdatendatei) im dateisystem schon existiert hat:
+ *							String adresszeile; 									// lokale stringvariable für die einzelenen adresszeilen
+ *							try { 													// standard um fehler abzufangen
+ *								in = new BufferedReader(new FileReader(dateiname)); // eingabestream "in":  BufferedReader-objekt unter mitgabe & erzeugen von FileReader-objekt mit dem argument dateiname 
+ *								while ((adresszeile = in.readLine()) != null) { 	// solange mit methode .readLine() zeilen einlesen, bis keine zeile mehr vorhanden (=null)	(while-schleife statt for-schleife, da anzahl einträge der datei nicht bekannt)
+ *									jListKontakteModel.addElement(adresszeile); 	// jeden, in adresszeile zwischengespeicherten eintrag mit .addElement() in listbox übertragen 
+ *								}													 
+ *							} catch (Exception e) {									// Exception-handling wichtig wegen anfälligem speichern von daten auf datenträger
+ *								e.printStackTrace();
+ *							} finally {												// finally => auf jeden fall (auch wenn oben fehler aufgetreten sind soll stream geschlossen werden, desshalb wird close() ins finally ausgelagert)
+ *								if (in != null) {   								// falls eingabestream In nicht null ist, also wirklich ein BufferedReader-objekt erzeugt wurde..
+ *									try {											// ... unter verwendung der sichderheitsmechanismen try-catch
+ *										in.close();									// ...steram und damit auch die datei mit .close() schliessen [auch bei obigen fehlern], evtl. gebufferte einträge werden fertig eingelesen [close() beinhaltet flush()]
+ *									} catch (IOException e){						// ...oder zusätzliches Exceptionhandlicng wenn beim schliessen selber (des streams) ein fehler auftritt
+ *										e.printStackTrace();
+ *									}
+ *								}
+ *							}
+ *						}
+ *					} 
+ *					...
+ * 				}
+ * 
+ * PROGRAMM:	Erweiterung in diesem programm ist:
+ * 					(out) Beim Beenden des Programms werden die Kontaktdaten der Listbox in eine datei ausgeschrieben / = in einer datei gespeichert. 
+ * 					(in) Beim Programmstart werden die Daten aus der Datei in die Listbox eingelesen. 
+ * 
+ * 				erweiterung von:	11.3.   	JScrollListBox_substring_ohneArrayList_Kontaktliste_MitBearbeiten		Aufgabe 7, s.347
  * 									[	Die Kontakdaten Name, Vorname, Telefonnummer und Email-Adresse können in Textfeldern eingegeben 
  * 										und von dort in eine Listbox übernommen werden. Markierte Einträge können aus der Listbox gelöscht werden. 
  * 										Ein markierter Eintrag kann zum Bearbeiten aus der Listbox zurück in die Textfelder übertragen werden.	]
  * 
  * 									LISTBOX SIEHE:		11.2.2.   Listbox_ArrayList_Basics_Notenbilanz		s.335 uf		
  *									SCROLL-LISTBOX:	 	11.2.3.   ScrollListbox_JScrollPane_SelectionMode_ArrayList_Notenbilanz		s.340 uf (JScrollPane => scrollbalken)		
- * 
- * 
- * 				Erweiterung in diesem programm ist:
- * 				(out) Beim Beenden des Programms werden die Kontaktdaten der Listbox in eine datei ausgelesen / = in einer datei gespeichert. 
- * 				(in) Beim Programmstart werden die Daten aus der Datei in die Listbox eingelesen.
  */
 
 package uebungen12;
@@ -233,7 +285,7 @@ public class In_FileReader_BufferedReader_KontaktlisteMitSpeichern extends javax
 				File datei = new File(dateiname); // ist eine art vergleichsfile innerhalb der methode!!!
 				BufferedReader in = null; 	// Buffererreader-objekt in (weil ins Prog. EINgelesen wird) wird ausserhalb vom try-catch-block erzeugt weil er so überall verwendet werden kann
 				if (!datei.exists()) {	// falls das File datei mit dateiname im Dateisystem nicht existiert...
-					datei.createNewFile();	// ... wird ein neues File mit dateiname im dateisystem real (!!) erzeugt
+					datei.createNewFile();	// ... wird ein neues File mit dateiname im dateisystem real (!!) erzeugt (eigtl. total überflüssig für die programmlogik, file wird sowieso erzeugt in jBtnEnde.. beim write out)
 				} else { 				// sonst, wenn File mit dateiname (kontaktdatendatei) im dateisystem schon existiert hat:
 					String adresszeile; // lokale stringvariable für die einzelenen adresszeilen
 					try { 				// standard um fehler abzufangen

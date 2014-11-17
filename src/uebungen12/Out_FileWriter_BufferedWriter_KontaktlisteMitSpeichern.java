@@ -38,6 +38,7 @@
  *				private void jBtnEndeActionPerformed(ActionEvent evt) {				// vor beenden des programms wird datei erzeugt in der die vorhandenen daten gespeichert werden. [existenz der datei kontakte.dat: siehe projektordner (JavaBuch) im explorer!!!] 
  *					BufferedWriter out = null;										// ein BufferedWriter-Objekt mit dem namen out wird erzeugt und vorerst mit null initialisiert, initialisierung mit null bei objektdatentypen (bei basisdatentypen wär s: 0 oder false etc.)
  *					try {															// ...das BufferedWriter-objekt wird ausserhalb des try-blocks erzeugt, weil s in finally auch gebraucht wird
+ *																					// mit FileWriter wird anscheinend (?) real auf dem datenträger die datei mit dateiname erzeugt:
  *						out = new BufferedWriter(new FileWriter(dateiname));		// BufferedWriter-objekt initialisieren & dem konstruktor ein FileWriter-objekt übergeben, das gleichzeitig erzeugt wird & dem wiederum als argument der name der Zieldatei übergeben
  *						for (int i = 0; i < jListKontakteModel.getSize(); i++) { 	// for-schleife um zeilenweise die einträge des listmodels mit der write()-methode in die datei zu schreiben,  
  *							out.write(jListKontakteModel.get(i).toString()); 		// .get(i) liefert eintrag mit index i als objekt, .toString() weil write() einen String erwartet
@@ -255,7 +256,7 @@ public class Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern extends java
 						jBtnbearbeitenActionPerformed(evt);
 					}
 				});
-			}
+			} 
 			// (importe: java.io.File java.io.BufferedReader java.io.FileReader nicht vergessen)
 			// Daten in programm einlesen mit BufferedReader & FileReader (IN)
 			// am ende von initGUI() weil hier schon ListBox mit Listmodel erzeugt ist und die einträge zeilenweise eingetragen werden können
@@ -280,7 +281,7 @@ public class Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern extends java
 					} finally {				// auf jeden fall:
 						if (in != null) {   // falls eingabestream in nicht gleich null...
 							try {			// ... unter verwendung der sichderheitsmechanismen try-catch
-								in.close();		// ...steram und damit auch die datei mit .close() schliessen
+								in.close();		// ...stream und damit auch die datei mit .close() schliessen
 							} catch (IOException e){
 								e.printStackTrace();
 							}
@@ -367,7 +368,7 @@ public class Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern extends java
 			// BufferedWriter-objekt out wird initialisiert, dabei wird dem konstruktor ein FileWriter-objekt...
 			// ..übergeben, das gleichzeitig erzeugt wird, dem konstruktor des FileWriter wird wiederum als argument..
 			// ..der name der Zieldatei übergeben
-			out = new BufferedWriter(new FileWriter(dateiname));
+			out = new BufferedWriter(new FileWriter(dateiname)); // mit FileWriter wird anscheinend (?) real auf dem datenträger eine datei mit dateiname erzeugt
 			// for-schleife um zeilenweise die einträge des listmodels mit der write()-methode in die datei zu schreiben
 			for (int i = 0; i < jListKontakteModel.getSize(); i++) { // .getSize() für zeilenanzahl
 				out.write(jListKontakteModel.get(i).toString()); // .get(i) liefert eintrag mit index i als objekt, .toString() weil write() einen String erwartet
@@ -376,7 +377,7 @@ public class Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern extends java
 		} catch (Exception e) {	// falls es fehler gibt beim file ausschreiben / file erzeugen
 			e.printStackTrace();
 		} finally { // finally => auf jeden fall (auch wenn oben fehler aufgetreten sind wird stream geschlossen)
-			if (out != null){ // wenn out nicht null ist, also wirklich ein bufferedWriter-objekt erzeugt wurde
+			if (out != null){ // wenn out NICHT null ist, also wirklich ein bufferedWriter-objekt erzeugt wurde (wenn out null wäre, ist close() überflüssig!!)
 				try { 
 					out.close();	// schliessen des streams mit close() auch bei fehlern/ evtl. gebufferte einträge werden fertig ausgeschrieben
 				} catch (IOException e){ // zusätzlich wird auf fehler beim schliessen selber (des streams) reagiert
