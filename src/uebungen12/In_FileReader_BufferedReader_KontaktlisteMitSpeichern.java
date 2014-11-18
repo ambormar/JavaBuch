@@ -11,32 +11,21 @@
  *							ALLGEMEINE BEGRIFFS-VERWIRRUNG:		- daten in datei schreiben / aus datei auslesen etc.	==>> IGNORIEREN !!!!!!!!!!!!!!!!!!!!!
  * 
  * 
- * Daten aus datei in s dialogfenster einlesen mit BufferedReader, FileReader siehe ende methode initGUI()
- * 		// File datei mit dateinamen wird im programm erzeugt und verglichen, ob die die datei (hier kontakte.dat)
- * 		// ...real im dateisystem existiert, wenn nein, wird sie mit datei.createNewFile() erzeugt, wenn ja..
- *		// wird ein Eingabestream erzeugt (analog zum oben beschriebenen ausgabestrom) und in einer while-schleife..
- *		// ..mit .addElement() zeile für zeile der listbox angefügt bis keine zeile mehr in der datei vorhanden ist
- * 
  *	12.3.1.	READ IN - DATEN INS PROGRAMM EIN-LESEN (VON EINE DATEI)
  *
  * 	IN ZU BEACHTEN VORWEG:		- speichern von daten auf datenträger ist fehler-anfällig		=>  Exception-handling grundsätzlich wichtig		[datenträger können voll, schreibgeschützt oder fehlerhaft sein]
  * 								- hier: speichern von textdaten			=> zeichen-orientierte Streams -> writer:	=> FileReader		(import: java.io.FileReader)
  * 								- da vermutlich viel text/einträge	 	=> viel schreibvorgänge 	-> puffern:		=> BufferedReader 	(import: java.io.BufferedReader)
  * 								
- * 	IMPORT:			java.io.FileReader		& 	java.io.BufferedReader
+ * 	IMPORT:			java.io.File	&	java.io.FileReader		& 	java.io.BufferedReader
  * 
  * 	IN VORGEHEN:	=> Daten aus datei in's dialogfenster (jListKontakteModel) einlesen mit BufferedReader / FileReader 	=> siehe ende methode initGUI()	
  * 						(-> idealer ort für den import der gespeicherten daten:		beim programmstart, ende initGUI(), wo Listbox bereits erzeugt ist)
- *					// File datei mit dateinamen wird im programm erzeugt und verglichen, ob die die datei (hier kontakte.dat)
- * 					// ...real im dateisystem existiert, wenn nein, wird sie mit datei.createNewFile() erzeugt, wenn ja..
- *					// wird ein Eingabestream erzeugt (analog zum oben beschriebenen ausgabestrom) und in einer while-schleife..
- *					// ..mit .addElement() zeile für zeile der listbox angefügt bis keine zeile mehr in der datei vorhanden ist
- * 
- * 
- * 
- * 					 //> eine datei wird in den projektordner (hier JavaBuch) gespeichert 		((datei ist dort mit dem normalen dokumenten-explorer einsehbar))
- * 					 //> mit BufferedWriter/FileWriter werden textdaten mit dem schliessen des dialogfensters in die datei ausgeschrieben, 
- *					 //> mit der methode write() von Bufferedwriter werden die strings zeilenweise in die datei geschrieben	
+ * 					> Vergleichs-File datei mit dateinamen wird im programm erzeugt und verglichen, ob die datei (hier kontakte.dat)...
+ * 						...real im dateisystem existiert, wenn nein, wird sie mit datei.createNewFile() erzeugt, wenn ja..	(eigtl. überflüssig für die programmlogik, file wird sowieso erzeugt in jBtnEnde.. beim write out)
+ *					> wird ein Eingabestream erzeugt (analog zum oben beschriebenen ausgabestrom) und in einer while-schleife..
+ *					 	... mit .addElement() zeile für zeile der listbox angefügt bis keine zeile mehr in der datei vorhanden ist
+ *
  *				
  *	IN (KERN-CODE): 
  * 
@@ -51,7 +40,7 @@
  * 		READ IN DER DATEN (schema):													// Daten in programm einlesen mit BufferedReader & FileReader (IN)
  * 																					
  * 				private void initGUI() {											
- *					...																// am ende von initGUI() weil hier schon ListBox mit Listmodel erzeugt ist und die einträge zeilenweise eingetragen werden können
+ *					...																// am ende von initGUI() weil hier schon ListBox mit Listmodel erzeugt ist. die einträge können zeilenweise eingetragen werden.
  *					{																// Eine art vergleichs- File datei mit argument dateiname wird innerhalb der methode (!!!) erzeugt, damit man es nachher mit den... 		
  *						File datei = new File(dateiname); 							// ...Files im dateisystem vergleichen kann. das bedeutet nicht, dass diese datei im dateisystem real erzeugt wird!!!!
  *						BufferedReader in = null; 									// Buffererreader-objekt in (weil ins Prog. EINgelesen wird) wird ausserhalb vom try-catch-block erzeugt weil er so überall verwendet werden kann
@@ -70,7 +59,7 @@
  *								if (in != null) {   								// falls eingabestream In nicht null ist, also wirklich ein BufferedReader-objekt erzeugt wurde..
  *									try {											// ... unter verwendung der sichderheitsmechanismen try-catch
  *										in.close();									// ...steram und damit auch die datei mit .close() schliessen [auch bei obigen fehlern], evtl. gebufferte einträge werden fertig eingelesen [close() beinhaltet flush()]
- *									} catch (IOException e){						// ...oder zusätzliches Exceptionhandlicng wenn beim schliessen selber (des streams) ein fehler auftritt
+ *									} catch (IOException e){						// ...oder zusätzliches IOExceptionhandlicng wenn beim schliessen selber (des streams) ein fehler auftritt
  *										e.printStackTrace();
  *									}
  *								}

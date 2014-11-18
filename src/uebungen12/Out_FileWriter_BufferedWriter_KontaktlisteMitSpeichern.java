@@ -50,7 +50,7 @@
  *						if (out != null){ 						// falls out nicht null ist, also wirklich ein bufferedWriter-objekt erzeugt wurde..
  *							try { 
  *								out.close();					// ...schliessen des streams mit close() [auch bei obigen fehlern], evtl. gebufferte einträge werden fertig ausgeschrieben [close() beinhaltet flush()]
- *							} catch (IOException e){ 			// ...oder zusätzliches Exceptionhandlicng wenn beim schliessen selber (des streams) ein fehler auftritt
+ *							} catch (IOException e){ 			// ...oder zusätzliches IOExceptionhandlicng wenn beim schliessen selber (des streams) ein fehler auftritt
  *								e.printStackTrace();
  *							}
  *						}
