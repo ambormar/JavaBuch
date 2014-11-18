@@ -1,10 +1,10 @@
-/* TODO 12.3.3.   s.370 
+/* TODO 12.3.3.   s.370 uf
  * class FilterWriter_Verschluesselt extends FilterWriter
  * 
- * einen eigenen Verschluesselt_FilterWriter von der basisklasse FilterWriter ableiten:
+ * einen eigenen FilterWriter_Verschluesselt von der basisklasse FilterWriter ableiten:
  *  	- die drei unten aufgezählten write-methoden sind nach eigenen vorstellungen zu implementieren
  * 		- verschlüsselung des zu schreibenden texts ist in der write-methode für einzelnes zeichen ( .write(int c)) abzulesen...
- * 		- ...die anderen methoden greifen auf diese zurück:  write(char [] c, offset, count) & write(String s, offset, count
+ * 		- ...die anderen methoden greifen auf diese zurück:  write(char [] c, offset, count) & write(String s, offset, count)
  * 	  	- anstelle de übergebenen zeichens wird das um eine stelle in der unicodetabelle nach hinten versetzte zeichen geschrieben
  * 		- (die methoden write(char [] c) & write(String s) ohne offset und count können wie vererbt verwendet werden)
  *
