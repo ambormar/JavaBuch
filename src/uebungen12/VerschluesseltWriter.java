@@ -8,7 +8,7 @@
  * 			=> ein FilterWriter abreitet immer mit einem anderen Writer-Objekt zusammen, welcher den eigentlichen schreibvorgang (z.b in eine datei) übernimmt
  * 			=> der FilterWriter bzw. (hier eigentlich) der VerschlüsseltWriter MANIPULIERT zuvor die zu schreibenden unicode-zeichen
  * 			=> der Writer ist das einzige attribut der basisklasse FilterWriter
- * 			=> der einzige Konstruktor von FilterWriter erwartet als Argument den Writer (mit dem er zusammen arbeiten soll
+ * 			=> der einzige Konstruktor von FilterWriter erwartet als Argument einen Writer (irgendeinen Writer) mit dem er zusammen arbeiten soll
  * 
  * 	KONSTRUKTOR:  	protected FilterWriter(Writer out) 	// protected => paket-sichtbarkeit erweitert: 	zugriff auf attribute & methoden für alle klassen aus
  * 																								 		demselben paket & AUCH für Unterklassen aus anderen paketen
@@ -27,7 +27,7 @@
  * 
  * 		VORGEHEN:	=> einen eigenen VerschluesseltWriter von der basisklasse FilterWriter ableiten:		public class VerschluesseltWriter extends FilterWriter {
  * 					=> anstelle de übergebenen zeichens wird das um eine stelle in der unicodetabelle nach hinten versetzte zeichen geschrieben
- *  				=> die drei unten aufgezählten write-methoden sind nach eigenen vorstellungen zu implementieren
+ *  				=> DIE DREI unten aufgezählten WRITE-METHODEN sind NACH EIGENEN VORSTELLUNGEN zu IMPLEMENTIEREN
  * 					=> verschlüsselung des zu schreibenden texts ist in der write-methode für einzelnes zeichen ( .write(int c)) abzulesen...
  * 						-> ...die anderen methoden greifen auf diese zurück  	=> 	write(char [] c, offset, count) 	& 		write(String s, offset, count)
  * 					=> als zusätzliche methoden der klasse VerschlüesseltWriter:	 write(char [] c)	&	write(String s) 	ohne offset und count...
