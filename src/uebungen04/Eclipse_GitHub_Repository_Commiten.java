@@ -1,4 +1,4 @@
-/* TODO .4.2.1.   eigene bemerkung !!!!!!!!!!!!!!!!
+/* TODO .4.2.1.   eigene bemerkung !!!!!!!!!!!
  * class Eclipse_GitHub_Repository_Commiten
  * 
  * 	GITHUB - SYNCHRONISIERTES JAVAPROJEKT ERSTELLEN SIEHE: 	 4.2.1.   Eclipse_GitHub_JavaProjekt_SynchronisiertErstellen		eigene bemerkung !!!!!!!!!!!!!!!!!!!!

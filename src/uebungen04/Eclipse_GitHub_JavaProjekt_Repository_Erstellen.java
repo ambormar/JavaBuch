@@ -1,4 +1,4 @@
-/* TODO .4.2.1.   eigene bemerkung !!!!!!!!!!!!!!!!!!!!
+/* TODO .4.2.1.   eigene bemerkung 
  * class Eclipse_GitHub_JavaProjekt_SynchronisiertErstellen
  * 
  * 	GITHUB:		siehe firefox-lesezeichen:	=> github xampp...		( bei den  kompi-ordnern ) 		=> GitHub Repository
