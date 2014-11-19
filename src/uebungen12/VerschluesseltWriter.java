@@ -30,7 +30,10 @@
  *  				=> die drei unten aufgezählten write-methoden sind nach eigenen vorstellungen zu implementieren
  * 					=> verschlüsselung des zu schreibenden texts ist in der write-methode für einzelnes zeichen ( .write(int c)) abzulesen...
  * 						-> ...die anderen methoden greifen auf diese zurück  	=> 	write(char [] c, offset, count) 	& 		write(String s, offset, count)
- * 					=> die methoden:	 write(char [] c)	&	write(String s) 	ohne offset und count, können wie vererbt verwendet werden
+ * 					=> als zusätzliche methoden der klasse VerschlüesseltWriter:	 write(char [] c)	&	write(String s) 	ohne offset und count...
+ * 							... wurden 2 methoden definiert die ein komplettes Char-Array bzw einen kompletten String schreiben. 
+ * 								-> sie greifen zu auf => 	write(char [] c, offset, count) 	& 		write(String s, offset, count)
+ * 
  * 	  				
  * 		EXCEPTION-HANDLING DER METHODEN V. FILTERWRITER:			
  *			
@@ -48,28 +51,28 @@
  *					super(out);											// FilterWriter arbeitet immer mit Writer-Objekt zusammen, FilterWriter verschlüsselt, Writer übernimmt schreibvorgang
  *				}
  * 
- *				public void write(int c) throws IOException {		// überschreiben der methode write(int c) der superklasse,	wichtigste methode,
- *					super.write(c + 1);  							// super nur hier nötig, die folgenden methoden greifen auf hier zurück
- * 				}													// schreibt anstelle des zeichens c das um eine stelle im unicode nach hinten verschobene zeichen
- *
- *	 			public void write(char[] c, int offset, int count) throws IOException{ 	// überschreibt write(char[] c, int offset, int count) der superklasse
- *					for (int i= 0; i< count; i++){ 										// ... greift aber auf write(int c) von oben zu, also ohne super.write(...)
- *						write(c [offset + i]); 											// ... genau siehe unten
- *					}						   
- *				} 
- *				
- *				public void write(char[] c) throws IOException { 	// zusätzl. meth. v. VerschluesseltWriter zum schreiben eines kompletten char-arrays:	 write(char[] c) 	(ohne int offset, int count)
- *					write(c, 0, c.length); 							// greift auf methode write(char[] c, int offset, int count) dieser klasse zu (also ohne super.)...
- *				}																
- *							
- *				public void write(String s, int offset, int count) throws IOException { // überschreibt write(String c, int offset, int count) der superklasse
- *					for (int i= 0; i < count; i++) { 								 	// ... greift aber auf write(int c) von oben zu, also ohne super.write(...)
- *						write(s.charAt(offset + i));	 								// ... genau siehe unten
- *					}
- *				}
- *	
- *				public void write(String s) throws IOException { 	// zusätzl. meth. v. VerschluesseltWriter zum schreiben eines kompletten strings:  write(String s)	ohne int offset, int count
- *					write(s, 0, s.length()); 						// greift auf methode write(String s, int offset, int count) dieser klasse zu (also ohne super.)...
+ *	 			public void write(int c) throws IOException {		// überschreiben der methode write(int c) der superklasse,	wichtigste methode,
+ *	-->				super.write(c + 1);  							// super nur hier nötig, die folgenden methoden greifen auf hier zurück
+ * 	|			}													// schreibt anstelle des zeichens c das um eine stelle im unicode nach hinten verschobene zeichen
+ *	|	
+ *	| 			public void write(char[] c, int offset, int count) throws IOException{ 	// überschreibt write(char[] c, int offset, int count) der superklasse
+ *	|				for (int i= 0; i< count; i++){ 										// ... greift aber auf write(int c) von oben zu, also ohne super.write(...)
+ *	|--<	--> 		write(c [offset + i]); 											// ... genau siehe unten
+ *	|		|		}						   
+ *	|		|	} 
+ *	|		|	
+ *	|		|	public void write(char[] c) throws IOException { 	// zusätzl. meth. v. VerschluesseltWriter zum schreiben eines kompletten char-arrays:	 write(char[] c) 	(ohne int offset, int count)
+ *	|		|_		write(c, 0, c.length); 							// greift auf methode write(char[] c, int offset, int count) dieser klasse zu (also ohne super.)...
+ *	|			}																
+ *	|						
+ *	|			public void write(String s, int offset, int count) throws IOException { // überschreibt write(String c, int offset, int count) der superklasse
+ *	|				for (int i= 0; i < count; i++) { 								 	// ... greift aber auf write(int c) von oben zu, also ohne super.write(...)
+ *	|--<	-->			write(s.charAt(offset + i));	 								// ... genau siehe unten
+ *			|		}
+ *			|	}
+ *			|
+ *			|	public void write(String s) throws IOException { 	// zusätzl. meth. v. VerschluesseltWriter zum schreiben eines kompletten strings:  write(String s)	ohne int offset, int count
+ *			|_		write(s, 0, s.length()); 						// greift auf methode write(String s, int offset, int count) dieser klasse zu (also ohne super.)...
  *				}													
  *			} 
  *
