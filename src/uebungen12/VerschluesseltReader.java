@@ -39,6 +39,7 @@
  * 					=> z.b. beim lesen eines zeichens wird die verschiebung in der unicodetabelle um eins nach hinten wieder rückgängig gemacht
  *  				=> Die METHODEN ZUM LESEN NACH EIGENEN VORSTELLUNGEN IMPLEMENTIEREN, alle anderen methoden können wie vererbt verwendet werden 
  *  
+ *  
  * 					AB HIER NOCH ÜBERARBEITEN & AUF FILTERREADER ANPASSEN S. 373 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * 
  * 
