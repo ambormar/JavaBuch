@@ -1,4 +1,4 @@
-/* TODO 12.3.3.   s.370 uf,  (VerschluesseltWriter extends FilterWriter)
+/* TODO 12.3.3.   s.370 uf, (OUT) (VerschluesseltWriter extends FilterWriter)
  * class VerschluesseltWriter extends FilterWriter
  * 
  * FILTERWRITER BASICS: 	SIEHE:		12.3.3.   FilterWriter_Basics_Methoden_Konstruktor		s.370 
@@ -26,7 +26,7 @@
  * 	EIGENEN VERSCHLUESSELTWRITER VON DER BASISKLASSE FILTERWRITER ABLEITEN:
  * 
  * 		VORGEHEN:	=> einen eigenen VerschluesseltWriter von der basisklasse FilterWriter ableiten:		public class VerschluesseltWriter extends FilterWriter {
- * 					=> anstelle de übergebenen zeichens wird das um eine stelle in der unicodetabelle nach hinten versetzte zeichen geschrieben
+ * 					=> z.b. anstelle de übergebenen zeichens wird das um eine stelle in der unicodetabelle nach hinten versetzte zeichen geschrieben
  *  				=> DIE DREI unten aufgezählten WRITE-METHODEN sind NACH EIGENEN VORSTELLUNGEN zu IMPLEMENTIEREN
  * 					=> verschlüsselung des zu schreibenden texts ist in der write-methode für einzelnes zeichen ( .write(int c)) abzulesen...
  * 						-> ...die anderen methoden greifen auf diese zurück  	=> 	write(char [] c, offset, count) 	& 		write(String s, offset, count)
@@ -55,9 +55,9 @@
  *	-->				super.write(c + 1);  							// super nur hier nötig, die folgenden methoden greifen auf hier zurück
  * 	|			}													// schreibt anstelle des zeichens c das um eine stelle im unicode nach hinten verschobene zeichen
  *	|	
- *	| 			public void write(char[] c, int offset, int count) throws IOException{ 	// überschreibt write(char[] c, int offset, int count) der superklasse
- *	|				for (int i= 0; i< count; i++){ 										// ... greift aber auf write(int c) von oben zu, also ohne super.write(...)
- *	|--<	--> 		write(c [offset + i]); 											// ... genau siehe unten
+ *	| 		->	public void write(char[] c, int offset, int count) throws IOException{ 	// überschreibt write(char[] c, int offset, int count) der superklasse
+ *	|		|		for (int i= 0; i< count; i++){ 										// ... greift aber auf write(int c) von oben zu, also ohne super.write(...)
+ *	|--<	|	 		write(c [offset + i]); 											// ... genau siehe unten
  *	|		|		}						   
  *	|		|	} 
  *	|		|	
@@ -65,9 +65,9 @@
  *	|		|_		write(c, 0, c.length); 							// greift auf methode write(char[] c, int offset, int count) dieser klasse zu (also ohne super.)...
  *	|			}																
  *	|						
- *	|			public void write(String s, int offset, int count) throws IOException { // überschreibt write(String c, int offset, int count) der superklasse
- *	|				for (int i= 0; i < count; i++) { 								 	// ... greift aber auf write(int c) von oben zu, also ohne super.write(...)
- *	|--<	-->			write(s.charAt(offset + i));	 								// ... genau siehe unten
+ *	|		->	public void write(String s, int offset, int count) throws IOException { // überschreibt write(String c, int offset, int count) der superklasse
+ *	|		|		for (int i= 0; i < count; i++) { 								 	// ... greift aber auf write(int c) von oben zu, also ohne super.write(...)
+ *	|--<	|			write(s.charAt(offset + i));	 								// ... genau siehe unten
  *			|		}
  *			|	}
  *			|

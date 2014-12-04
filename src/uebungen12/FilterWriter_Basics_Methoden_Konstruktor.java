@@ -1,4 +1,4 @@
-/* TODO 12.3.3.   s.370, (OUT)
+/*  (ZeichenOrientierte Datenstreams)
  * class FilterWriter_Basics_Methoden_Konstruktor
  * 
  * EIGENEN VERSCHLUESSELTWRITER VON DER BASISKLASSE ABLEITEN: 	SIEHE:		12.3.3.   VerschluesseltWriter (extends FilterWriter)	s.370 uf
@@ -38,7 +38,7 @@
  * 	  				
  * 	EXCEPTION-HANDLING DER METHODEN V. FILTERWRITER:			
  *			
- *					=> throws IOException aller methoden von FilterWriter (s.s. 371) : 
+ *					=> throws IOException aller methoden von FilterReader (s.s. 371) : 
  * 						-> die signatur ist quasi von der superklasse aufgezwungen, irgendwo in der write-methode der superklasse wird ...
  * 						-> ... eine bedingung mit throw new IOException geworfen...
  * 						-> ...somit muss dies im methoden-kopf solang als signatur an die näxtaufrufende methode übernommen (weitergegeben werden)...

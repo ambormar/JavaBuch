@@ -1,16 +1,16 @@
-package uebungen04;
-
-/* TODO .4.2.2.(eigtl. 7.3.1)   s.215
- * class JavaDocs_Eclipse
+/* TODO .4.2.1.   eigene bemerkung
+ * Eclipse_Javadoc_Installieren
+ * 
  * 
  * 	JAVADOCS INS ECLIPSE EINBINDEN (ONLINE VARIANTE):	=> javadoc library einbinden ins eclipse sodass: 	javadoc kommentare im unteren reiter	&	javadoc kommentare im attached browser
  * 
  * 		=> Eclipse > window > preferences > java > installed JREs > obersten eintrag mit dem aktuellen jre (z.b. jre 1.8.0_25) anwählen > edit 
  * 		 > im fenster muss ausgefüllt sein:		> JRE home:		C:\Program Files\Java\jre1.8.0_25  		& 		jre name:	jre1.8.0_25
  * 		 > jre system libraries: obersten eintrag anwählen	> javadoc location klicken	> neues fenster: javadoc location path: 	http://download.oracle.com/javase/7/docs/api/	einfüllen
- * 		 > usw. für die obersten 6 einträge diesen pfad als javadoc location path einfüllen (oberste 6 einträge enden mit: \resources.jar, \rt.jar, \jsse.jar, \jce.jar, \charsets.jar, \jfr.jar) * 
- *
- *
+ * 		 > usw. für die obersten 6 einträge diesen pfad als javadoc location path einfüllen (oberste 6 einträge enden mit: \resources.jar, \rt.jar, \jsse.jar, \jce.jar, \charsets.jar, \jfr.jar)
+ * 
+ * 
+ * 
  *	JAVADOCS BROWSER-FENSTER IM ECLIPSE:	
  *
  *	AUFRUF:		 	> Klasse (zb.: String) im quellcode anklicken
@@ -45,7 +45,11 @@ package uebungen04;
  * 											-> in ALL CLASSES: CTRL & FIND: 	die vermutete klasse finden, wenn klassenname +- bekannt 
  * 				
  *											-> innerhalb einer KLASSE: CTRL & FIND: 	vermutete methode schnell finden
- */										
-											
-public class JavaDocs_Eclipse {
+ *
+ * 
+ */
+package uebungen04;
+
+public class Eclipse_Javadoc_Installieren {
+
 }

@@ -1,4 +1,4 @@
-/* TODO 12.3.4.   s.372, (IN) !!!!!!!!!!!!!!!
+/* TODO 12.3.4.   s.372, (IN) (ZeichenOrientierte Datenstreams)!!!!!!!!!!!!!!!
  * class FilterReader_Basics_Methoden_Konstruktor
  * 
  * EIGENEN VERSCHLUESSELTREADER VON DER BASISKLASSE ABLEITEN: 	SIEHE:		12.3.4.   VerschluesseltReader (extends FilterReader)	s.373 
@@ -8,8 +8,8 @@
  * 			=> die klasse FilterReader ist analog zum FilterWriter angelegt.
  * 			=> ein FilterReader abreitet immer mit einem Reader-Objekt zusammen, welches den eigentlichen lesevorgang (z.b aus einer datei) übernimmt
  * 			=> vom Reader übernimmt der FilterReader [bzw. eine davon erbende klasse (z.b. VerschluesseltReader)] die unicode-zeichen, um sie zu bearbeiten / entschlüsseln
- * 			=> der Reader ist das einzige attribut der basisklasse FilterReader
- * 			=> der einzige Konstruktor von FilterReader erwartet als Argument einen Reader (irgendeinen Reader) mit dem er zusammen arbeiten soll
+ * 			=> der Reader ist das einzige attribut der basisklasse FilterReader				(irgendeinen Reader, z.b. FileReader)
+ * 			=> der einzige Konstruktor von FilterReader erwartet als Argument einen Reader (irgendeinen Reader, z.b. FileReader) mit dem er zusammen arbeiten soll
  * 
  * 	KONSTRUKTOR:  	protected FilterReader(Reader in) 	// protected => paket-sichtbarkeit erweitert: 	zugriff auf attribute & methoden für alle klassen aus
  * 																								 		demselben paket & AUCH für Unterklassen aus anderen paketen
