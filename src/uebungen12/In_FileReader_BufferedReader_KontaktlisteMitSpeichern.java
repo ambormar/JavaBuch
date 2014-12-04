@@ -58,7 +58,7 @@
  *							} finally {												// finally => auf jeden fall (auch wenn oben fehler aufgetreten sind soll stream geschlossen werden, desshalb wird close() ins finally ausgelagert)
  *								if (in != null) {   								// falls eingabestream In nicht null ist, also wirklich ein BufferedReader-objekt erzeugt wurde..
  *									try {											// ... unter verwendung der sichderheitsmechanismen try-catch
- *										in.close();									// ...steram und damit auch die datei mit .close() schliessen [auch bei obigen fehlern], evtl. gebufferte einträge werden fertig eingelesen [close() beinhaltet flush()]
+ *										in.close();									// ...stream und damit auch die datei mit .close() schliessen [auch bei obigen fehlern], evtl. gebufferte einträge werden fertig eingelesen [close() beinhaltet flush()]
  *									} catch (IOException e){						// ...oder zusätzliches IOExceptionhandlicng wenn beim schliessen selber (des streams) ein fehler auftritt
  *										e.printStackTrace();
  *									}

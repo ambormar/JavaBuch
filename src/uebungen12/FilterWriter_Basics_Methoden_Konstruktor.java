@@ -1,4 +1,4 @@
-/* TODO 12.3.3.   s.370 
+/* TODO 12.3.3.   s.370, (OUT)
  * class FilterWriter_Basics_Methoden_Konstruktor
  * 
  * EIGENEN VERSCHLUESSELTWRITER VON DER BASISKLASSE ABLEITEN: 	SIEHE:		12.3.3.   VerschluesseltWriter (extends FilterWriter)	s.370 uf
@@ -7,8 +7,8 @@
  * 
  * 			=> ein FilterWriter abreitet immer mit einem anderen Writer-Objekt zusammen, welcher den eigentlichen schreibvorgang (z.b in eine datei) übernimmt
  * 			=> der FilterWriter [bzw. eine davon erbende klasse (z.b. VerschluesseltWriter)] MANIPULIERT zuvor die zu schreibenden unicode-zeichen
- * 			=> der Writer ist das einzige attribut der basisklasse FilterWriter
- * 			=> der einzige Konstruktor von FilterWriter erwartet als Argument einen Writer (irgendeinen Writer) mit dem er zusammen arbeiten soll.
+ * 			=> der Writer ist das einzige attribut der basisklasse FilterWriter				(irgendeinen Writer, z.b. FileWriter)
+ * 			=> der einzige Konstruktor von FilterWriter erwartet als Argument einen Writer (irgendeinen Writer, z.b. FileWriter) mit dem er zusammen arbeiten soll.
  * 
  * 	KONSTRUKTOR:  	protected FilterWriter(Writer out) 	// protected => paket-sichtbarkeit erweitert: 	zugriff auf attribute & methoden für alle klassen aus
  * 																								 		demselben paket & AUCH für Unterklassen aus anderen paketen
@@ -28,7 +28,7 @@
  * 		SIEHE EIGNTL.:		12.3.3.   VerschluesseltWriter (extends FilterWriter)		s.370 uf
  * 
  * 		VORGEHEN:	=> einen eigenen VerschluesseltWriter von der basisklasse FilterWriter ableiten:		public class VerschluesseltWriter extends FilterWriter {
- * 					=> anstelle de übergebenen zeichens wird das um eine stelle in der unicodetabelle nach hinten versetzte zeichen geschrieben
+ * 					=> z.b. anstelle de übergebenen zeichens wird das um eine stelle in der unicodetabelle nach hinten versetzte zeichen geschrieben
  *  				=> DIE DREI unten aufgezählten WRITE-METHODEN sind NACH EIGENEN VORSTELLUNGEN zu IMPLEMENTIEREN
  * 					=> verschlüsselung des zu schreibenden texts ist in der write-methode für einzelnes zeichen ( .write(int c)) abzulesen...
  * 						-> ...die anderen methoden greifen auf diese zurück  	=> 	write(char [] c, offset, count) 	& 		write(String s, offset, count)
