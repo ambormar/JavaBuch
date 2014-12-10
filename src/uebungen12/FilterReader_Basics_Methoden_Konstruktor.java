@@ -1,4 +1,4 @@
-/* TODO 12.3.4.   s.372, (IN) (ZeichenOrientierte Datenstreams)!!!!!!!!!!!!!!!
+/* TODO 12.3.4.   s.372, (IN) (ZeichenOrientierte Datenstreams)
  * class FilterReader_Basics_Methoden_Konstruktor
  * 
  * EIGENEN VERSCHLUESSELTREADER VON DER BASISKLASSE ABLEITEN: 	SIEHE:		12.3.4.   VerschluesseltReader (extends FilterReader)	s.373 
@@ -40,9 +40,10 @@
  * 		VORGEHEN:	=> einen eigenen VerschluesseltReader von der basisklasse FilterReader ableiten:		public class VerschluesseltReader extends FilterReader {
  * 					=> z.b. beim lesen eines zeichens wird die verschiebung in der unicodetabelle um eins nach hinten wieder rückgängig gemacht
  *  				=> Die METHODEN ZUM LESEN NACH EIGENEN VORSTELLUNGEN IMPLEMENTIEREN (= ENTSPRECHEND DEM VERSCHLÜSSELTWRITER), alle anderen methoden können wie vererbt verwendet werden 
- *  				=> entschlüsselung des einzulesenden texts wird in der..:	read-methode für einzelnes zeichen 		int read()			 					
- *  															& in der..:		read-methode für char-arrays 			int read(char[] c, int offset, int count) 	..gemacht/überschrieben
- *  																			=> in der read-methode für char-arrays werden zuerst die originaldaten eingelesen & dann dekodiert
+ *  				=> entschlüsselung des einzulesenden texts wird gemacht durch überschreiben.. :    
+ *  						.. der read-methode für einzelnes zeichen 			int read() {..}		 													-> siehe code VerschluesseltReader	
+ *  						&  der read-methode für char-arrays 				int read(char[] c, int offset, int count) { ..}	
+ *  																			-> hier in 2 schritten:  1. originaldaten einlesen	&	2. dekodieren	-> siehe code VerschluesseltReader
  * 	  				
  * 		EXCEPTION-HANDLING DER METHODEN V. FILTERREADER:			
  *			

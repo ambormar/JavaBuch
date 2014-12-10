@@ -1,4 +1,4 @@
-/*  (ZeichenOrientierte Datenstreams)
+/* TODO 12.3.3.   s.370  (OUT) (ZeichenOrientierte Datenstreams)  	
  * class FilterWriter_Basics_Methoden_Konstruktor
  * 
  * EIGENEN VERSCHLUESSELTWRITER VON DER BASISKLASSE ABLEITEN: 	SIEHE:		12.3.3.   VerschluesseltWriter (extends FilterWriter)	s.370 uf
