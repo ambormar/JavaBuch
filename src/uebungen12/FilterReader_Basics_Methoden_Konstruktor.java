@@ -25,7 +25,7 @@
  * 		- boolean markSupported()						: liefert zurück ob die markierung unterstützt wird.
  * 		- int read()									: liest ein zeichen aus dem stream & liefert es als unicode-zeichen zurück. 
  * 														  wurde kein zeichen gelesen weil das straem-ende erreicht ist, wird -1 zurückgegeben.										
- * 		- void read(char[] c, int offset, int count)	: versucht count zeichen aus dem stream zu lesen & im char-array c abzulegen. wird kein zeichen gelesen,
+ * 		- int read(char[] c, int offset, int count)	: versucht count zeichen aus dem stream zu lesen & im char-array c abzulegen. wird kein zeichen gelesen,
  * 														  weil das stream-ende bereits erreicht war, wird -1 zurückgeliefert. ansonsten wird die anzahl gelesener zeichen zurückgegeben
  * 		- boolean ready()								: liefert zurück, ob zeichen zum lesen im stream bereit stehen.
  * 		- void reset()									: springt zur position des streams, die zuvor markiert wurde.
@@ -33,31 +33,24 @@
  * 														  liefert die zahl der tatsächlich übersprungenen bytes zurück. 
  * 
  * 
+ *[ EIGENEN VERSCHLUESSELTREADER VON DER BASISKLASSE FILTERREADER ABLEITEN:
  * 
- * 					AB HIER NOCH ÜBERARBEITEN & AUF VERSCHLUESSELTREADER ABGLEICHEN (TEILS ZUMINDEST)  ANPASSEN S. 373 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * 		SIEHE EIGNTL.:		12.3.3.   VerschluesseltReader (extends FilterReader)		12.3.4.   s.373 (IN)
  * 
- * 
- * 
- * 	EIGENEN VERSCHLUESSELTREADER VON DER BASISKLASSE FILTERREADER ABLEITEN:
- * 
- * 		SIEHE EIGNTL.:		12.3.3.   VerschluesseltWriter (extends FilterWriter)		s.370 uf
- * 
- * 		VORGEHEN:	=> einen eigenen VerschluesseltWriter von der basisklasse FilterWriter ableiten:		public class VerschluesseltWriter extends FilterWriter {
- * 					=> z.b. anstelle de übergebenen zeichens wird das um eine stelle in der unicodetabelle nach hinten versetzte zeichen geschrieben
- *  				=> DIE DREI unten aufgezählten WRITE-METHODEN sind NACH EIGENEN VORSTELLUNGEN zu IMPLEMENTIEREN
- * 					=> verschlüsselung des zu schreibenden texts ist in der write-methode für einzelnes zeichen ( .write(int c)) abzulesen...
- * 						-> ...die anderen methoden greifen auf diese zurück  	=> 	write(char [] c, offset, count) 	& 		write(String s, offset, count)
- * 					=> als zusätzliche methoden der klasse VerschlüesseltWriter:	 write(char [] c)	&	write(String s) 	ohne offset und count...
- * 							... wurden 2 methoden definiert die ein komplettes Char-Array bzw einen kompletten String schreiben. 
- * 								-> sie greifen zu auf => 	write(char [] c, offset, count) 	& 		write(String s, offset, count)
+ * 		VORGEHEN:	=> einen eigenen VerschluesseltReader von der basisklasse FilterReader ableiten:		public class VerschluesseltReader extends FilterReader {
+ * 					=> z.b. beim lesen eines zeichens wird die verschiebung in der unicodetabelle um eins nach hinten wieder rückgängig gemacht
+ *  				=> Die METHODEN ZUM LESEN NACH EIGENEN VORSTELLUNGEN IMPLEMENTIEREN (= ENTSPRECHEND DEM VERSCHLÜSSELTWRITER), alle anderen methoden können wie vererbt verwendet werden 
+ *  				=> entschlüsselung des einzulesenden texts wird in der..:	read-methode für einzelnes zeichen 		int read()			 					
+ *  															& in der..:		read-methode für char-arrays 			int read(char[] c, int offset, int count) 	..gemacht/überschrieben
+ *  																			=> in der read-methode für char-arrays werden zuerst die originaldaten eingelesen & dann dekodiert
  * 	  				
- * 	EXCEPTION-HANDLING DER METHODEN V. FILTERREADER:			
+ * 		EXCEPTION-HANDLING DER METHODEN V. FILTERREADER:			
  *			
  *					=> throws IOException aller methoden von FilterReader (s.s. 373) : 
  * 						-> die signatur ist quasi von der superklasse aufgezwungen, irgendwo in der read-methode der superklasse wird ...
  * 						-> ... eine bedingung mit throw new IOException geworfen...
  * 						-> ...somit muss dies im methoden-kopf solang als signatur an die näxtaufrufende methode übernommen (weitergegeben werden)...
- * 						-> ...bis man an geeigneter stelle beim methodenaufruf einen try-catch-block einbaut zum abfangen der IOException
+ * 						-> ...bis man an geeigneter stelle beim methodenaufruf einen try-catch-block einbaut zum abfangen der IOException					]
  */
 
 package uebungen12;
