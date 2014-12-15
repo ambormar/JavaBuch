@@ -37,7 +37,7 @@
  * 
  * 		VORGEHEN:	=> einen eigenen VerschluesseltReader von der basisklasse FilterReader ableiten:		public class VerschluesseltReader extends FilterReader {
  * 					=> z.b. beim lesen eines zeichens wird die verschiebung in der unicodetabelle um eins nach hinten wieder rückgängig gemacht
- *  				=> Die METHODEN ZUM LESEN NACH EIGENEN VORSTELLUNGEN IMPLEMENTIEREN (= ENTSPRECHEND DEM VERSCHLÜSSELTWRITER), alle anderen methoden können wie vererbt verwendet werden 
+ *  				=> Die METHODEN ZUM LESEN NACH EIGENEN VORSTELLUNGEN IMPLEMENTIEREN (= ENTSPRECHEND DEM VERSCHLÜSSELTWRITER), alle anderen methoden können wie von FilterReader vererbt verwendet werden 
  *  				=> entschlüsselung des einzulesenden texts wird gemacht durch überschreiben.. :    
  *  						.. der read-methode für einzelnes zeichen 			int read() {..}		 													-> siehe code	
  *  						&  der read-methode für char-arrays 				int read(char[] c, int offset, int count) { ..}	
@@ -78,7 +78,7 @@ public class VerschluesseltReader extends FilterReader {
 	// methode zum überschreiben der methode read(char[] c, int offset, int count) der superklasse;
 	public int read(char[] c, int offset, int lenght) throws IOException {  // throws IOException -> siehe oben
 		// 1. originaldaten einlesen:
-		int result = super.read(c, offset, lenght);	// zeichen werden in das charArray c (welches man beim aufruf der methoode ja als parameter mitgeben muss) eingelesen ..
+		int result = super.read(c, offset, lenght);	// zeichen werden in das charArray c (welches man beim aufruf der methoode als parameter mitgeben muss) eingelesen ..
 													// .. & in result wird die anzahl der gelesenen zeichen gespeichert		[remember: methode int read(char c,...) der superklasse gibt als int die anzahl der gelesenen zeichen zurück]
 													// (befüllen des char-arrays c von (read(..) hier nicht mit for-schleife, das wird offensichtlich irgendwo in der superklasse erledigt))
 		// 2. dekodieren:

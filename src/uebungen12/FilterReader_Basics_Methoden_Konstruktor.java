@@ -23,7 +23,7 @@
  * 														  markierte position gesprungen. dadurch können die gleichen zeichen mehrfach gelesen werden. (wozu??)	
  * 														  der parameter gibt an, nach wievielen gelesenen bytes die markierungen verfallen. (mal maja fragen)
  * 		- boolean markSupported()						: liefert zurück ob die markierung unterstützt wird.
- * 		- int read()									: liest ein zeichen aus dem stream & liefert es als unicode-zeichen zurück. 
+ * 		- int read()									: liest ein zeichen aus dem stream & liefert es als unicode-zeichen in dezimaler schreibweise zurück. 
  * 														  wurde kein zeichen gelesen weil das straem-ende erreicht ist, wird -1 zurückgegeben.										
  * 		- int read(char[] c, int offset, int count)	: versucht count zeichen aus dem stream zu lesen & im char-array c abzulegen. wird kein zeichen gelesen,
  * 														  weil das stream-ende bereits erreicht war, wird -1 zurückgeliefert. ansonsten wird die anzahl gelesener zeichen zurückgegeben
