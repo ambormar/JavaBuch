@@ -83,7 +83,7 @@ public class VerschluesseltReader extends FilterReader {
 													// (befüllen des char-arrays c von (read(..) hier nicht mit for-schleife, das wird offensichtlich irgendwo in der superklasse erledigt))
 		// 2. dekodieren:
 		for (int i= 0; i < result; i++) {						// char-array c bearbeiten mit schleife von c[index: 0] bis c[index: anzahl gelesene zeichen = result von oben]
-			c[i+offset] = (char) ((int) (c[i+offset]) - 1 ); 	// jedes zeichen des char-arrays wird mit cast (int) in den zeichencode konvertiert & der zeichencode um eins reduziert..
+			c[i+offset] = (char) ( (int) c[i+offset] - 1 ); 	// jedes zeichen des char-arrays wird mit cast (int) in den zeichencode konvertiert & der zeichencode um eins reduziert..
 		}														// ..& anschliessend wieder mit cast (char) in den datentyp char umgewandelt 
 																// c[i+offset] weil:  index beginnend bei 0 + startzahl (offset) der ursprünglich zu bearbeitenden zeichen
 		
