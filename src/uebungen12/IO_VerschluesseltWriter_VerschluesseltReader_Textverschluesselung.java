@@ -13,10 +13,13 @@
 package uebungen12;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;					// themenspeziefischer import !!!
+import java.io.File;					// guck themenspeziefischer import !!!
+import java.io.FileWriter;				// guck themenspeziefischer import !!!
+import java.io.IOException;				// guck themenspeziefischer import !!!
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.WindowConstants;
@@ -116,8 +119,23 @@ public class IO_VerschluesseltWriter_VerschluesseltReader_Textverschluesselung e
 		}
 	}
 	
+	// methode zum verschlüsselten speichern des textes aus jTextPane
 	private void jBtnSpeichernActionPerformed(ActionEvent evt) {
-		// hier weiter
+		VerschluesseltWriter out = null;
+		try {
+			out = new VerschluesseltWriter (new FileWriter(dateiname)); // hier wird die datei verschluesselt.txt real erzeugt glaub
+			out.write(jTextPane.getText());
+		} catch (Exception e){
+			JOptionPane.showMessageDialog(null, "Fehler beim Speichern!");
+		} finally {					// finally => auf jeden fall (auch wenn oben fehler aufgetreten muss stream geschlossen werden)
+			if (out != null) {		// falls ausgabestream out nicht gleich null...
+				try {				// ... unter verwendung der sichderheitsmechanismen try-catch
+					out.close();	// ...stream und damit auch die datei mit .close() schliessen; OHNE OUT.CLOSE() funktionierts nicht !!!
+				} catch (IOException e){	// zusätzlich wird auf fehler beim schliessen selber (des streams) reagiert
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 	
 	private void jBtnVerschluesseltActionPerformed(ActionEvent evt) {
