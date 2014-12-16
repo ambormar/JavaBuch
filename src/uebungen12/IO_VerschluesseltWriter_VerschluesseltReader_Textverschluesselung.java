@@ -36,7 +36,7 @@ public class IO_VerschluesseltWriter_VerschluesseltReader_Textverschluesselung e
 	// stringvariable dateiname für datei, in der die textdaten beim schliessen  gespeichert werden
 		// String dateiname wird initialisiert mit dem relativen pfad zum aktuellen verzeichnis (aus dem auch das programm gestartet wird)
 		// "relativer pfad" besteht aus: "." für aktuelles verzeichnis + platformunabhängiges trennzeichen (File.separator) + dateiname.txt
-	private String dateiname = "." + File.separator + "verschluesselt.txt";	
+	private String dateiname = "." + File.separator + "verschluesselt.txt";		// verschluesselt.txt ins .gitignore ums nicht committen zu müssen (packageexplorer > datei > re-klick > ignorieren)
 		// statt "." -> "./dokumente/" & ein dokumentordner in JavaBuch, dann kann man auch im Package explorer die dateien sehen
 	/**
 	* Auto-generated main method to display this JFrame
