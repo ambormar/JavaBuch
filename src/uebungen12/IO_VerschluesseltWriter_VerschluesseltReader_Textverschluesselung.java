@@ -6,16 +6,37 @@
  * 					FILTERREADER BASICS:		12.3.4.   FilterReader_Basics_Methoden_Konstruktor		s.372 
  * 					VERSCHLUESSELTREADER:		12.3.4.   VerschluesseltReader extends FilterReader		s.373 
  * 
- * 	IM CODE & DANN HIER WEITER MACHEN, s.374: frame für textverschlüsselung machen, orientieren an Jigloo_Events_Gui...., kommentare schreiben
+ * 	IM CODE kommentare fertig & DANN HIER WEITER MACHEN, s.374: frame für textverschlüsselung machen & kommentare schreiben !!!!!
  * 
+ * 12.3.5. TEXTDATEIEN VERSCHLÜSSELN & ENTSCHLÜSSELN
+ * 
+ * TEXTVERSCHLÜSSELUNG VORGEHEN: EVTL.
+ * 
+ * JTEXTPANE:
+ * 
+ * IMPORTE:
+ * 
+ * KERN-CODE: 
+ * 
+ * 
+ * PROGRAMM:	Das Programm nutzt die selbstgeschriebenen Klassen VerschluesseltWriter und VerschluesseltReader (erweiterungen von FilterWriter & FilterReader)
+ * 				zur verschlüsselten Speicherung von Text. 
+ * 
+ * 				GUi, bestehend aus Frame mit JTextPane (anstelle von JTextField) zum aus-schreiben / ein-lesen am stück (statt zeilen-weise, wie bei JTextFiled) 
+ * 				& 3 Buttons:
+ * 				1. speichern 				=> verschlüsselt aus-schreiben von text, aus jTextPane in verschluesselt.txt datei, mittels:	 			VerschluesseltWriter out
+ * 				2. verschlüsselt öffnen 	=> ein-lesen des verschluesselten texts, aus verschluesselt.txt ins jTextPane, mittels:		 				BufferedReader in
+ * 				3. unverschlüsselt öffnen	=> entschlüsseltes ein-lesen des verschluesselten texts, aus verschluesselt.txt ins jTextPane, mittels:		VerschluesseltReader in
  */
 
 package uebungen12;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;					// guck themenspeziefischer import !!!
-import java.io.FileWriter;				// guck themenspeziefischer import !!!
-import java.io.IOException;				// guck themenspeziefischer import !!!
+import java.io.BufferedReader;			// guck themenspeziefischer import !!!
+import java.io.File;					// themenspeziefischer import !!!
+import java.io.FileReader;				// themenspeziefischer import !!!
+import java.io.FileWriter;				// themenspeziefischer import !!!
+import java.io.IOException;				// themenspeziefischer import !!!
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -68,7 +89,7 @@ public class IO_VerschluesseltWriter_VerschluesseltReader_Textverschluesselung e
 				jLEingabe.setBounds(12, 12, 81, 16);
 			}
 			{
-				jScrollPane1 = new JScrollPane();      // achtung: scrollbalken funktionieren jeweils nur korrekt, wenn man text MIT abständen eingibt, ich lööl 
+				jScrollPane1 = new JScrollPane();      // achtung: scrollbalken funktionieren jeweils nur korrekt, wenn man text MIT abständen ins jTextPane eingibt, ich lööl 
 				getContentPane().add(jScrollPane1);
 				jScrollPane1.setBounds(12, 34, 360, 103);
 				{	
@@ -119,12 +140,13 @@ public class IO_VerschluesseltWriter_VerschluesseltReader_Textverschluesselung e
 		}
 	}
 	
-	// methode zum verschlüsselten speichern des textes aus jTextPane
+	// methode zum verschlüsselten speichern des textes aus jTextPane in datei mit namen verschluesselt.txt (dateiname mit pfad: siehe auch private variabeln oben)
 	private void jBtnSpeichernActionPerformed(ActionEvent evt) {
-		VerschluesseltWriter out = null;
+		VerschluesseltWriter out = null;	// erzeugen eines VerschluesseltWriter.objekts out (ausserhalb von try-catch, damit in ganzer methode brauchbar)
 		try {
-			out = new VerschluesseltWriter (new FileWriter(dateiname)); // hier wird die datei verschluesselt.txt real erzeugt glaub
-			out.write(jTextPane.getText());
+			out = new VerschluesseltWriter (new FileWriter(dateiname)); // eingabestream für out mit :  VerschluesseltWriter-objekt unter mitgabe & erzeugen von FileWriter-objekt mit dem argument dateiname
+																		// .. FileWriter erzeugt real die datei mit dateiname (= verschluesselt.txt inkl. pfad)
+			out.write(jTextPane.getText());								// aus-schreiben mit der methode write(String str) von VerschluesseltWriter (= extra dort kreierte methode zum aus-schreiben ganzer strings) 
 		} catch (Exception e){
 			JOptionPane.showMessageDialog(null, "Fehler beim Speichern!");
 		} finally {					// finally => auf jeden fall (auch wenn oben fehler aufgetreten muss stream geschlossen werden)
@@ -138,12 +160,54 @@ public class IO_VerschluesseltWriter_VerschluesseltReader_Textverschluesselung e
 		}
 	}
 	
+	// methode zum anzeigen des verschlüsselten textes aus der datei verschluesselt.txt (in die oben der text aus jTextPane verschlüsselt eingelesen wurde)
 	private void jBtnVerschluesseltActionPerformed(ActionEvent evt) {
-		// hier weiter
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new FileReader(dateiname));
+			int c;										// zur aufnahme der einzelnen gelesenen unicodezeichen in dezimalschreibweise (entsprechend der read(int c) methode von BufferedReader
+			StringBuffer zeile = new StringBuffer();	// zur aufnahme der Zeichenfolge wird ein StringBuffer definiert/erzeugt.. (warum zusätzlicher StringBuffer?: glaub weil alle einzelnen zeichen zusammenhängen will in eine zeile, geeignetstes objekt: ein stringbuffer?!)
+			while ((c = in.read()) >= 0) {				// ..& in der schleife zeichen für zeichen eingelesen, solange die read-methode c >= 0 liefert, also ein dezimal geschriebenes unicodezeichen, bei streamende liefert die read-methode -1 ..
+				zeile.append((char) c);					// ..& die einzelnen zeichen werden ans Stringbufferobjekt angehängt mit der methode: append(char c) von StringBuffer, dezimal geschriebene int c zeichen werden dabei zu char gecastet
+			}
+			jTextPane.setText(zeile.toString());	// JTextPane kann mit setText() einen String übernehmen, toString()-methode von StringBuffer macht StringBuffer-objekt zeile zu einem String
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Fehler beim Lesen!");
+		} finally {
+			if (in != null){
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 	}
 	
+	// methode zum anzeigen & entschlüsseln des textes aus der datei verschluesselt.txt (in die oben der text aus jTextPane verschlüsselt eingelesen wurde)
+										// einziger unterschied zur oben (jBtnVerschluesseltA..): VerschluesseltReader (wird zur entschlüsselung benutzt) statt BufferedReader
 	private void jBtnUnverschluesseltActionPerformed(ActionEvent evt) {
-		// hier weiter
+		VerschluesseltReader in = null;	
+		try {
+			in = new VerschluesseltReader(new FileReader(dateiname));
+			int c;
+			StringBuffer zeile = new StringBuffer();
+			while((c = in.read()) >= 0 ){
+				zeile.append((char) c);
+			}
+			jTextPane.setText(zeile.toString());
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Fehler beim Lesen!");
+		} finally {
+			if (in != null){
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 }

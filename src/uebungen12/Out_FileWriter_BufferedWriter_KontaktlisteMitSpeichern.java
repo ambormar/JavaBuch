@@ -367,7 +367,7 @@ public class Out_FileWriter_BufferedWriter_KontaktlisteMitSpeichern extends java
 		try { 
 			// BufferedWriter-objekt out wird initialisiert, dabei wird dem konstruktor ein FileWriter-objekt...
 			// ..übergeben, das gleichzeitig erzeugt wird, dem konstruktor des FileWriter wird wiederum als argument..
-			// ..der name der Zieldatei übergeben
+			// ..der name (& pfad) der Zieldatei übergeben
 			out = new BufferedWriter(new FileWriter(dateiname)); // mit FileWriter wird anscheinend (?) real auf dem datenträger eine datei mit dateiname erzeugt
 			// for-schleife um zeilenweise die einträge des listmodels mit der write()-methode in die datei zu schreiben
 			for (int i = 0; i < jListKontakteModel.getSize(); i++) { // .getSize() für zeilenanzahl
