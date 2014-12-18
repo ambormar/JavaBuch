@@ -11,6 +11,6 @@
 
 package uebungen12;
 
-public class Textverschluesselung_VerschluesseltWriter_VerschluesseltReader_IO {
+public class TextVerschluesselung_VerschluesseltWriter_VerschluesseltReader_IO {
 
 }
