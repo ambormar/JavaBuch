@@ -1,32 +1,57 @@
-/* TODO 12.3.5.   s.374, (ZeichenOrientierte Datenstreams)		!!!!!!!!!!!!!!!!!!!
- * class IO_VerschluesseltWriter_VerschluesseltReader_Textverschluesselung 
+/* TODO 12.3.5.   s.374, (ZeichenOrientierte Datenstreams)	
+ * class IO_VerschluesseltWriter_VerschluesseltReader_Textverschluesselung		nutzt	VerchluesseltWriter & VerschluesseltReader
  * 
  * SIEHE AUCH:		FILTERWRITER BASICS:		12.3.3.   FilterWriter_Basics_Methoden_Konstruktor		s.370
  * 					VERSCHLUESSELTWRITER		12.3.3.   VerschluesseltWriter extends FilterWriter		s.370 
  * 					FILTERREADER BASICS:		12.3.4.   FilterReader_Basics_Methoden_Konstruktor		s.372 
  * 					VERSCHLUESSELTREADER:		12.3.4.   VerschluesseltReader extends FilterReader		s.373 
- * 
- * 	IM CODE kommentare fertig & DANN HIER WEITER MACHEN, s.374: frame für textverschlüsselung machen & kommentare schreiben !!!!!
- * 
+ *  
  * 12.3.5. TEXTDATEIEN VERSCHLÜSSELN & ENTSCHLÜSSELN
  * 
- * TEXTVERSCHLÜSSELUNG VORGEHEN: EVTL.
+ * 	VORGEHEN: 
  * 
- * JTEXTPANE:
+ * 		=> Das Programm nutzt die selbstgeschriebenen Klassen (dieses packages) VerschluesseltWriter und VerschluesseltReader (erweiterungen von FilterWriter & FilterReader)
+ * 			zum verschlüsselten Speicherern & verschlüsselten bzw. unverschlüsselten Öffnen von Text.
+ * 	 
+ * 		=> GUi, bestehend aus Frame mit JTextPane (anstelle von JTextField) zum aus-schreiben / ein-lesen am stück (statt zeilen-weise, wie bei JTextFiled) 
+ * 			& 3 Buttons:
  * 
- * IMPORTE:
+ * 			1. verschlüsselt speichern 	=> verschlüsselt aus-schreiben von text, aus jTextPane in verschluesselt.txt datei, mittels:	 		out = new VerschluesseltWriter (new FileWriter(dateiname)
+ * 			2. verschlüsselt öffnen 	=> ein-lesen des verschluesselten texts, aus verschluesselt.txt ins jTextPane, mittels:		 			in = new BufferedReader (new FileReader(dateiname))
+ * 			3. unverschlüsselt öffnen	=> entschlüsseltes ein-lesen des verschluesselten texts, aus verschluesselt.txt ins jTextPane, mittels:	in = new VerschluesseltReader (new FileReader(dateiname))
+ *
+ * 		=> die effektife verschlüsselung / entschlüsselung der TEXTZEICHEN wird in den klassen VerschluesseltWriter & VerschluesseltReader gemacht.
+ * 			-> VerschluesseltWriter & VerschluesseltReader werden hier zum AUSSCHREIBEN & EINLESEN anstelle von BufferedWriter & BufferedReader eingesetzt.
+ * 			-> auch VerschluesseltWriter & VerschluesseltReader benötigen (wie BufferedWriter & BufferedReader) als ARGUMENT einen Writer / Reader, hier: FileWriter & FileReader
+ *
+ *		=> beachte: 	StringBuffer-objekt zeile in den 2 methoden zum einlesen (in) des textes ins programm		// glaub:  wäre wie String zeile, aber nochmal gebuffert, zur aufnahme der zeichenfolge 
+ *
+ *
+ * 	JTEXTPANE:		=> aus Jigloo (componenten) kann mehrzeiligen text als eingabe aufnehmen & somit wie ein einfacher texteditorverwendet werden;
+ *						-> vergleiche: bei JTextField muss zeilenweise ausgeschrieben werden, bei jTextPane wie bei einfachem texteditor am stück 
+ *					-> siehe initGUI() unter JScrollPane, ca zeile 111
  * 
- * KERN-CODE: 
+ * 
+ * 	IMPORTE (THEMENSPEZIFISCH):		java.io.BufferedReader;		import java.io.File;	java.io.FileReader;		java.io.FileWriter;		java.io.IOException;	
+ * 
+ * 									VerschluesseltWriter  & VerschluesseltReader	->  NICHT, sind ja Klassen desselben packages
+ * 
+ * 	KERN-CODE: 		
+ * 
+ * 		DATEINAME MIT PFAD ZUM PROJEKTORDNER:		private String dateiname = "." + File.separator + "verschluesselt.txt";		// siehe private-variabeln der klasse, ca zeile 74
+ * 
+ * 		VERSCHLÜSSELT SPEICHERN:					siehe	jBtnSpeichern...(ActionEvent evt) {..}								// ca. zeile 158
+ *
+ *		VERSCHLÜSSELT ÖFFNEN: 						siehe	jBtnVerschluesselt...(ActionEvent evt) {..}							// ca. zeile 178
+ *
+ *		UNVERSCHLÜSSELT ÖFFNEN: 					siehe	jBtnUnverschluesselt...(ActionEvent evt) {..}						// ca. zeile 203
  * 
  * 
- * PROGRAMM:	Das Programm nutzt die selbstgeschriebenen Klassen VerschluesseltWriter und VerschluesseltReader (erweiterungen von FilterWriter & FilterReader)
- * 				zur verschlüsselten Speicherung von Text. 
+ * 	PROGRAMM:	Das Programm nutzt die selbstgeschriebenen Klassen (dieses packages) VerschluesseltWriter und VerschluesseltReader (erweiterungen von FilterWriter & FilterReader)
+ * 				zur verschlüsselten Speicherung von Text.
+ * 	 			GUi, bestehend aus Frame mit JTextPane & 3 Buttons: 
+ * 				1. verschlüsselt speichern des texts aus JTextPane, 2. verschlüsselt öffnen & 3. unverschlüsselt öffnen
  * 
- * 				GUi, bestehend aus Frame mit JTextPane (anstelle von JTextField) zum aus-schreiben / ein-lesen am stück (statt zeilen-weise, wie bei JTextFiled) 
- * 				& 3 Buttons:
- * 				1. speichern 				=> verschlüsselt aus-schreiben von text, aus jTextPane in verschluesselt.txt datei, mittels:	 			VerschluesseltWriter out
- * 				2. verschlüsselt öffnen 	=> ein-lesen des verschluesselten texts, aus verschluesselt.txt ins jTextPane, mittels:		 				BufferedReader in
- * 				3. unverschlüsselt öffnen	=> entschlüsseltes ein-lesen des verschluesselten texts, aus verschluesselt.txt ins jTextPane, mittels:		VerschluesseltReader in
  */
 
 package uebungen12;
@@ -142,18 +167,18 @@ public class IO_VerschluesseltWriter_VerschluesseltReader_Textverschluesselung e
 	
 	// methode zum verschlüsselten speichern des textes aus jTextPane in datei mit namen verschluesselt.txt (dateiname mit pfad: siehe auch private variabeln oben)
 	private void jBtnSpeichernActionPerformed(ActionEvent evt) {
-		VerschluesseltWriter out = null;	// erzeugen eines VerschluesseltWriter.objekts out (ausserhalb von try-catch, damit in ganzer methode brauchbar)
+		VerschluesseltWriter out = null;	// deklarieren eines VerschluesseltWriter.objekts out & initialisieren mit null (ausserhalb von try-catch, damit in ganzer methode brauchbar)
 		try {
-			out = new VerschluesseltWriter (new FileWriter(dateiname)); // eingabestream für out mit :  VerschluesseltWriter-objekt unter mitgabe & erzeugen von FileWriter-objekt mit dem argument dateiname
+			out = new VerschluesseltWriter (new FileWriter(dateiname)); // ausgabestream out mit :  VerschluesseltWriter-objekt unter mitgabe & erzeugen von FileWriter-objekt mit dem argument dateiname
 																		// .. FileWriter erzeugt real die datei mit dateiname (= verschluesselt.txt inkl. pfad)
 			out.write(jTextPane.getText());								// aus-schreiben mit der methode write(String str) von VerschluesseltWriter (= extra dort kreierte methode zum aus-schreiben ganzer strings) 
 		} catch (Exception e){
 			JOptionPane.showMessageDialog(null, "Fehler beim Speichern!");
-		} finally {					// finally => auf jeden fall (auch wenn oben fehler aufgetreten muss stream geschlossen werden)
-			if (out != null) {		// falls ausgabestream out nicht gleich null...
-				try {				// ... unter verwendung der sichderheitsmechanismen try-catch
-					out.close();	// ...stream und damit auch die datei mit .close() schliessen; OHNE OUT.CLOSE() funktionierts nicht !!!
-				} catch (IOException e){	// zusätzlich wird auf fehler beim schliessen selber (des streams) reagiert
+		} finally {									// finally => auf jeden fall (auch wenn oben fehler aufgetreten muss stream geschlossen werden)
+			if (out != null) {						// falls ausgabestream out nicht gleich null...
+				try {								// ... unter verwendung der sichderheitsmechanismen try-catch
+					out.close();					// ...stream und damit auch die datei mit .close() schliessen; OHNE OUT.CLOSE() funktionierts nicht !!!
+				} catch (IOException e){			// zusätzlich wird auf fehler beim schliessen selber (des streams) reagiert
 					e.printStackTrace();
 				}
 			}
@@ -162,48 +187,47 @@ public class IO_VerschluesseltWriter_VerschluesseltReader_Textverschluesselung e
 	
 	// methode zum anzeigen des verschlüsselten textes aus der datei verschluesselt.txt (in die oben der text aus jTextPane verschlüsselt eingelesen wurde)
 	private void jBtnVerschluesseltActionPerformed(ActionEvent evt) {
-		BufferedReader in = null;
+		BufferedReader in = null;		// deklarieren eines BufferedReader-objekts in & initialisieren mit null (ausserhalb von try-catch, damit in ganzer methode brauchbar)
 		try {
-			in = new BufferedReader(new FileReader(dateiname));
-			int c;										// zur aufnahme der einzelnen gelesenen unicodezeichen in dezimalschreibweise (entsprechend der read(int c) methode von BufferedReader
-			StringBuffer zeile = new StringBuffer();	// zur aufnahme der Zeichenfolge wird ein StringBuffer definiert/erzeugt.. (warum zusätzlicher StringBuffer?: glaub weil alle einzelnen zeichen zusammenhängen will in eine zeile, geeignetstes objekt: ein stringbuffer?!)
-			while ((c = in.read()) >= 0) {				// ..& in der schleife zeichen für zeichen eingelesen, solange die read-methode c >= 0 liefert, also ein dezimal geschriebenes unicodezeichen, bei streamende liefert die read-methode -1 ..
-				zeile.append((char) c);					// ..& die einzelnen zeichen werden ans Stringbufferobjekt angehängt mit der methode: append(char c) von StringBuffer, dezimal geschriebene int c zeichen werden dabei zu char gecastet
+			in = new BufferedReader(new FileReader(dateiname)); // eingabestream in mit :  Bufferedreader-objekt unter mitgabe & erzeugen von FileReader-objekt mit dem argument dateiname (=verschluesselt.txt + pfad) 
+			int c;									// zur aufnahme der einzelnen gelesenen unicodezeichen in dezimalschreibweise (entsprechend der read() methode von BufferedReader
+			StringBuffer zeile = new StringBuffer();// zur aufnahme der Zeichenfolge wird ein StringBuffer definiert/erzeugt.. (warum zusätzlicher StringBuffer?: glaub weil er alle einzelnen zeichen zusammenhängen will in eine zeile, geeignetstes objekt: ein stringbuffer?!)
+			while ((c = in.read()) >= 0) {			// ..& in der schleife zeichen für zeichen eingelesen, solange die read-methode c >= 0 liefert, also ein dezimal geschriebenes unicodezeichen, bei streamende liefert die read-methode -1 ..
+				zeile.append((char) c);				// ..& die einzelnen zeichen werden ans Stringbufferobjekt angehängt mit der methode: append(char c) von StringBuffer, dezimal geschriebene int c zeichen werden dabei zu char gecastet
 			}
 			jTextPane.setText(zeile.toString());	// JTextPane kann mit setText() einen String übernehmen, toString()-methode von StringBuffer macht StringBuffer-objekt zeile zu einem String
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Fehler beim Lesen!");
-		} finally {
-			if (in != null){
-				try {
-					in.close();
-				} catch (IOException e) {
+		} finally {									// finally => auf jeden fall (auch wenn oben fehler aufgetreten muss stream geschlossen werden)
+			if (in != null){						// falls eingabestream in nicht gleich null...
+				try {								// ... unter verwendung der sichderheitsmechanismen try-catch
+					in.close();						// ...stream und damit auch die datei mit .close() schliessen; OHNE IN.CLOSE() funktionierts nicht !!!
+				} catch (IOException e) {			// zusätzlich wird auf fehler beim schliessen selber (des streams) reagiert
 					e.printStackTrace();
 				}
 			}
 		}
-		
 	}
 	
 	// methode zum anzeigen & entschlüsseln des textes aus der datei verschluesselt.txt (in die oben der text aus jTextPane verschlüsselt eingelesen wurde)
 										// einziger unterschied zur oben (jBtnVerschluesseltA..): VerschluesseltReader (wird zur entschlüsselung benutzt) statt BufferedReader
 	private void jBtnUnverschluesseltActionPerformed(ActionEvent evt) {
-		VerschluesseltReader in = null;	
+		VerschluesseltReader in = null;			// deklarieren eines VerschluesseltReader-objekts in & initialisieren mit null (ausserhalb von try-catch, damit in ganzer methode brauchbar)
 		try {
-			in = new VerschluesseltReader(new FileReader(dateiname));
-			int c;
-			StringBuffer zeile = new StringBuffer();
-			while((c = in.read()) >= 0 ){
-				zeile.append((char) c);
+			in = new VerschluesseltReader(new FileReader(dateiname)); // eingabestream in mit :  VerschluesseltReader-objekt unter mitgabe & erzeugen von FileReader-objekt mit dem argument dateiname (=verschluesselt.txt + pfad)
+			int c;									// zur aufnahme der einzelnen gelesenen unicodezeichen in dezimalschreibweise (entsprechend der, in VerschluesseltReader überschriebenen, read() methode)
+			StringBuffer zeile = new StringBuffer();// zur aufnahme der Zeichenfolge wird ein StringBuffer definiert/erzeugt.. (warum zusätzlicher StringBuffer?: glaub weil er alle einzelnen zeichen zusammenhängen will in eine zeile, geeignetstes objekt: ein stringbuffer?!)
+			while((c = in.read()) >= 0 ){			// ..& in der schleife zeichen für zeichen eingelesen, solange die read-methode c >= 0 liefert, also ein dezimal geschriebenes unicodezeichen, bei streamende liefert die read-methode -1 ..
+				zeile.append((char) c);				// ..& die einzelnen zeichen werden ans Stringbufferobjekt angehängt mit der methode: append(char c) von StringBuffer, dezimal geschriebene int c zeichen werden dabei zu char gecastet
 			}
-			jTextPane.setText(zeile.toString());
+			jTextPane.setText(zeile.toString());	// JTextPane kann mit setText() einen String übernehmen, toString()-methode von StringBuffer macht StringBuffer-objekt zeile zu einem String
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Fehler beim Lesen!");
-		} finally {
-			if (in != null){
-				try {
-					in.close();
-				} catch (IOException e) {
+		} finally {									// finally => auf jeden fall (auch wenn oben fehler aufgetreten muss stream geschlossen werden)
+			if (in != null){						// falls eingabestream in nicht gleich null...
+				try {								// ... unter verwendung der sichderheitsmechanismen try-catch
+					in.close();						// ...stream und damit auch die datei mit .close() schliessen; OHNE IN.CLOSE() funktionierts nicht !!!
+				} catch (IOException e) {			// zusätzlich wird auf fehler beim schliessen selber (des streams) reagiert
 					e.printStackTrace();
 				}
 			}
