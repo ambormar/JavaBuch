@@ -1,4 +1,4 @@
-/* TODO 12.3.5.   s.374, (ZeichenOrientierte Datenstreams)	
+/* TODO 12.3.5.   s.374, (Textverschlüsselung) (ZeichenOrientierte Datenstreams)	
  * class IO_VerschluesseltWriter_VerschluesseltReader_Textverschluesselung		nutzt	VerchluesseltWriter & VerschluesseltReader
  * 
  * SIEHE AUCH:		FILTERWRITER BASICS:		12.3.3.   FilterWriter_Basics_Methoden_Konstruktor		s.370
