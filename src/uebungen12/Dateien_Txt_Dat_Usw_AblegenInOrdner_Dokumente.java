@@ -3,7 +3,6 @@
  * 
  *  SIEHE:		12.4.1.  Dokumente_OrdnerFuer_Txt_Dat_Usw_Dateien_WoAblegen		eigene bemerkung
  * 
- * 
  */
 
 package uebungen12;

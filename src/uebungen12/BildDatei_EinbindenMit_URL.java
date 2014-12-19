@@ -12,6 +12,7 @@
  * 									=> einbinden von bilddatei aus lokalem datenträger c:\ hab ich nicht hingekriegt, bei allfälligem bedarf -> maja fragen
  * 										-> ist aber eh bitz bullshit, weil dann mach ich die bild-dateien doch besser gleich in den images-ordner
  *  
+ *  
  * NACHTEILE:	1. bei der einbindung mit URL werden die bilder NICHT in der Jigloo-Vorschau angezeigt
  * 				2. anscheinend kann man bei der einbindung mit URL die anwendung nicht mehr in ein .jar-file packen & als applet einsetzen (s.380)
  * 					(-> keine genaueren infos zur zeit dazu ??!!)

@@ -11,6 +11,7 @@
  * 															
  * 															SIEHE AUCH:		12.4.1.   BildDateien_In_Labels_Und_Buttons		s.378, 	
  * 
+ * 
  */
 
 package uebungen12;

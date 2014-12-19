@@ -1,4 +1,4 @@
-/* TODO 12.4.1.   s.378, 	!!!!!!!!!!!!!
+/* TODO 12.4.1.   s.378, 	!!!!!!!!!!!!!!!
  * class BildDateien_In_Labels_Und_Buttons
  *  
  * 12.4.1 BILDER (-DATEIEN) IN LABELS & BUTTONS:

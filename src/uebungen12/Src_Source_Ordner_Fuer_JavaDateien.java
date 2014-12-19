@@ -3,6 +3,7 @@
  * 
  * 	SRC:	SOURCE:		=> src-ordner im projektordner (hier z.b. JavaBuch) zur ablage der .java dateien (= dateien der Java-klassen vor dem compilieren)
  *  
+ *  
  */
 
 package uebungen12;
