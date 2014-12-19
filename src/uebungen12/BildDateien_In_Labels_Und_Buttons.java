@@ -1,5 +1,7 @@
 /* TODO 12.4.1.   s.378, 	!!!!!!!!!!!!!!!
  * class BildDateien_In_Labels_Und_Buttons
+ * 
+ * 			SIEHE AUCH:		BILD-DATEI EINBINDEN:		1.4,   JFrame_Container_GrussMitProgrammfenster		Aufgabe 5, s.57
  *  
  * 12.4.1 BILDER (-DATEIEN) IN LABELS & BUTTONS:
  *  

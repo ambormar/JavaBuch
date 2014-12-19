@@ -11,7 +11,9 @@
  * 
  * 									=> einbinden von bilddatei aus lokalem datenträger c:\ hab ich nicht hingekriegt, bei allfälligem bedarf -> maja fragen
  * 										-> ist aber eh bitz bullshit, weil dann mach ich die bild-dateien doch besser gleich in den images-ordner
- *  
+ *  								
+ *  									SIEHE EVTL. AUCH:	1.4,   JFrame_Container_GrussMitProgrammfenster		Aufgabe 5, s.57
+
  *  
  * NACHTEILE:	1. bei der einbindung mit URL werden die bilder NICHT in der Jigloo-Vorschau angezeigt
  * 				2. anscheinend kann man bei der einbindung mit URL die anwendung nicht mehr in ein .jar-file packen & als applet einsetzen (s.380)
