@@ -17,6 +17,7 @@
  * 				2. anscheinend kann man bei der einbindung mit URL die anwendung nicht mehr in ein .jar-file packen & als applet einsetzen (s.380)
  * 					(-> keine genaueren infos zur zeit dazu ??!!)
  * 
+ * 
  */
 
 package uebungen12;
