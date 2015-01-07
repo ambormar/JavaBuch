@@ -1,30 +1,35 @@
 /* TODO 12.4.1.   s.378, 	!!!!!!!!!!!!!!!
  * class BildDateien_In_Labels_Und_Buttons
  * 
- * 			SIEHE AUCH:		BILD-DATEI EINBINDEN:		1.4,   JFrame_Container_GrussMitProgrammfenster		Aufgabe 5, s.57
+ * 			SIEHE AUCH:		BILD-DATEI EINBINDEN:		1.4,   		JFrame_Container_GrussMitProgrammfenster			Aufgabe 5, s.57
+ * 
+ * 							BILDER SPEICHERN, WO:		12.4.1.		Images_Ordner_WoInDerProjektStrukturAblegen			eigene bemerkung
+ * 
  *  
  * 12.4.1 BILDER (-DATEIEN) IN LABELS & BUTTONS:
  *  
  *  VORGEHEN:	HIER WIETERMACHEN: DURCHLESEN, ANPASSEN & IM BUCH S.380 & JE NACHDEM CODE !!!!!!!!!!!!!!!!
  *  
- *  	- frame machen (in Jigloo-ansicht, GUI-form)
- *  		-> frame NICHT unter layout auf absolute (wie bis anhin jeweils) stellen, Sondern auf standardeinstellung BORDER belassen 
+ *  	1. frame machen (in Jigloo-ansicht, GUI-form)
+ *  		-> frame LAYOUT auf standardeinstellung BORDER belassen, 	NICHT unter layout auf absolute (wie bis anhin jeweils) stellen  
  *  
- *  	- gui_images ordner innerhalb von src (source) (ordner der .java dateien) im package explorer erstellen 
+ *  	2. gui_images ordner innerhalb von src (source) (ordner der .java dateien) im package explorer erstellen 
  *  		-> somit ist der gleiche gui_images ordner auch vorhanden im bin (binary) (ordner der .class dateien) in der naviagtor ansicht 
  *  
- * 		- .jpg oder .giff bilddatei kopieren in einen dieser gui_images ordner (sollte automatisch auch im jeweiligen anderen, src oder bin, angezeigt werden)
+ * 		3. .jpg, .gif oder .tif- bilddatei kopieren in einen dieser gui_images ordner (sollte automatisch auch im jeweiligen anderen, src oder bin, angezeigt werden)
  * 			-> die bilddatei muss sowohl innerhalb des src als auch des bin gespeichert (also an 2 orten der entwicklungsumgebung) sein: 	
  * 				damit das bild sowohl in der jigloo-vorschau als auch im gestarteten programm angezeigt wird 
  * 			[-> NB in anderen fällen sind die bilder glaub schon korrekt abgespeichert: 	-> in einem image-ordner auf gleicher ebene wie src (also wie bis anhin gemacht)]
  * 
- * 		- label in den frame ziehen & den empfohlenen namen übernehmen
+ * 		4. label in den frame ziehen & den empfohlenen namen übernehmen
  * 			=> in den properties des labels bei Icon klicken & via Öffnendialog die oben gespeicherte bilddatei wählen
  * 
- * 		- NB: -> so eingebundenes bild wird immer in originalgrösse angezeigt, d.h. es füllt einfach das label aus
- * 			  -> veränder man die frame-grösse:  gibts einen abstand zw. bild & framerahmen, standardmässig rechts, 
- * 				-> dort erscheint dann z.b. der labeltext, diese labeltextanzeige ist verstellbar unter: 	jLabel1 > properties > horizontalTextPosition & verticalTextPosition
- * 								
+ * 		NB: => so eingebundenes bild wird immer in originalgrösse angezeigt, d.h. es füllt einfach das label aus
+ * 			  => veränder man die frame-grösse:	
+ * 				1. frame kleiner als bild:		das bild in originalrösse wird nur teilweise angezeigt
+ * 				2. frame grösser als bild:		gibts einen abstand zw. bild & framerahmen, standardmässig rechts, 
+ * 					-> dort erscheint dann z.b. der labeltext, diese labeltextanzeige ist verstellbar unter: 	jLabel1 > properties > horizontalTextPosition & verticalTextPosition
+ * 			  										
  * 
  * 	KLASSE javax.swing.ImageIcon:		=> zur ausgabe von bildern in labels, buttons, panels
  * 										=> bildformate: .gif .jpeg .tif
