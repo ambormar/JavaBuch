@@ -1,7 +1,7 @@
 /* TODO 12.4.1.   s.380,   eigenes beispiel 
  * class BildDatei_EinbindenMit_URL
  * 
- * KOMMENTARE SIEHE:	12.4.1.   BildDateien_In_Labels_Und_Buttons		s.378, 	
+ * KOMMENTARE SIEHE:	12.4.1.   BildDateien_In_Labels		s.378, 	
  * 						=> VORGEHEN	 allgemein   
  * 						=> KLASSE javax.swing.ImageIcon:
  * 									=> bilder mit URL und import-anweisung aus Internet, Intranet & von lokalen Datenträgern laden:

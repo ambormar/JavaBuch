@@ -1,20 +1,20 @@
-/* TODO 12.4.1.   s.378, 	!!!!!!!!!!!!!!!
- * class BildDateien_In_Labels_Und_Buttons
+/* TODO 12.4.1.   s.378, 	
+ * class BildDateien_In_Labels
  * 
  * 			SIEHE AUCH:		BILD-DATEI EINBINDEN:		1.4,   		JFrame_Container_GrussMitProgrammfenster			Aufgabe 5, s.57
  * 
  * 							BILDER SPEICHERN, WO:		12.4.1.		Images_Ordner_WoInDerProjektStrukturAblegen			eigene bemerkung
  * 
  *  
- * 12.4.1 BILDER (-DATEIEN) IN LABELS & BUTTONS:
- *  
- *  VORGEHEN:	HIER WIETERMACHEN: DURCHLESEN, ANPASSEN & IM BUCH S.380 & JE NACHDEM CODE !!!!!!!!!!!!!!!!
- *  
+ * 12.4.1 BILDER (-DATEIEN) IN LABELS:
+ *   
+ * 	VORGEHEN:
+ *     
  *  	1. frame machen (in Jigloo-ansicht, GUI-form)
  *  		-> frame LAYOUT auf standardeinstellung BORDER belassen, 	NICHT unter layout auf absolute (wie bis anhin jeweils) stellen  
  *  
- *  	2. gui_images ordner innerhalb von src (source) (ordner der .java dateien) im package explorer erstellen 
- *  		-> somit ist der gleiche gui_images ordner auch vorhanden im bin (binary) (ordner der .class dateien) in der naviagtor ansicht 
+ *  	2. images (hier: gui_images) ordner innerhalb von src (source) (ordner der .java-dateien) im package explorer erstellen 
+ *  		-> somit ist der gleiche gui_images ordner auch vorhanden im bin (binary) (ordner der .class-dateien) in der naviagtor ansicht 
  *  
  * 		3. .jpg, .gif oder .tif- bilddatei kopieren in einen dieser gui_images ordner (sollte automatisch auch im jeweiligen anderen, src oder bin, angezeigt werden)
  * 			-> die bilddatei muss sowohl innerhalb des src als auch des bin gespeichert (also an 2 orten der entwicklungsumgebung) sein: 	
@@ -22,13 +22,16 @@
  * 			[-> NB in anderen fällen sind die bilder glaub schon korrekt abgespeichert: 	-> in einem image-ordner auf gleicher ebene wie src (also wie bis anhin gemacht)]
  * 
  * 		4. label in den frame ziehen & den empfohlenen namen übernehmen
- * 			=> in den properties des labels bei Icon klicken & via Öffnendialog die oben gespeicherte bilddatei wählen
+ * 			
+ * 		5. in den properties des labels bei Icon klicken & via Öffnendialog die oben gespeicherte bilddatei wählen
  * 
  * 		NB: => so eingebundenes bild wird immer in originalgrösse angezeigt, d.h. es füllt einfach das label aus
  * 			  => veränder man die frame-grösse:	
  * 				1. frame kleiner als bild:		das bild in originalrösse wird nur teilweise angezeigt
  * 				2. frame grösser als bild:		gibts einen abstand zw. bild & framerahmen, standardmässig rechts, 
- * 					-> dort erscheint dann z.b. der labeltext, diese labeltextanzeige ist verstellbar unter: 	jLabel1 > properties > horizontalTextPosition & verticalTextPosition
+ * 					-> dort erscheint dann z.b. der labeltext..
+ * 
+ * 		6. labeltextanzeige ist verstellbar unter: 	jLabel1 > properties > horizontalTextPosition & verticalTextPosition
  * 			  										
  * 
  * 	KLASSE javax.swing.ImageIcon:		=> zur ausgabe von bildern in labels, buttons, panels
@@ -48,7 +51,7 @@
  * 													
  * 						SIEHE:	12.4.1.   BildDatei_EinbindenMit_URL	s.380, 
  * 
- * 						=> einbinden von bilddatei aus lokalem datenträger c:\ hab ich nicht hingekriegt, bei allfälligem bedarf -> maja fragen
+ * 						=> einbinden von bilddatei aus lokalem datenträger C:\ hab ich nicht hingekriegt, bei allfälligem bedarf -> maja fragen
  * 						-> ist aber eh bitz bullshit, weil dann mach ich die bild-dateien doch besser gleich in den images-ordner  
  *  		
  * 						NACHTEILE:	1. bei der einbindung mit URL werden die bilder NICHT in der Jigloo-Vorschau angezeigt
@@ -56,22 +59,22 @@
  * 										(-> keine genaueren infos zur zeit dazu ??!!) 
  *  
  * 				
- * 	KERN-CODE:	
+ * 	KERN-CODE:		siehe initGUI() 
  * 
-
+ *
  */
 
 package uebungen12;
 
 import java.awt.BorderLayout;
-import javax.swing.ImageIcon;
+import javax.swing.ImageIcon;		// guck themen-speziefischer import (macht jigloo aber von selbst)
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.SwingConstants;	
 
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
-public class BildDateien_In_Labels_Und_Buttons extends javax.swing.JFrame {
+public class BildDateien_In_Labels extends javax.swing.JFrame {
 	private JLabel jLabel1;
 
 	/**
@@ -80,20 +83,22 @@ public class BildDateien_In_Labels_Und_Buttons extends javax.swing.JFrame {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				BildDateien_In_Labels_Und_Buttons inst = new BildDateien_In_Labels_Und_Buttons();
+				BildDateien_In_Labels inst = new BildDateien_In_Labels();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
 		});
 	}
 	
-	public BildDateien_In_Labels_Und_Buttons() {
+	public BildDateien_In_Labels() {
 		super();
 		initGUI();
 	}
 	
 	private void initGUI() {
 		try {
+			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			this.setTitle("Frame mit Bild");
 			{
 				jLabel1 = new JLabel();
 				getContentPane().add(jLabel1, BorderLayout.CENTER);
