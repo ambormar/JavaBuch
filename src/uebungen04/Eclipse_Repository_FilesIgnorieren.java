@@ -6,7 +6,7 @@
  * 		=> files im projektordner die z.b. von prgrammen erzeugt werden beim compilieren des programms (bsp. kontakte.dat in 12.3.1. Out_FileWriter...)
  * 			-> diese files werden jedesmal beim kompilieren erzeugt und beim nächsten mal wieder überschrieben (im eclipse)..
  * 				... ist aber sinnlos sie auch zu comitten ins repository
- * 		=> eintrag machen im projekt-file: .GITIGNORE	=> einsehbar im dokument-explorer:	Documents > Java > Workspace_Lexikon > JavaBuch > .gitignore
+ * 		=> eintrag machen im projekt-file: .GITIGNORE	=> einsehbar im dokument-explorer:	Documents > Java > Workspace_Lexikon > JavaBuch > .gitignore (manchmal zeigts den filenamen nicht an)
  * 			-> den eintrag könnte man direkt in dieses file machen, aber einfacher:
  * 		=> MIT ECLIPSE: 	ZU IGNORIERENDES FILE IN DEN .GITIGNORE-ORDNER TUN:
  * 											

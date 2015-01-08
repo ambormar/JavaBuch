@@ -9,8 +9,8 @@
  * 								=> anderes bsp:				sollen bilder durch jigloo eingebunden werden, also auch in der jigloo vorschau von eclipse sichtbar sein:
  * 															dann muss ein image-ordner im src-ordner & somit auch im bin-ordner sein, damit eclipse richtig darauf zugreifen kann
  * 															
- * 															SIEHE AUCH:		12.4.1.   BildDateien_In_Labels_Und_Buttons		s.378, 	
- * 
+ * 															SIEHE AUCH:		12.4.1.   BildDateien_In_Labels			s.378, 	
+ * 																			12.4.1.   BildDateien_In_Buttons		s.380
  * 
  */
 
