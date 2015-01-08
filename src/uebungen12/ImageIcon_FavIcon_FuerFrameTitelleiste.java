@@ -1,14 +1,12 @@
-/* TODO 12.4.1.   s.382, 	!!!!!!!!!!!!!!!!!!!!!!!
+/* TODO 12.4.1.   s.382, 	
  * class ImageIcons_FuerFramesTitelleisten_FavIcon
  * 
  * 	SIEHE AUCH:		12.4.1.   BildDateien_In_Labels		s.378, 	 
  * 					12.4.1.   BildDateien_In_Buttons_setIcon_setRolloverIcon_setPressedIcon		s.380 	
  *  
  *  
- * 12.4.1 BILDER (-DATEIEN) ALS IMAGE-ICONS / FAVICONS FÜR FRAMES (TITELLEISTEN):
- *  
- *  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 	AB HIER ÜBERARBEITEN 	!!!!!!!!!!!!!!!!!!!!!!!!!
- *  
+ * 12.4.1 BILD(-DATEI) ALS IMAGE-ICON / FAVICON FÜR FRAME-TITELLEISTE:
+ *    
  *  VORGEHEN:		
  *  
  *  	1. frame machen (in Jigloo-ansicht, GUI-form)
@@ -22,17 +20,22 @@
  * 				damit das bild sowohl in der jigloo-vorschau als auch im gestarteten programm angezeigt wird 
  * 			[-> NB in anderen fällen sind die bilder glaub schon korrekt abgespeichert: 	-> in einem image-ordner auf gleicher ebene wie src (also wie bis anhin gemacht)]
  * 
- * 		4. button in den frame ziehen & den empfohlenen namen übernehmen
- * 			
- * 		5. in den properties des buttons bei Icon, pressedIcon + rolloverIcon klicken & via Öffnendialog (gui_images ordner) die gewünschten bilddatein zuordnen 
+ * 		4. frame anwählen & in den properties des frames bei IconImage klicken & via Öffnendialog die gewünschte bilddatei (im gui_images ordner) zuordnen 
  * 			  		
  * 
  * 
- * 	KERN-CODE:		genau siehe initGUI():  jButton1 
+ * 	KERN-CODE:		- genau siehe initGUI() anfang (= eigenschaften des frames)
+ * 					- beachte: 	Pfadangaben zu images müssen zur entwicklungsumgebeung passen:
+ * 								-> soll das programm auf anderen plattformen laufen braucht es evtl. anpassungen der pfadangaben
+ * 		
+ *			private void initGUI() {
+ *				try {
+ *					...			
+ *					this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("gui_images/HPH.JPG")).getImage());
+ * 					...
  * 
  * 
- * 
- * 	[REMEMBER:							
+ * 	[NB: 							
  * 
  * 	KLASSE javax.swing.ImageIcon:		=> zur ausgabe von bildern in labels, buttons, panels, "favicons" (= icon der frame titelleiste)
  * 										=> bildformate: .gif .jpeg .tif
@@ -74,7 +77,7 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
-public class ImageIcons_FuerFramesTitelleisten_FavIcon extends javax.swing.JFrame {
+public class ImageIcon_FavIcon_FuerFrameTitelleiste extends javax.swing.JFrame {
 	private JLabel jLabel1;
 	private JButton jButton1;
 
@@ -84,14 +87,14 @@ public class ImageIcons_FuerFramesTitelleisten_FavIcon extends javax.swing.JFram
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				ImageIcons_FuerFramesTitelleisten_FavIcon inst = new ImageIcons_FuerFramesTitelleisten_FavIcon();
+				ImageIcon_FavIcon_FuerFrameTitelleiste inst = new ImageIcon_FavIcon_FuerFrameTitelleiste();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
 		});
 	}
 	
-	public ImageIcons_FuerFramesTitelleisten_FavIcon() {
+	public ImageIcon_FavIcon_FuerFrameTitelleiste() {
 		super();
 		initGUI();
 	}
@@ -99,7 +102,11 @@ public class ImageIcons_FuerFramesTitelleisten_FavIcon extends javax.swing.JFram
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			this.setTitle("Frame mit Bild & Button");
+			this.setTitle("Frame mit ImageIcon (FavIcon) & Bild & Button");
+			// ImageIcon (favicon) für die titelleiste des frames:
+			// jigloo autogenerierte zeile: bei anwählen von JFrame > properties > iconImage > bild (aus ordner unterhalb von src)
+			// code: setIconImage für s frame (this) unter mitgabe von image, in form von new ImageIcon(...).getImage() 	für genauer müsste ich häsli fragen
+			this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("gui_images/HPH.JPG")).getImage());
 			{
 				jLabel1 = new JLabel();
 				getContentPane().add(jLabel1, BorderLayout.CENTER);
@@ -137,7 +144,7 @@ public class ImageIcons_FuerFramesTitelleisten_FavIcon extends javax.swing.JFram
 	
 	private void jButton1ActionPerformed(ActionEvent evt) {
 		System.out.println("jButton1.actionPerformed, event="+evt);
-		//add your code for jButton1.actionPerformed
+					//add your code for jButton1.actionPerformed
 	}
 
 }

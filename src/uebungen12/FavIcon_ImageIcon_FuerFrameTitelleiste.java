@@ -6,6 +6,6 @@
 
 package uebungen12;
 
-public class FavIcon_ImageIcons_FuerFramesTitelleisten {
+public class FavIcon_ImageIcon_FuerFrameTitelleiste {
 
 }
