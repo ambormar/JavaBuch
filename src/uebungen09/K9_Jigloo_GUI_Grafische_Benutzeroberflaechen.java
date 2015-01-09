@@ -1,5 +1,5 @@
 package uebungen09;
-/* TODO .9.0.0.   K9 GUI & JIGLOO IN ECLIPSE, s.247
+/* TODO .9,0.0.   K9 GUI & JIGLOO IN ECLIPSE, s.247
  * 
  */
 

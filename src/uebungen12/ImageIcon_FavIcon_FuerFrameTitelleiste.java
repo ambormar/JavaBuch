@@ -25,7 +25,7 @@
  * 
  * 
  * 	KERN-CODE:		- genau siehe initGUI() anfang (= eigenschaften des frames)
- * 					- beachte: 	Pfadangaben zu images müssen zur entwicklungsumgebeung passen:
+ * 					- beachte: 	Pfadangaben zu images müssen zur entwicklungs-umgebeung passen:
  * 								-> soll das programm auf anderen plattformen laufen braucht es evtl. anpassungen der pfadangaben
  * 		
  *			private void initGUI() {
