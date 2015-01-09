@@ -14,7 +14,8 @@
  * 
  * 
  * 		COMPONENT:		Die oberste fensterklasse der hierarchie als ursprung aller AWT-klassen ist Component.
- * 						Component esitzt eine grösse + position & kann eine vielzahl von ereignissen senden + auf ereignisse reagieren.
+ * 						Component ist eine abstrakte klasse.
+ * 						Component besitzt eine grösse + position & kann eine vielzahl von ereignissen senden + auf ereignisse reagieren.
  * 						Diese eigenschaften + fähigkeiten bilden die grundlage jeder komponente einer grafischen benutzeroberfläche.
  * 
  * 		CONTAINER:		Container ist ebenfalls eine abstracte klasse. sie bildet die grundlage für Komponenten, die andere componenten aufnehmen sollen.
