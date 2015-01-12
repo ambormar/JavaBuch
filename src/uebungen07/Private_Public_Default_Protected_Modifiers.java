@@ -20,6 +20,6 @@
  */
 package uebungen07;
 
-public class Private_Public_Default_Protect_Modifiers {
+public class Private_Public_Default_Protected_Modifiers {
 
 }
