@@ -56,10 +56,10 @@
  * 
  * 
  * 
- * PROGRAMM:	Klasse ImageComponent:							Von JComponent abgeleitete Klasse zur Darstellung einer Bilddatei.
+ * K&K:		Klasse ImageComponent:							Von JComponent abgeleitete Klasse zur Darstellung einer Bilddatei.
  * 
- * 				Programm ImageIO_Klasse_Basics_Bildbetrachter:	Über einen Dateiauswahldialog kann eine Bilddatei (jpg, gif oder png) geladen werden. 
- * 																Das Bild wird in einem Scrollpane dargestellt.
+ * 			Programm ImageIO_Klasse_Basics_Bildbetrachter:	Über einen Dateiauswahldialog kann eine Bilddatei (jpg, gif oder png) geladen werden. 
+ * 															Das Bild wird in einem Scrollpane dargestellt.
  */
 
 package uebungen12;
