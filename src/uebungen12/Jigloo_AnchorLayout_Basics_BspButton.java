@@ -1,11 +1,12 @@
 /* TODO .9.3.(eigtl. 12.4.2.)   s.385,  !!!!!!!!!!!!!!	
  * class Jigloo_AnchorLayout_Basics_BspButton 
  * 
- * !!!!! noch kommentieren !!!!!!!!!!!!!
+ * SIEHE BSP ANGEWANDT:	12.4.2.   ImageIO_Klasse_Basics_JFilechooser_Bildbetrachter		s.382 	 
  * 
  * Stichworte:
  * 	- AnchorLayout
  * 	- AnchorConstraints	(absolute, relative, none)
+ * 	- setPreferedSize(..)
  * 
  */
 

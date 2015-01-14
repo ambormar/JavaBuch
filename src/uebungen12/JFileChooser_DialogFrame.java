@@ -1,5 +1,5 @@
 /* TODO 12.1.2.  ->
- * class JFileChooser
+ * class JFileChooser_DialogFrame
  * 
  * JFILECHOOSER:	= Dialog-Frame mit den betriebssystemtypischen komponenten zum navigieren, zur steuerung der ansicht, zum editieren des
  * 					  ausgewählten dateinamens & zur filterung der dateianzeige
@@ -19,6 +19,6 @@
 
 package uebungen12;
 
-public class JFileChooser {
+public class JFileChooser_DialogFrame {
 
 }

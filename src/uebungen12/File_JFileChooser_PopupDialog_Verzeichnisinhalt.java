@@ -48,9 +48,16 @@
  * 
  * 					SIEHE AUCH:	 	12.1.2.   	File_JFileChooser_MitJigloo			s.354-355
  * 
+ * 
  * METHODEN / KONSTRUKTOREN DER KLASSE FILE: 			genauer siehe methode  jBtnAnzeigenA...(...), 
  * 
  * 					SIEHE AUCH:		 12.1.1.   File_Methoden_Konstruktoren_Bsp_SortierenVon_Verzeichnisinhalt		s.351
+ * 
+ * 
+ * JFILECHOOSER FÜR BILDBETRACHTER / IMAGEIO:	
+ * 
+ * 					SIEHE AUCH:		 12.4.2.   ImageIO_Klasse_Basics_JFilechooser_Bildbetrachter			s.382, 	
+ *  
  *  
  */
 
