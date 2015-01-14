@@ -1,4 +1,4 @@
-/* TODO .9.3.(eigtl. 12.4.2.)   s.385,  !!!!!!!!!!!!!!	
+/* TODO .9.3.(eigtl. 12.4.2.)   s.385,  Eigenes Bsp.		!!!!!!!!!!!!!!	
  * class Jigloo_AnchorLayout_Basics_BspButton 
  * 
  * SIEHE BSP ANGEWANDT:	12.4.2.   ImageIO_Klasse_Basics_JFilechooser_Bildbetrachter		s.382 	 
