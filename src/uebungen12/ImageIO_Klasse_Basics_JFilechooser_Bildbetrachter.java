@@ -84,23 +84,33 @@ import com.cloudgarden.layout.AnchorLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
 import java.io.File;
 
-import javax.imageio.ImageIO;
+import javax.imageio.*;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.*;
 
 public class ImageIO_Klasse_Basics_JFilechooser_Bildbetrachter extends javax.swing.JFrame {
 	private JButton jBtnOeffnen;
 	private JScrollPane jScrollPane1;
 	private ImageComponent bild;		// ImageComponent braucht kein import ist ja im selben pasket
 	private BufferedImage a;			// bezeichner a für objekt der Klasse BufferedImage
+
+	{
+		// Set Look & Feel
+		try {
+			javax.swing.UIManager
+					.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -146,37 +156,42 @@ public class ImageIO_Klasse_Basics_JFilechooser_Bildbetrachter extends javax.swi
 					bild = new ImageComponent();								// objektinstanz bild der klasse ImageComponent wird erzeugt...
 					a = ImageIO.read(new File("." + File.separator + "images" + File.separator + "bewblau.jpg"));// ins BufferedImage a, wird mit ImageIO.read(..), mit parameter.. 
 																				// ..new file, das bild bewblau.jpg geladen mit dem pfad ab aktuellem  "." verzeichnis, also projektordner
-					bild.setImage(a);											// a dem setter der objektinstanz bild mitgeben (damit das startbild gezeichnet wird)
+					bild.setImage(a);											// a wird dem setter der objektinstanz bild mitgeben (damit das startbild gezeichnet wird)
 					jScrollPane1.setViewportView(bild);							// ViewportView (= quasi monitor) von jScrollPane1 auf bild (= grösse von ImageComponent) setzen
-					jScrollPane1.setSize(a.getWidth() + 2, a.getHeight() + 2);	// jScrollPane1 an die bildgrösse anpassen
+					jScrollPane1.setSize(a.getWidth() + 2, a.getHeight() + 2);	// jScrollPane1 an die bildgrösse anpassen, (+ 2 jeweils: glaub wegen jeder rand je ein px mehr)
 				}
 			}
 			pack();
 			setSize(240, 260);			// grösse beim ersten öffnen des frames, wird überschrieben bei button-click in der methode jBtnOeffnen..(..) 
-		} catch (Exception e) {
+			this.setSize(a.getWidth() + 59, a.getHeight() + 121);		// frame-grösse anpassen auf grösse des erst-angezeigten bildes WICHTIG, sonst zeigts bild zu klein..
+		} catch (Exception e) {											// .. (zahlen ändern/ausprobieren bis bild ganz dargestellt & scrollbars nur eingeblendet werden beim frame verziehen)
 			// add your error handling code here
 			e.printStackTrace();
 		}
 	}
-	
-	private void jBtnOeffnenActionPerformed(ActionEvent evt) {
-		JFileChooser fc = new JFileChooser();
-		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		fc.setFileFilter(new FileNameExtensionFilter(".jpg", ".tif", ".png", "jpg", "tif", "png"));
-		fc.setCurrentDirectory(new File("."));
-		int state = fc.showOpenDialog(null);
-		if (state == JFileChooser.APPROVE_OPTION){
-			String selFile = fc.getSelectedFile().getAbsolutePath();
-			try {
-				BufferedImage a = ImageIO.read(new File(selFile));
-				bild.setImage(a);
-				jScrollPane1.setSize(new Dimension(a.getWidth() + 2, a.getHeight() + 2));
-				jScrollPane1.setViewportView(bild);
-				this.setSize(a.getWidth() + 50, a.getHeight() + 120);
+	// event-methode zum laden einer beliebigen bilddatei über einen FileChooser 
+	private void jBtnOeffnenActionPerformed(ActionEvent evt) {			
+		JFileChooser fc = new JFileChooser();							// lokales JFileChooser-objekt mit namen fc erzeugen 
+		fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);	// FileselectionMode wird so gesetzt, dass Dateien + Ordner angezeigt werden
+		fc.setFileFilter(new FileNameExtensionFilter("*.jpg", "*.tif", "*.png", "jpg", "tif", "png")); // FileFilter mit FilenameExtensionFilter und ..
+									// .. einer kommaseperierten liste filtert die möglichen namenserweiterungen der anzuzeigenden dateien im dialogframe
+		fc.setCurrentDirectory(new File("."));	// als ausgangsordner, für fc-dialog beim öffnen, wird der aktuelle Pfad (currentDir..) als relative (".") Pfadangabe gesetzt => Projektordner  
+		int state = fc.showOpenDialog(null);							// fc-Dialog öffnen & gleichzeitig status speichern, wie der fc-Dialog geschlossen wurde
+		if (state == JFileChooser.APPROVE_OPTION){						// wenn der fc-dialog mit dem status "(File) öffnen" (=> .APPROVE_OPTION) geschlossen wird ...
+			String selFile = fc.getSelectedFile().getAbsolutePath();	// .. wird der gewählte dateiname mit absoluter pfadangabe in die variable selFile übernommen
+			try {														
+				BufferedImage a = ImageIO.read(new File(selFile));		// ImageIO.read(..) liest neuerzeugtes File mit pfad von selFile in das BuferedImage a 
+				bild.setImage(a);										// a wird dem setter der oben bereits erzeugten objektinstanz bild mitgeben (damit das startbild gezeichnet wird)
+				jScrollPane1.setSize(a.getWidth() + 2, a.getHeight() + 2);	// grössenanpassung für den jScrollPane mit breite + höhe von Bufferedimage a, jeweils + 2 (glaub damit scroll nicht eingeblendet werden)
+				jScrollPane1.setViewportView(bild);						// ViewportView (= quasi monitor) von jScrollPane1 auf bild (= grösse von ImageComponent) setzen
+				this.setSize(a.getWidth() + 59, a.getHeight() + 121);	// den frame selber (this) auf die grösse von BufferedImage a anpassen ...
+																		// ...das bild sollte so eigentlich vollständig im frame dargestellt & scrollbalken nur eingeblendet werden, ..
+																		// ...wenn man das frame ändert..!! (zahlen ändern bis bild ganz dargestellt, scrollbars nur eingeblendet werden beim frame verziehen)
 			} catch (Exception e){
 				JOptionPane.showMessageDialog(null, "Fehler beim öffnen der Datei");
 			}
 		}
+	
 		
 		
 	}

@@ -8,6 +8,20 @@
  * 								-> re-klick auf komponente in der vorschau-ansicht > set look & feel > versch. looks auswählen
  * 						- umstellen der L&F-voreinstellungen:	Menü > Window > Preferences > Jigloo GUI Builder > Look & Feel	
  * 
+ * 
+ * IMPORT:	ist glaub der der im code drin ist hier: javax.swing.UIManager
+ * 
+ * CODE: 	
+ * 			{
+				// Set Look & Feel
+				try {
+					javax.swing.UIManager
+							.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+ * 
  */
 
 package uebungen09;
