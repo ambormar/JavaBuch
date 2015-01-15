@@ -29,13 +29,29 @@
  * 					CODE & IMPORTS & KOMMENTS:			12.4.2.   ImageIO_Klasse_Basics_JFilechooser_Bildbetrachter		s.382, 	
  *  
  * 
- * BESONDERES:	-@Override (über methode)		=> ist wie ein kommentar bei absichtlichem überschreiben von methoden der superklasse. 
+ * BESONDERES:	1. @Override (über methode)		=> ist wie ein kommentar bei absichtlichem überschreiben von methoden der superklasse. 
  *												-> heute java7: ist's guter programmierstil, kompiler nimmts zur kenntnis, evtl. ab java 8 oder 9 unumgänglich..
  * 
- * 				- setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
  * 
- * 												-> eine komponente auf eine bevorzugte grösse 
+ *  			2. setPreferredSize(new java.awt.Dimension(image.getWidth(), image.getHeight())): 
+ *
+ *					=> um komponenten, cotainern, frames auf eine grösse zu setzen, die gerade ausreicht, die jeweiligen inhalts-elemente komplett darzustellen
+ *					=> oder auch um elemente im initGUI() auf eine anfangsgrösse zu setzen, wenn sich die grösse später ändert, weil beinhaltete komponenten unterschiedlich gross sind		
+ *				
+ *					-> im zusammenhang mit AnchorLayout relevant, weil da evtl. die grössen von Frames & komponenten im programmverlauf oder anwendung eher geändert werden
+ *
+ *					- setzen in den properties (od. code):			jBtnOeffnen.setPreferredSize(new java.awt.Dimension(107, 20)
  * 										
+ * 				3. paintComponent(Graphics g):		- die methode ist für das zeichnen von komponenten (jComponent / ImageComponent) zuständig. 
+ * 														-> ihr wird ein objekt der klasse Graphics übergeben. 
+ * 
+ * 				   Klasse Grapics: 					- besitzt viele methoden zum zeichnen auf unterschiedlichsten geräten
+ *				
+ *				   repaint(): 						= zum neuzeichnen von Componenten
+ *				   									- innerhalb von repaint() wird glaub die methode paintComponent(Graphics g) automatisch aufgerufen
+ *				   										-> ohne dass man zwangsläufig einen parameter für Graphics g selber mitgeben muss
+ *				   											-> wird innerhalb von repaint() automatisch gemacht
+ *				   
  * 
  * PROGRAMM:	Klasse ImageComponent:							Von JComponent abgeleitete Klasse zur Darstellung einer Bilddatei.
  * 

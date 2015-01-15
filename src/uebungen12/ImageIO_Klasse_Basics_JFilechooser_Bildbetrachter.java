@@ -110,8 +110,18 @@
  *							} 
  * 
  * 
- * BESONDERES:	@Override (über methode)		=> ist wie ein kommentar bei absichtlichem überschreiben von methoden der superklasse. 
+ * BESONDERES:	- @Override (über methode)		=> ist wie ein kommentar bei absichtlichem überschreiben von methoden der superklasse. 
  *												-> heute java7: ist's guter programmierstil, kompiler nimmts zur kenntnis, evtl. ab java 8 oder 9 unumgänglich..
+ * 
+ * 
+ *   			- setPreferredSize(new java.awt.Dimension(width, height)): 
+ *
+ *					=> um komponenten, cotainern, frames auf eine grösse zu setzen, die gerade ausreicht, die jeweiligen inhalts-elemente komplett darzustellen
+ *					=> oder auch um elemente im initGUI() auf eine anfangsgrösse zu setzen, wenn sich die grösse später ändert, weil beinhaltete komponenten unterschiedlich gross sind		
+ *				
+ *					-> im zusammenhang mit AnchorLayout relevant, weil da evtl. die grössen von Frames & komponenten im programmverlauf oder anwendung eher geändert werden
+ *
+ *					- setzen in den properties (od. code):			jBtnOeffnen.setPreferredSize(new java.awt.Dimension(107, 20) 
  * 
  * 
  * 

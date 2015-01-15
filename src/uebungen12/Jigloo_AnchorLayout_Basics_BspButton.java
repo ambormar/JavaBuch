@@ -1,4 +1,4 @@
-/* TODO .9.3.(eigtl. 12.4.2.)   s.385,  Eigenes Bsp.		!!!!!!!!!!!!!!	
+/* TODO .9.3.(eigtl. 12.4.2.)   s.385,  Eigenes Bsp.		
  * class Jigloo_AnchorLayout_Basics_BspButton 
  * 
  * SIEHE BSP ANGEWANDT:	12.4.2.   ImageIO_Klasse_Basics_JFilechooser_Bildbetrachter		s.382 	 
@@ -42,13 +42,24 @@
  * 																							|			  right						|
  * 																							|______________________________________ |
  * 
- * 			- ANCHOR_ABS:	
- *
- *		- PreferedSize setzen in den properties (od. code):			jBtnOeffnen.setPreferredSize(new java.awt.Dimension(107, 20) 
- *
- * 		- ANCHORLAYOUT SIEHE AUCH: 		9.3.(eigtl. 12.4.2.)   Jigloo_AnchorLayout_Basics_BspButton	s.385, 	
+ * 			- ANCHOR_ABS:	= zahlenangabe als absolutwerte in pixel
  * 
- * 		- CODE & KOMMENTS SIEHE:	initGUI()	JBtnOeffnen		&		event-methode jBtnOeffnen..(..) * 
+ * 							- top, right, bottom, left :		=> ist glaub: 	jeweils abstand vom komponentenrand zum containerrand auf der selben seite
+ * 																	-> also:	top nach top, right nach right, bottom nach bottom, left nach left
+ *
+ *
+ *	- setPreferredSize(new java.awt.Dimension(width, height)):	 	(RELEVANT FÜR ANCHORLAYOUTS): 
+ *
+ *				=> um komponenten, cotainern, frames auf eine grösse zu setzen, die gerade ausreicht, die jeweiligen inhalts-elemente komplett darzustellen
+ *				=> oder auch um elemente im initGUI() auf eine anfangsgrösse zu setzen, wenn sich die grösse später ändert, weil beinhaltete komponenten unterschiedlich gross sind		
+ *				
+ *				-> im zusammenhang mit AnchorLayout relevant, weil da evtl. die grössen von Frames & komponenten im programmverlauf oder anwendung eher geändert werden
+ *
+ *				- setzen in den properties (od. code):			jBtnOeffnen.setPreferredSize(new java.awt.Dimension(107, 20) 
+ *
+	
+ * 
+
  */
 
 package uebungen12;
