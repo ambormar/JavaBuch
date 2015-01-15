@@ -55,14 +55,59 @@
  * 
  * 							- startbild ("bewblau") in (hier: images von) projektordner  kopieren
  * 
- * 							- CODE & KOMMENTS SIEHE: 		initGUI()	JScrollPane1  
+ * 							- CODE:		im initGUI():
+ * 
+ *  						{
+ *								jScrollPane1 = new JScrollPane();
+ *								getContentPane().add(jScrollPane1, new AnchorConstraint(60, 20, 20, 20, AnchorConstraint.ANCHOR_ABS, AnchorConstraint.ANCHOR_ABS, AnchorConstraint.ANCHOR_ABS, AnchorConstraint.ANCHOR_ABS));
+ *								jScrollPane1.setAutoscrolls(true);								// autoscrolls auf true, glaub damit sich die scrollbars vorzu anpassen (weissnit sicher)
+ *								jScrollPane1.setPreferredSize(new java.awt.Dimension(200, 200));// bevorzugte ausgangsgrösse des frames,  wird überschrieben bei button-click in der methode jBtnOeffnen..(..) 
+ *								{
+ *									bild = new ImageComponent();								// objektinstanz bild der klasse ImageComponent wird erzeugt...
+ *									a = ImageIO.read(new File("." + File.separator + "images" + File.separator + "bewblau.jpg"));// ins BufferedImage a, wird mit ImageIO.read(..), mit parameter.. 
+ *																								// ..new file, das bild bewblau.jpg geladen mit dem pfad ab aktuellem  "." verzeichnis, also projektordner
+ *									bild.setImage(a);											// a wird dem setter der objektinstanz bild mitgeben (damit das startbild gezeichnet wird)
+ *									jScrollPane1.setViewportView(bild);							// ViewportView (= quasi monitor) von jScrollPane1 auf bild (= grösse von ImageComponent) setzen
+ *									jScrollPane1.setSize(a.getWidth() + 2, a.getHeight() + 2);	// jScrollPane1 an die bildgrösse anpassen, (+ 2 jeweils: glaub wegen jeder rand je ein px mehr)
+ *								}
+ *							}
+ *							pack();
+ *							setSize(240, 260);			// grösse beim ersten öffnen des frames, wird überschrieben bei button-click in der methode jBtnOeffnen..(..) 
+ *							this.setSize(a.getWidth() + 59, a.getHeight() + 121);		// frame-grösse anpassen auf grösse des erst-angezeigten bildes WICHTIG, sonst zeigts bild zu klein..
+ *																						// .. (zahlen ändern/ausprobieren bis bild ganz dargestellt & scrollbars nur eingeblendet werden beim frame verziehen)
  * 
  * 
- * 						d. Über einen Dateiauswahldialog (filechooser) kann eine Bilddatei (jpg, gif oder png) geladen werden. 
- *  					
- * 
- * 					CODE & IMPORTS & KOMMENTS:			siehe code class:	  ImageIO_Klasse_Basics_Bildbetrachter
- * 
+ * 						d. Über Dateiauswahldialog (FILECHOOSER) IN DER EVENT-METHODE eine BILDDATEI (jpg, gif oder png) LADEN, via ImageComponent bild 
+ *  						
+ *  						- lokales erzeugen eines FileChoosers innerhalb der event-methode
+ *  							
+ *  						- bei schliessen des fc-dialogs durch cklicken des "file öffnen"-buttons: 
+ *  							-> laden der bilddatei (via ImageComponent bild) & anpassen der grössen von frame, scrollbalken, etc. auf die jeweilige bildgrösse
+ *									
+ *							- CODE:					
+ *												
+ *							private void jBtnOeffnenActionPerformed(ActionEvent evt) {			// event-methode zum laden einer beliebigen bilddatei über einen FileChooser 
+ *								JFileChooser fc = new JFileChooser();							// lokales JFileChooser-objekt mit namen fc erzeugen 
+ *								fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);	// FileselectionMode wird so gesetzt, dass Dateien + Ordner angezeigt werden
+ *								fc.setFileFilter(new FileNameExtensionFilter("*.jpg", "*.tif", "*.png", "jpg", "tif", "png")); // FileFilter mit FilenameExtensionFilter und ..
+ *																								// .. einer kommaseperierten liste filtert die möglichen namenserweiterungen der anzuzeigenden dateien im dialogframe
+ *								fc.setCurrentDirectory(new File("."));							// als ausgangsordner, für fc-dialog beim öffnen, wird der aktuelle Pfad (currentDir..) als relative (".") Pfadangabe gesetzt => Projektordner  
+ *								int state = fc.showOpenDialog(null);							// fc-Dialog öffnen & gleichzeitig status speichern, wie der fc-Dialog geschlossen wurde
+ *								if (state == JFileChooser.APPROVE_OPTION){						// wenn der fc-dialog mit dem status "(File) öffnen" (=> .APPROVE_OPTION) geschlossen wird ...
+ *									String selFile = fc.getSelectedFile().getAbsolutePath();	// .. wird der gewählte dateiname mit absoluter pfadangabe in die variable selFile übernommen
+ *									try {														
+ *										BufferedImage a = ImageIO.read(new File(selFile));		// ImageIO.read(..) liest neuerzeugtes File mit pfad von selFile in das BuferedImage a 
+ *										bild.setImage(a);										// a wird dem setter der oben bereits erzeugten objektinstanz bild mitgeben (damit das startbild gezeichnet wird)
+ *										jScrollPane1.setSize(a.getWidth() + 2, a.getHeight() + 2);	// grössenanpassung für den jScrollPane mit breite + höhe von Bufferedimage a, jeweils + 2 (glaub damit scroll nicht eingeblendet werden)
+ *										jScrollPane1.setViewportView(bild);						// ViewportView (= quasi monitor) von jScrollPane1 auf bild (= grösse von ImageComponent) setzen
+ *										this.setSize(a.getWidth() + 59, a.getHeight() + 121);	// den frame selber (this) auf die grösse von BufferedImage a anpassen ...
+ *																								// ...das bild sollte so eigentlich vollständig im frame dargestellt & scrollbalken nur eingeblendet werden, ..
+ *																								// ...wenn man das frame ändert..!! (zahlen ändern bis bild ganz dargestellt, scrollbars nur eingeblendet werden beim frame verziehen)
+ *									} catch (Exception e){
+ *									JOptionPane.showMessageDialog(null, "Fehler beim öffnen der Datei");
+ *									}
+ *								}	
+ *							} 
  * 
  * 
  * BESONDERES:	@Override (über methode)		=> ist wie ein kommentar bei absichtlichem überschreiben von methoden der superklasse. 
@@ -190,10 +235,7 @@ public class ImageIO_Klasse_Basics_JFilechooser_Bildbetrachter extends javax.swi
 			} catch (Exception e){
 				JOptionPane.showMessageDialog(null, "Fehler beim öffnen der Datei");
 			}
-		}
-	
-		
-		
+		}	
 	}
 
 }

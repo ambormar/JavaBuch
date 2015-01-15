@@ -8,6 +8,47 @@
  * 	- AnchorConstraints	(absolute, relative, none)
  * 	- setPreferedSize(..)
  * 
+ * 	JFRAME mit ANCHORLAYOUT:		
+ * 
+ * 		- Jigloo-ansicht > Menue-leiste > Layout > AnchorLayout anklicken > im angewählten JFrame erneut klicken
+ * 
+ * 			Code dazu im initGUI():					AnchorLayout thisLayout = new AnchorLayout();
+													getContentPane().setLayout(thisLayout);
+ * 
+ * 
+ * 	ANCHORCONSTRAINTS (ANKER-RAND-BEDINGUNGEN) FÜR DIE JEWEILIGE KOMPONENTE:	 HIER AM BSP. BUTTON:
+ * 
+ * 		= angaben wie sich die ränder einer komponente zu den rändern des containers verhalten sollen
+ * 
+ * 		- Jigloo-ansicht > JButton machen + anwählen > schwarzen pfeil klicken > auswahlfenster: für den jeweiligen rand (oben, re, unten, li) AnchorConstraints wählen
+ * 							
+ * 			=> 3 MÖGLICHKEITEN:		1. gerader anker:	= AnchorConstraint.ANCHOR_ABS 	(= zahlenangabe als absolutwerte in pixel)
+ * 									2. anker, schräg:	= AnchorConstraint.ANCHOR_REL 	(= zahlenangabe relativ zur grösse des containers)
+ * 									3. durchgestrichen:	= AnchorConstraint.ANCHOR_NONE 	(= keine verankerung		&	li, obere ecke 0,0		&	keine werte nötig: werden mit .setPreferedSize() eh überschrieben)
+ * 								
+ * 			- CODE-BSP: 	jButton = new JButton();
+							getContentPane().add(jButton, new AnchorConstraint(109, 151, 130, 135, 				// parameter:	abstände nach top, right, bottom, left
+																				AnchorConstraint.ANCHOR_NONE,	// verankerungsart für top		: keine
+																				AnchorConstraint.ANCHOR_NONE, 	// verankerungsart für right	: keine
+																				AnchorConstraint.ANCHOR_ABS, 	// verankerungsart für bottom	: absolut in px
+																				AnchorConstraint.ANCHOR_REL));	// verankerungsart für left		: relativ zu container
+ * 								
+ * 			- ANCHOR_REL:	 BERECHNUNG IN PX:		=> ausdehnung container in px 	* 	relativ-angabe (zal)	:	1000 
+ * 																							 ______________________________________
+ * 					 								=> abstände beziehen jeweils sich auf:	|		A top		A					|
+ * 																							|left	¦_________	¦					|
+ * 																							|<------|_________|	¦ bottom			|
+ * 																							|<-----------------						|
+ * 																							|			  right						|
+ * 																							|______________________________________ |
+ * 
+ * 			- ANCHOR_ABS:	
+ *
+ *		- PreferedSize setzen in den properties (od. code):			jBtnOeffnen.setPreferredSize(new java.awt.Dimension(107, 20) 
+ *
+ * 		- ANCHORLAYOUT SIEHE AUCH: 		9.3.(eigtl. 12.4.2.)   Jigloo_AnchorLayout_Basics_BspButton	s.385, 	
+ * 
+ * 		- CODE & KOMMENTS SIEHE:	initGUI()	JBtnOeffnen		&		event-methode jBtnOeffnen..(..) * 
  */
 
 package uebungen12;

@@ -16,7 +16,7 @@
  * 	VORGEHEN:	1. 	class ImageComponent, von der abstrakten klasse JComponent abgeleitet, zur darstellung einer bilddatei
  * 						-> diese komponente ist als nachkomme von JComponent geeignet in einem JScrollPane-behälter untergebracht zu werden
  * 
- * 					CODE & IMPORTS & KOMMENTS:			siehe code class ImageComponent
+ * 					CODE & IMPORTS & KOMMENTS:			siehe code unten, class ImageComponent
  * 
  * 
  * 				2. 	programm (anwendung) class ImageIO_Klasse_Basics_Bildbetrachter:
@@ -26,14 +26,16 @@
  * 						- klasse ImageComponent (das bild), als objektinstanz erzeugt, wird in JScrollPane eingebettet damit bei bedarf skrollbalken eingeblendet werden können.
  * 							-> JScrollPane kann Objekte aufnehmen, die von JComponent abgeleitet sind
  * 
- * 					CODE & IMPORTS & KOMMENTS:			siehe code class ImageIO_Klasse_Basics_Bildbetrachter
+ * 					CODE & IMPORTS & KOMMENTS:			12.4.2.   ImageIO_Klasse_Basics_JFilechooser_Bildbetrachter		s.382, 	
+ *  
  * 
- * 
- * 
- * BESONDERES:	@Override (über methode)		=> ist wie ein kommentar bei absichtlichem überschreiben von methoden der superklasse. 
+ * BESONDERES:	-@Override (über methode)		=> ist wie ein kommentar bei absichtlichem überschreiben von methoden der superklasse. 
  *												-> heute java7: ist's guter programmierstil, kompiler nimmts zur kenntnis, evtl. ab java 8 oder 9 unumgänglich..
  * 
+ * 				- setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
  * 
+ * 												-> eine komponente auf eine bevorzugte grösse 
+ * 										
  * 
  * PROGRAMM:	Klasse ImageComponent:							Von JComponent abgeleitete Klasse zur Darstellung einer Bilddatei.
  * 
