@@ -3,15 +3,22 @@
  * 
  * PACKAGE JAVAX.SOUND.SAMPLED:
  * 
+ * 	KLASSE AUDIOSYSTEM:					import javax.sound.sampled.AudioSystem
  * 
- * KLASSE AUDIOSYSTEM:
+ * 			METHODEN:					static getClip()				liefert clip, für wiedergabe von audiofile od. audio-stream. 
+ * 																		dieser clip muss geöffnet werden mit open(AudioFormat) oder open(AudiInputStream) 
+ * 
+ * 				static AudioInputStream getAudioInputStream(File file)	liefert audio input stream von der mitgegebenen datei, datei muss auf eine gültige audio-datei zeigen
  * 
  * 
- * KLASSE CLIP:		- stellt folgende METHODEN zum abspielen des Sound bereit:
+ * 	INTERFACE(KLASSE) CLIP:				import javax.sound.sampled.Clip
  * 
- * 						void start()				spielt die datei einmal ab
- * 						void loop(int anzahl)		spielt die datei in einer schleife int anzahl male ab
- * 						void stop()					stoppt einen gestarteten abspielvorgang
+ * 			METHODEN:					void open(AudiInputStream)		öffnet einen clip mit seinem format und audio-daten im übergebenen audio input stream
+ * 										
+ * 			(M. z. Sound abspielen:)	void start()					spielt die datei einmal ab
+ * 										void loop(int anzahl)			spielt die datei in einer schleife int anzahl male ab
+ * 										void stop()						stoppt einen gestarteten abspielvorgang
+ * 
  * 
  * 
  * VORGEHEN:	- programm-Frame mit 4 buttons / event-methoden
@@ -142,10 +149,10 @@ public class SoundSampled_Package_AudioSystem_Klasse_Clip_Klasse_SoundPlayer ext
 			jBtnEinmal.setEnabled(false);								// btn aktivieren
 			jBtnSchleife.setEnabled(false);								// btn aktvieren
 			try{
-				audioClip = AudioSystem.getClip();	// objekt audioClip vom typ Clip initialisieren mit hilfe der klasse AudioSystem + methode .getClip()
+				audioClip = AudioSystem.getClip();	// (anstelle von: Clip audioClip = new Clip()): Clip audioClip initialisieren mit: AudioSystem.getClip() => liefert ja einen Clip zurück 
 				AudioInputStream ais = AudioSystem.getAudioInputStream(fc.getSelectedFile());	// AudioInputStream erzeugen mit der Klasse AudioSystem + methode .getAudioInputStream(..), ..
 																								//.. mit der im fc-dialog ausgewählten datei als parameter 
-				audioClip.open(ais);					// dem objekt audioClip wird mittels der methode .open(ais) der zuvor erzeugte AudioInputStream übergeben
+				audioClip.open(ais);					// öffnet den Clip audioClip mit seinen audio-daten / + format im übergebenen AudioInputStream ais
 				jBtnEinmal.setEnabled(true);			// einmalBtn aktivieren
 				jBtnSchleife.setEnabled(true);			// loopBtn aktivieren
 				jBtnStop.setEnabled(false);				// stopBtn (sicherheitshalber??!) nochmal deaktivieren
