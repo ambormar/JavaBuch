@@ -1,4 +1,4 @@
-/* TODO 12.4.2.   s.382, 	
+/* TODO 12.4.2.   s.382, ("Images IN")
  * class ImageIO_Klasse_Basics_JFilechooser_Bildbetrachter	&	ImageComponent (extends JComponent)  
  * 
  * 	KLASSE ImageIO:		IMPORT:		 	javax.imageio.*;		= imageio, paket zum vereinheitlichten lesen + schreiben von Grafiken

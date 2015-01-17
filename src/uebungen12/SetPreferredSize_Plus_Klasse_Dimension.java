@@ -21,5 +21,5 @@
 package uebungen12;
 
 public class SetPreferredSize_Plus_Klasse_Dimension {
-
+	
 }
