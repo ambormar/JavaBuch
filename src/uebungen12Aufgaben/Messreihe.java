@@ -122,7 +122,6 @@ public class Messreihe extends javax.swing.JFrame {
 					}
 				});
 			}
-
 			pack();
 			this.setSize(400, 312);
 		} catch (Exception e) {
@@ -137,7 +136,7 @@ public class Messreihe extends javax.swing.JFrame {
 			jTFMesswert.requestFocus();
 		} else {
 			try {
-				Double.parseDouble(jTFMesswert.getText());						// text-eingaben verhindern => führen zu Exception
+				Double.parseDouble(jTFMesswert.getText());						// my own trick (vielleicht nicht so hübsch): text-eingaben verhindern => führen zu Exception
 				jListMesswerteModel.addElement(jTFMesswert.getText());
 				jTFMesswert.setText("");
 				jTFMesswert.requestFocus();
@@ -151,7 +150,7 @@ public class Messreihe extends javax.swing.JFrame {
 	
 	private void jBtnSpeichernActionPerformed(ActionEvent evt) {		// !!!! klasse machen für JFileChooser mit showSaveDialog(null) for dummies
 		JFileChooser fc = new JFileChooser();						 					// FileChooser erzeugen
-		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);								// nur Files akzeptieren (keine ordner) => fiel wird ja nacher gespeichert
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);								// nur Files akzeptieren (keine ordner) => datei soll ja nacher gespeichert werden
 		fc.setFileFilter(new FileNameExtensionFilter("Messwertdateien *.mwd", "mwd"));	// mögliche datei-erweiterungen auf .mwd beschränken
 		fc.setCurrentDirectory(new File("." + File.separator + File.separator));		// plattformunabhängiger rel. pfad für eins rauf i.d.hierarchie, (".\\") wär für windows auch korrekt
 		int state = fc.showSaveDialog(null);											// fc-speicher-dialog öffnen + gleichzeitig status auf "speichern, jaa" setzen
@@ -182,9 +181,7 @@ public class Messreihe extends javax.swing.JFrame {
 					} catch (IOException e){
 						JOptionPane.showMessageDialog(this, "Fehler beim Schliessen");
 					}
-					
 				}
-				
 			}
 		}
 	}
