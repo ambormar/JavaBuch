@@ -81,7 +81,9 @@
  *							jBtnStop.setEnabled(false);						// stop button wieder deaktivieren
  *						} 
  * 
- * 
+ * K&K:		Programm SoundPlayer_AudioSystem_Klasse_Clip_Interface_SoundSampled_Package
+ * 			Über einen Dateiauswahldialog kann eine Sounddatei (wav) geladen werden. 
+ * 			Die Sounddatei kann einmalig oder in einer Schleife abgespielt werden.
  * 
  */
 
