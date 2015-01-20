@@ -49,14 +49,17 @@
  *
  *	BESONDERES:		deutsche formatierung mit komma als trennzeichen statt punkt:		
  *																					-> (achtung gespeicherte .mwd-dateien von messreihe 1 von aufgabe 1 sind dann nicht mehr kompatibel )
+ *					
+ *					- der NumberFormat variablen nf wird der wert Locale.German zugewiesen:						
+ *
  *					import java.text.NumberFormat;
  *					import java.util.Locale;
  *					
  *					private NumberFormat nf;														// attribut-deklaration
  *
- *					nf = NumberFormat.getInstance(Locale.GERMAN);   								// im initGUI() nach pack(..)
+ *					nf = NumberFormat.getInstance(Locale.GERMAN);   								// im initGUI() nach pack(..)	//der NumberFormat variablen nf wird der wert Locale.German zugewiesen
  *
- * 					jListMesswerteModel.addElement(nf.format(nf.parse(jTFMesswert.getText())));		// im jBtnUebernehmen...(..)
+ * 					jListMesswerteModel.addElement(nf.format(nf.parse(jTFMesswert.getText())));		// im jBtnUebernehmen...(..)	// der string wird formatiert der methode addElement(..) mitgegeben
  * 
  * 
  * 
@@ -270,7 +273,7 @@ public class In_DateiLaden_MitDateiErweiterung_MitFileChooserAufrufen_Messreihe2
 			String messwerteZeile;				 									// lokale stringvariable für die einzelenen adresszeilen
 			try {
 				BufferedReader in = new BufferedReader(new FileReader(dateiname));	// BufferedReader-objekt out mit neu erzeugtem FileReader-objekt mit argument dateinam (& pfad) der Zieldatei 
-				jListMesswerteModel.clear();							// WICHTIG: jListModel von einträgen clearen, sonst lassen sich einträge mehrfach ins selbe frame laden
+				jListMesswerteModel.clear();										// WICHTIG: jListModel von einträgen clearen, sonst lassen sich einträge mehrfach ins selbe frame laden
 				while ((messwerteZeile = in.readLine()) != null){					// mit while-schleife, solange mit methode .readLine() zeilen einlesen, bis keine zeile mehr vorhanden (=null) 
 					jListMesswerteModel.addElement(messwerteZeile);					// jeden, in messwertezeile zwischengespeicherten eintrag mit .addElement() in listbox übertragen 
 				}
