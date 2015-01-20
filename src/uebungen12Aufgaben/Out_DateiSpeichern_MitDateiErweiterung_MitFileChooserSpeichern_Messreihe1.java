@@ -217,7 +217,7 @@ public class Out_DateiSpeichern_MitDateiErweiterung_MitFileChooserSpeichern_Mess
 					out.write(jListMesswerteModel.get(i).toString());					// .get(i) liefert eintrag mit index i als objekt, .toString() weil write() einen String erwartet
 					out.newLine();														// .. und nach jedem zeileneintrag ein zeilenvorschub
 				}
-				out.close();															// schliessen des streams mit close(), abgekürzte variante
+				out.close();															// schliessen des outputstreams mit close(), abgekürzte variante
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, "Fehler beim Speichern");			// (anscheinend egal: ob null oder this als erstes argument )
 			} 
