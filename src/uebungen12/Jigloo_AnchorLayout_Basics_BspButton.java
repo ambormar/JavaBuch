@@ -3,29 +3,45 @@
  * 
  * SIEHE BSP ANGEWANDT:	12.4.2.   ImageIO_Klasse_Basics_JFilechooser_Bildbetrachter		s.382 	 
  * 
- * Stichworte:
- * 	- AnchorLayout
- * 	- AnchorConstraints	(absolute, relative, none)
- * 	- setPreferedSize(..)
  * 
  * 	JFRAME mit ANCHORLAYOUT:		
  * 
  * 		- Jigloo-ansicht > Menue-leiste > Layout > AnchorLayout anklicken > im angewählten JFrame erneut klicken
  * 
  * 			Code dazu im initGUI():					AnchorLayout thisLayout = new AnchorLayout();
-													getContentPane().setLayout(thisLayout);
+ *													getContentPane().setLayout(thisLayout);
+ *													
+ *	
+ * 	=> K&K VORWEG:		SINNVOLLE EINSTELLUNGEN VON ANCHORCHONSTRAINTS:
+ * 																									
+ * 				1. BSP:		FRAME MIT BILD (unterhalb, bis an die ränder raus) & BUTTON (oben links):	
+ * 
+ * 							button:			 	jBtnOeffnen, new AnchorConstraint(20, 300, 100, 20, (sponti anordnung jigloo); AnchorConstraint.ANCHOR_ABS, _NONE, _NONE, _ABS )
+ * 							bild im scroll:		jScrollPane1, new AnchorConstraint(60, 20, 20, 20, (sponti anordnung jigloo); 	AnchorConstraint.ANCHOR_ABS, _ABS, _ABS, _ABS, )
+ * 
+ * 							& jeweils für beide .setPreferreSize(breite, höhe) nicht vergessen
+ * 
+ * 				2. BSP:		FRAME MIT TEXTPANE (oberhalb ,bis an die ränder raus) & BUTTON (unterhalb, mittig):
+ * 
+ * 							textpane im scroll:	jScrollPane1, new AnchorConstraint(43, 975, 806, 26, (sponti anordnung jigloo); 	AnchorConstraint.ANCHOR_REL, _REL, _REL, _REL, )		
+ * 							button:			 	jBtnOeffnen, new AnchorConstraint(845, 670, 933, 321, (sponti anordnung jigloo); 	AnchorConstraint.ANCHOR_REL, _REL, _REL, _REL )
+ * 
+ * 							& jeweils für beide .setPreferreSize(breite, höhe) nicht vergessen * 
  * 
  * 
+ * 	=> BASICS:
+ * 	
  * 	ANCHORCONSTRAINTS (ANKER-RAND-BEDINGUNGEN) FÜR DIE JEWEILIGE KOMPONENTE:	 HIER AM BSP. BUTTON:
  * 
- * 		= angaben wie sich die ränder einer komponente zu den rändern des containers verhalten sollen
+ * 		= angaben wie sich die ränder einer komponente zu den rändern des containers verhalten sollen 		
+ * 
  * 
  * 		- Jigloo-ansicht > JButton machen + anwählen > schwarzen pfeil klicken > auswahlfenster: für den jeweiligen rand (oben, re, unten, li) AnchorConstraints wählen
  * 							
  * 			=> 3 MÖGLICHKEITEN:		1. gerader anker:	= AnchorConstraint.ANCHOR_ABS 	(= zahlenangabe als absolutwerte in pixel)
  * 									2. anker, schräg:	= AnchorConstraint.ANCHOR_REL 	(= zahlenangabe relativ zur grösse des containers)
  * 									3. durchgestrichen:	= AnchorConstraint.ANCHOR_NONE 	(= keine verankerung		&	li, obere ecke 0,0		&	keine werte nötig: werden mit .setPreferedSize() eh überschrieben)
- * 								
+ * 
  * 			- CODE-BSP: 	jButton = new JButton();
 							getContentPane().add(jButton, new AnchorConstraint(109, 151, 130, 135, 				// parameter:	abstände nach top, right, bottom, left
 																				AnchorConstraint.ANCHOR_NONE,	// verankerungsart für top		: keine
@@ -47,7 +63,7 @@
  * 							- top, right, bottom, left :		=> ist glaub: 	jeweils abstand vom komponentenrand zum containerrand auf der selben seite
  * 																	-> also:	top nach top, right nach right, bottom nach bottom, left nach left
  *
- *
+ *	
  *	- setPreferredSize(new java.awt.Dimension(width, height)):	 	(RELEVANT FÜR ANCHORLAYOUTS): 
  *
  *				=> um komponenten, cotainern, frames auf eine grösse zu setzen, die gerade ausreicht, die jeweiligen inhalts-elemente komplett darzustellen
