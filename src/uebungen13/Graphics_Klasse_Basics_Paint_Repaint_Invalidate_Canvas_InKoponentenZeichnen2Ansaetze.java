@@ -1,4 +1,4 @@
-/* TODO 13.1.1   s.396,	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/* TODO 13.1.1   s.396,	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ncoh verweise machen mit paasssenden begriffen
  * Graphics_Klasse_Basics_Paint_Repaint_Invalidate_Canvas_InKoponentenZeichnen2Ansaetze
  * 
  * 13.1. IN KOMPONENTEN ZEICHNEN
@@ -38,7 +38,7 @@
  * 
  * 	KLASSE GRAPHICS:	DEVICE-KONTEXT - UNIVERSELLES AUSGABE-GERÄT FÜR GRAFIK + SCHRIFT
  * 
- * 		-> die klasse Graphics ist ein sogenanter Device-Kontext, ein Ausgabe-gerätr für grafik + schrift
+ * 		-> die klasse Graphics ist ein sogenanter Device-Kontext, ein Ausgabe-gerät für grafik + schrift
  * 			
  * 		-> liefert METHODEN zur realisierung von:		- Linien-elementen
  *														- Füll-elementen für flächen
