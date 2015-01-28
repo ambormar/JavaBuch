@@ -1,4 +1,4 @@
-/* TODO 13.1.1   s.396,	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ncoh verweise machen mit paasssenden begriffen
+/* TODO 13.1.1   s.396,	
  * Graphics_Klasse_Basics_Paint_Repaint_Invalidate_Canvas_InKoponentenZeichnen2Ansaetze
  * 
  * 13.1. IN KOMPONENTEN ZEICHNEN

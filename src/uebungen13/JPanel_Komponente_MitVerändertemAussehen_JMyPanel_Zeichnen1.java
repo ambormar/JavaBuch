@@ -1,4 +1,4 @@
-/* TODO 13.1.2.   s.400+(398),
+/* TODO 13.1.2.   s.400+(398), (einsetzen von JMyPanel statt JPanel)
  * class JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1		&	JMyPanel  	
  * 
  * 		SIEHE:			13.1.2.  JMyPanel				s.398+(400),

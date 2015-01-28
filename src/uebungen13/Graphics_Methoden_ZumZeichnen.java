@@ -14,6 +14,12 @@
  *
  *
  *	METHODEN (ZUM ZEICHNEN) VON GRAPHICS G:				= überblick über die wichtigsten zeichenmethoden der klasse Graphics 
+ *														
+ *														-> positionsangaben x, y beschreiben grundsätzlich linke obere ecke
+ *															-> bei runden / abgerundeten objekten die li, obere ecke des umschreibenden rechtecks des objekts
+ *
+ *														**  mit hilfe des clipping-bereichs kann man zeichenbereich einschränken, objekte werden dann nur im aktuellen clipping-bereich sichtbar.
+ *
  *
  *		METHODE:																				BESCHREIBUNG:
  *
@@ -45,11 +51,11 @@
  *
  *		void fillRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) 	wie drawRoundRect, mit der akt zeichenfarbe gefüllt
  *
- *		Rectangle getClipBounds()  																liefert den aktuellen clipping-bereich zurück
+ *		Rectangle getClipBounds()  																liefert den aktuellen clipping-bereich zurück	**	(=> einschränken des zeichenbereichs)
  *
- *		void setClip(int x, int y, int width, int height)  										setzt den neuen clipping-bereich
+ *		void setClip(int x, int y, int width, int height)  										setzt den neuen clipping-bereich	** 
  *
- *		Color getColor()																		gibt die akt. zeichenfarbe zurück
+ *		Color getColor()																		gibt die akt. zeichenfarbe zurück	
  *
  *		void setColor(Color c)																	setzt die akt. zeichenfarbe
  *

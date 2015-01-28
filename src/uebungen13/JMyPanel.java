@@ -1,4 +1,4 @@
-/* TODO 13.1.2.   s.398+(400),
+/* TODO 13.1.2.   s.398+(400), (JMyPanel extends JPanel)
  * class JMyPanel & 	JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1
  * 
  * 		SIEHE:			13.1.2.   JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1									s.400+(398),
@@ -102,7 +102,6 @@ public class JMyPanel extends JPanel {
 		g.setColor(Color.red);					// zeichenfarbe einstellen mit der anweisung setColor(..) der klasse Graphics, die argument Color (klasse Color importier) erwartet
 		g.drawLine(10, 10, this.getWidth() - 10, this.getHeight() -10);	// linie zeichnen (x, y, breite, höhe)
 		
-		
 		// IGNORIEREN, NUR GRAFIK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		//ab hier ignorieren nicht so lern-relevant, nur rumgedooft aus freude an "grafik"
 		g.setColor(Color.WHITE);
@@ -124,7 +123,6 @@ public class JMyPanel extends JPanel {
 		g.drawOval(56, 56 , this.getWidth() -112, this.getHeight()-112 );
 		g.drawOval(57, 57 , this.getWidth() -114, this.getHeight()-114 ); 
 		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		
 	}
 
 }
