@@ -1,12 +1,14 @@
 /* TODO 13.1.2.   s.398+(400), (JMyPanel extends JPanel)
  * class JMyPanel & 	JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1
  * 
- * 		SIEHE:			13.1.2.   JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1									s.400+(398),
+ * 		SIEHE:			13.1.2.   JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1									s.400+(398),	(1.ANSATZ, TEIL)
  * 
  * 		SIEHE AUCH:	 	13.1.1   Graphics_Klasse_Basics_Paint_Repaint_Invalidate_Canvas_InKoponentenZeichnen2Ansaetze			s.396,	
+ * 
+ * 		SIEHE AUCH:		13.2.1   JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2											s.403,	 (2. ANSATZ)
  * 									
  * 
- * JPANEL (OD. AUCH JFRAME) ALS KOMPONENTE MIT VERÄNDERTEM AUSSEHEN ERSTELLEN:
+ * JPANEL (OD. AUCH JFRAME) ALS KOMPONENTE MIT VERÄNDERTEM AUSSEHEN ERSTELLEN:		(= 1. ANSATZ, TEIL)
  * 
  * 	VORGEHEN:	
  * 
