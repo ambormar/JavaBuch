@@ -10,14 +10,46 @@
  * 
  * 			=> JPanel/JFrame mit Möglichkeit für den anwender zum interaktiv hineinzeichnen
  * 
- * 		KURZ:	
+ * 		K&K:	 	Programm Zeichnen2
+ * 					Dem Anwender steht ein Panel, auf das er verschiedene geometrische Figuren zeichnen kann, zur Verfügung. 
+ * 					Position und Größe der Figuren können frei bestimmt werden.
  * 
- * 		VORGEHEN:
+ * 		VORGEHEN:	1. frame mit JPanel, worauf das gezeichnete dargestellt wird
  * 
- * 	
+ * 					2. 4 positions-textfelder zur eingabe jeweils benötigten parameterwerte für die zeichenmethoden (x, y, höhe, breite)
+ * 							-> werden nach programmlogik ein-/ausgeblendet & benannt
  * 
- * 		KERN-CODE:
+ * 					3. 2 buttons:	- zeichnen		=> zum auslösen des effektiven zeichenvorganges für die jeweiligen werte & auswahlen (checkbox + radiobuttons)
+ * 									- ende			=> beenden des programms 															// wichtig: vor buttongroup erstellen
  * 
+ * 					4. 1 checkbox zum anhäckeln ob formen gefüllt werden oder nicht						=> siehe CHECKBOX unten
+ * 
+ * 					5. 4 radiobuttons zum wählen der gewünschten form (rechteck, kreis, oval, linie)	=> siehe RADIOBUTTONS unten		// wichtig: zuerst erstellen
+ * 							-> inklusive event-methoden
+ * 
+ * 					6. ButtonGroup (= RadioGroup) um die radiobuttons einander zuzuordnen				=> siehe BUTTONGROUP unten		// wichtig: nacher erstellen
+ * 																										=> siehe ZUORDNUNG DER RADIOBUTTONS ZUR RADIOGROUP unten
+ * 
+ * 					7. allgemeingültige Methode zum beschriften/anpassen der textfelder je nach radiobutton-auswahl (rechteck, kreis, oval oder linie!!)
+ * 
+ * 							=> CODE siehe:		private void setzeBeschriftungen(){..}
+ * 
+ *					8. die action-listener-methoden der radiobuttons 		-> rufen die methode setzeBeschriftung() auf (für die beschriftung)..
+ *																			-> ..und steuern die sichtbarkeit der jeweils erwünschten komponenten (checkbox & y2)
+ * 								& -> char-variablen figur speichert den jeweilige anfangsbuchstaben der aktuellen geometrischen figur (L, O, R oder K) 
+ * 										-> .. für switch-case der methode jBtnZeichnen..(..) 
+ * 
+ * 							=> CODE siehe: 		jRBtnReckteck..(..)		&	jRBtnLinie..(..)	&	jRBtnOval..(..)		&		jRBtnKreis..(..)
+ * 		
+ * 
+ * 
+ * 
+ * 		JCHECKBOX:		
+ * 
+ * 			=> häckchen box
+ * 			=> gut zur abfrage von wahrheitswert (true - false)
+ * 
+ * 			=> METHODE:		- getSelected() 		=> zum prüfen ob häckchen gesetzt ist oder nicht
  * 
  * 
  *		RADIOBUTTONS:
@@ -25,9 +57,12 @@
  *			=> WICHTIG:		ZUERST die versch. RadioButtons erstellen, 	DANN die ButtonGroup (hier: BtnGrpFigure), 	DANN zuordnung der RadioButtons zur ButtonGroup
  *								-> sonst hat's eine meise und erstellt irgendwelche lustigen getters 
  *			=> normal mit Jigloo reinziehen
+ *			
+ *			=> METHODEN:		- setSelected()		=> um schaltfläche auf angewählt zu setzen, (auch via properties)
+ *								- isSelected()		=> um zu rüfen ob schaltfläche ausgewählt ist (true - false)
  *
- * 
- * 		BUTTONGROUP:
+ *
+ * 		BUTTONGROUP / RADIOGROUP:
  * 	
  * 			=> nötig für zusammenspiel von mehreren RadioButtons, von denen nur einer aufs mal ausgewählt werden kann
  * 			=> egal wo reinziehen in den frame		-> wird NICHT dargestellt im GUI / initGUI()  
@@ -53,16 +88,17 @@
  *			=> jedem RadioButton in den properties unter eigenschaft buttonGroup die RadioGroup (hier: BtnGrpFigure) zuordnen 
  * 				
  * 			=> CODE:   		getBtnGrpFigure().add(jRBtnReckteck);		// bsp ergänzung  im initGUI() um jRBtnRechteck der ButtonGroup BtnGrpFigur zuzuordnen
+ * 																		// via getter-methode verschaft sich der frame zugriff auf die readiogroup (BtnGrpFigure)
  * 
- * 
- * 
- * 	VORGEHEN:		
  * 
  */
 
 package uebungen13;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;			// guck themenspez. imp.
+import javax.swing.JButton;
 
 import javax.swing.JCheckBox;			// guck
 import javax.swing.JLabel;
@@ -88,7 +124,9 @@ public class JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 extends javax
 	private JLabel jLZeichenflaeche;
 	private JLabel jLPositionX1;
 	private JRadioButton jRBtnReckteck;
-	private ButtonGroup BtnGrpFigure;			// auto-erzeugte variable von jigloo, 
+	private JButton jBtnEnde;
+	private JButton jBtnZeichnen;
+	private ButtonGroup BtnGrpFigure;			// mit jigloo erzeugte variable  
 	private JRadioButton jRBtnLinie;
 	private JRadioButton jRBtnOval;
 	private JRadioButton jRBtnKreis;
@@ -102,6 +140,7 @@ public class JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 extends javax
 	private JLabel jLPositionY1;
 	private JTextField jTFPositionX1;
 	private JPanel jPanelZeichenflaeche;
+	private char figur;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -164,7 +203,7 @@ public class JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 extends javax
 				jLPositionX2 = new JLabel();
 				getContentPane().add(jLPositionX2);
 				jLPositionX2.setText("Breite:");
-				jLPositionX2.setBounds(396, 51, 44, 16);
+				jLPositionX2.setBounds(375, 51, 65, 16);
 			}
 			{
 				jTFPositionX2 = new JTextField();
@@ -193,13 +232,23 @@ public class JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 extends javax
 				getContentPane().add(jRBtnReckteck);
 				jRBtnReckteck.setText("Rechteck");
 				jRBtnReckteck.setBounds(418, 108, 99, 20);
+				jRBtnReckteck.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
+						jRBtnReckteckActionPerformed(evt);
+					}
+				});
 				getBtnGrpFigure().add(jRBtnReckteck);			// in den properties die zuordnung zur buttonGroup BtnGrpFigure einstellen 
-			}
+			}													// via getter-methode verschaft sich der frame zugriff auf die readiogroup (BtnGrpFigure)
 			{
 				jRBtnKreis = new JRadioButton();
 				getContentPane().add(jRBtnKreis);
 				jRBtnKreis.setText("Kreis");
 				jRBtnKreis.setBounds(418, 142, 86, 23);
+				jRBtnKreis.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
+						jRBtnKreisActionPerformed(evt);
+					}
+				});
 				getBtnGrpFigure().add(jRBtnKreis);				// in den properties die zuordnung zur buttonGroup BtnGrpFigure einstellen 
 			}
 			{
@@ -207,6 +256,11 @@ public class JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 extends javax
 				getContentPane().add(jRBtnOval);
 				jRBtnOval.setText("Oval");
 				jRBtnOval.setBounds(418, 182, 86, 23);
+				jRBtnOval.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
+						jRBtnOvalActionPerformed(evt);
+					}
+				});
 				getBtnGrpFigure().add(jRBtnOval);				// in den properties die zuordnung zur buttonGroup BtnGrpFigure einstellen 
 			}
 			{
@@ -214,7 +268,34 @@ public class JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 extends javax
 				getContentPane().add(jRBtnLinie);
 				jRBtnLinie.setText("Linie");
 				jRBtnLinie.setBounds(418, 221, 86, 23);
+				jRBtnLinie.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
+						jRBtnLinieActionPerformed(evt);
+					}
+				});
 				getBtnGrpFigure().add(jRBtnLinie);				// in den properties die zuordnung zur buttonGroup BtnGrpFigure einstellen 
+			}
+			{
+				jBtnZeichnen = new JButton();
+				getContentPane().add(jBtnZeichnen);
+				jBtnZeichnen.setText("Zeichnen");
+				jBtnZeichnen.setBounds(418, 280, 125, 23);
+				jBtnZeichnen.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
+						jBtnZeichnenActionPerformed(evt);
+					}
+				});
+			}
+			{
+				jBtnEnde = new JButton();
+				getContentPane().add(jBtnEnde);
+				jBtnEnde.setText("Ende");
+				jBtnEnde.setBounds(418, 349, 125, 23);
+				jBtnEnde.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
+						jBtnEndeActionPerformed(evt);
+					}
+				});
 			}
 
 			pack();
@@ -231,6 +312,62 @@ public class JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 extends javax
 			BtnGrpFigure = new ButtonGroup();	// .. wenn nicht, wird konstruktor aufgerufen (objekt erzeugt) ..
 		}
 		return BtnGrpFigure;					// .. und die referenz auf das objekt zurückgeliefert
+	}
+	
+	//  Methode zum beschriften/anpassen der textfelder je nach radiobutton-auswahl (rechteck, kreis, oval oder linie!!)
+	private void setzeBeschriftungen(){ 			
+		if (jRBtnLinie.isSelected()) {				// wenn linie gewählt ist: ..
+			jLPositionX1.setText("Startpunkt x:");	// .. verschiedene labels für die textfelder anpassen für parameter-werte (x1,y1,x2,y2) [y1 bleibt immer gleich]
+			jLPositionX2.setText("Endpunkt x:");
+			jLPositionY2.setText("      y:");
+		} else {									// wenn rechteck, oval, kreis:..
+			jLPositionX1.setText("Position x:");	// ... labels anpassen auf parameter-werte (x1, y1, breite, höhe) [y1 bleibt immer gleich]				
+			jLPositionX2.setText("Breite:");
+			jLPositionY2.setText("Höhe:");
+		}
+			
+	}
+	
+	private void jRBtnReckteckActionPerformed(ActionEvent evt) {	// bei wählen des radiobuttons rechteck
+		setzeBeschriftungen();						// beschriftung der textfelder anpassen 
+		jCheckBgefuellt.setVisible(true);			// checkbox sichtbar machen weil rechteck gefüllt werden kann
+		jLPositionY2.setVisible(true);				// y2 label "wieder" sichtbar machen
+		jTFPositionY2.setVisible(true); 			// y2 TF "wieder" sichtbar machen
+		figur = 'R';								// char-variable 0 (für geom. Figur rechteck) für spätere verwendung im switch-case der zeichnen-methode 
+	}
+	
+	private void jRBtnKreisActionPerformed(ActionEvent evt) {	// bei wählen des radiobuttons kreis
+		setzeBeschriftungen();						// beschriftung der textfelder anpassen 
+		jCheckBgefuellt.setVisible(true);			// checkbox sichtbar machen weil kreis gefüllt werden kann
+		jLPositionY2.setVisible(false);				// y2 label unsichtbar machen, weil höhe bei kreis nicht gewählt werden soll
+		jTFPositionY2.setVisible(false); 			// y2 TF unsichtbar machen, 					"
+		figur = 'K';								// char-variable 0 (für geom. Figur kreis) für spätere verwendung im switch-case der zeichnen-methode 
+				
+		
+	}
+	
+	private void jRBtnOvalActionPerformed(ActionEvent evt) {	// bei wählen des radiobuttons oval
+		setzeBeschriftungen();						// beschriftung der textfelder anpassen 
+		jCheckBgefuellt.setVisible(true);			// checkbox sichtbar machen weil oval gefüllt werden kann
+		jLPositionY2.setVisible(true);				// y2 label "wieder" sichtbar machen
+		jTFPositionY2.setVisible(true); 			// y2 TF "wieder" sichtbar machen
+		figur = 'O';								// char-variable 0 (für geom. Figur oval) für spätere verwendung im switch-case der zeichnen-methode 
+	}
+	
+	private void jRBtnLinieActionPerformed(ActionEvent evt) {	// bei wählen des radiobuttons Linie
+		setzeBeschriftungen();						// beschriftung der textfelder anpassen 
+		jCheckBgefuellt.setVisible(false);			// checkbox unsichtbar machen weil eine linie ja nicht gefüllt werden kann
+		jLPositionY2.setVisible(true);				// y2 label "wieder" sichtbar machen
+		jTFPositionY2.setVisible(true); 			// y2 TF "wieder" sichtbar machen
+		figur = 'L';								// char-variable L (für geom. Figur linie) für spätere verwendung im switch-case der zeichnen-methode 
+	}
+	
+	private void jBtnZeichnenActionPerformed(ActionEvent evt) {
+		
+	}
+	
+	private void jBtnEndeActionPerformed(ActionEvent evt) {
+		System.exit(0);
 	}
 
 }
