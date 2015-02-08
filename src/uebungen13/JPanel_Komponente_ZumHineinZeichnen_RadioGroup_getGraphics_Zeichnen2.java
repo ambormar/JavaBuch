@@ -1,5 +1,5 @@
 /* TODO 13.2.1   s.403,	 (2. ANSATZ)
- * class 	JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2
+ * class 	JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen2
  * 
  * 		SIEHE AUCH:		13.1.2.   JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1	&	JMyPanel 		s.400+(398), 	(= 1. ANSATZ)
  * 
@@ -9,6 +9,12 @@
  * JPANEL (OD. AUCH JFRAME) ALS STANDARD-KOMPONENTE ZUM HINEINZEICHNEN:		(= 2. ANSATZ)
  * 
  * 			=> JPanel/JFrame mit Möglichkeit für den anwender zum interaktiv hineinzeichnen
+ * 		
+ * 			=> mit repaint() als button		= um die vorhandenen zeichnungen zu entfernen
+ * 											= achtung: repaint() für jPanel nicht in der selben methode wo gezeichnet wird, sondern extra methode oder von ausserhalb 
+ * 
+ * 			=> ohne repaint() fürs frame	= wenn man den Frame verzieht / bewegt, verschwindet das gezeichnete
+ * 
  * 
  * 		K&K:	 	Programm Zeichnen2
  * 					Dem Anwender steht ein Panel, auf das er verschiedene geometrische Figuren zeichnen kann, zur Verfügung. 
@@ -19,8 +25,12 @@
  * 					2. 4 positions-textfelder zur eingabe jeweils benötigten parameterwerte für die zeichenmethoden (x, y, höhe, breite)
  * 							-> werden nach programmlogik ein-/ausgeblendet & benannt
  * 
- * 					3. 2 buttons:	- zeichnen		=> zum auslösen des effektiven zeichenvorganges für die jeweiligen werte & auswahlen (checkbox + radiobuttons)
- * 									- ende			=> beenden des programms 															// wichtig: vor buttongroup erstellen
+ * 					3. 3 buttons:	[=> wichtig alle vor buttongroup erstellen]
+ * 									- zeichnen			=> zum auslösen des effektiven zeichenvorganges für die jeweiligen werte & auswahlen (checkbox + radiobuttons)
+ * 									- zeichnung löschen	=> actionlistener-methode mit:		jPanelZeichenflaeche.repaint()
+ * 															-> repaint() muss hier ausserhalb der zeichnen-methode benutzt werden 
+ * 															-> repaint() funktioniert nur um das panel zu löschen, nicht für neuzeichnen bei frame-veräderungen 			
+ * 									- ende				=> beenden des programms 
  * 
  * 					4. 1 checkbox zum anhäckeln ob formen gefüllt werden oder nicht						=> siehe CHECKBOX unten
  * 
@@ -41,18 +51,28 @@
  * 
  * 							=> CODE siehe: 		jRBtnReckteck..(..)		&	jRBtnLinie..(..)	&	jRBtnOval..(..)		&		jRBtnKreis..(..)
  * 		
+ * 					9. methode zu zeichen der geometrischen figuren jBtnZeichnen:
+ * 
+ * 							=> auslesen der parameterwerte der textfelder in x1, x2, y1, y2
+ * 							=> switch-case unter verwendung der, in char-variabel figur gespeicherten buchstaben (aus den action-listener-methoden der radiobuttons) 
+ * 							=> prüfen des checkbox-status bei den 2-dim figuren, ob gefüllt oder ungefüllt zeichnen 	
+ * 									-> bsp:		if (jCheckBox.isSelected)
+ * 							=> zeichenen der figuren	=> referenz auf Graphics mit .getGraphics() 	= zugriffs-methode aller komponenten (nachfahren der kalsse Component)
+ * 														=> zeichenmethoden & die nötigen parameterwerte		
+ * 									-> bsp: 	jPanelZeichenflaeche.getGraphics.fillRect(x1, y1, x2. y2)
+ * 	
+ * 							=> CODE siehe:		private void jBtnZeichnen..(..)
  * 
  * 
- * 
- * 		JCHECKBOX:		
+ * 	JCHECKBOX:		
  * 
  * 			=> häckchen box
  * 			=> gut zur abfrage von wahrheitswert (true - false)
  * 
- * 			=> METHODE:		- getSelected() 		=> zum prüfen ob häckchen gesetzt ist oder nicht
+ * 			=> METHODE:		- isSelected()			=> um zu rüfen ob häckchen gesetzt ist (true - false)
  * 
  * 
- *		RADIOBUTTONS:
+ *	RADIOBUTTONS:
  *
  *			=> WICHTIG:		ZUERST die versch. RadioButtons erstellen, 	DANN die ButtonGroup (hier: BtnGrpFigure), 	DANN zuordnung der RadioButtons zur ButtonGroup
  *								-> sonst hat's eine meise und erstellt irgendwelche lustigen getters 
@@ -62,7 +82,7 @@
  *								- isSelected()		=> um zu rüfen ob schaltfläche ausgewählt ist (true - false)
  *
  *
- * 		BUTTONGROUP / RADIOGROUP:
+ * 	BUTTONGROUP / RADIOGROUP:
  * 	
  * 			=> nötig für zusammenspiel von mehreren RadioButtons, von denen nur einer aufs mal ausgewählt werden kann
  * 			=> egal wo reinziehen in den frame		-> wird NICHT dargestellt im GUI / initGUI()  
@@ -82,7 +102,7 @@
  *					return BtnGrpFigur;						// .. und die referenz auf das objekt zurückgeliefert
  *				} 
  *
- *		ZUORDNUNG DER RADIOBUTTONS ZUR RADIOGROUP:
+ *	ZUORDNUNG DER RADIOBUTTONS ZUR RADIOGROUP:
  *
  *			=> RadioGroup sorgt dafür, dass nur ein RadioButton auf's mal ausgewählt sein kann
  *			=> jedem RadioButton in den properties unter eigenschaft buttonGroup die RadioGroup (hier: BtnGrpFigure) zuordnen 
@@ -90,27 +110,32 @@
  * 			=> CODE:   		getBtnGrpFigure().add(jRBtnReckteck);		// bsp ergänzung  im initGUI() um jRBtnRechteck der ButtonGroup BtnGrpFigur zuzuordnen
  * 																		// via getter-methode verschaft sich der frame zugriff auf die readiogroup (BtnGrpFigure)
  * 
+ * 	METHODE GETGRAPHICS():		=> komponenten stammen von der klasse Component ab
+ * 								=> mit getGraphics() ermöglicht so die klasse component so für alle komponenten zugriff auf Graphics 
+ * 
+ * 								=> bsp:		JPanelXY.getGraphics.drawLine(x1,y1,x2,y2)
+ * 			
  * 
  */
 
 package uebungen13;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;			// guck themenspez. imp.
 import javax.swing.JButton;
-
 import javax.swing.JCheckBox;			// guck
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;		// guck
 import javax.swing.JTextField;
-
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
 
-public class JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 extends javax.swing.JFrame {
+public class JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen2 extends javax.swing.JFrame {
 
 	{
 		//Set Look & Feel
@@ -140,7 +165,9 @@ public class JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 extends javax
 	private JLabel jLPositionY1;
 	private JTextField jTFPositionX1;
 	private JPanel jPanelZeichenflaeche;
-	private char figur;
+	private char figur;							// variable für anfangsbuchstaben der zu zeichnenden geom. figur ('L', 'O', 'K', 'R') für switch-case erkennung
+	private int x1, y1, x2, y2;					// variablen für speicherg. der parameterwerte aus den textfeldern
+	private JButton jBtnLoeschen;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -148,14 +175,14 @@ public class JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 extends javax
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 inst = new JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2();
+				JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen2 inst = new JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen2();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
 		});
 	}
 	
-	public JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2() {
+	public JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen2() {
 		super();
 		initGUI();
 	}
@@ -287,10 +314,21 @@ public class JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 extends javax
 				});
 			}
 			{
+				jBtnLoeschen = new JButton();
+				getContentPane().add(jBtnLoeschen);
+				jBtnLoeschen.setText("Zeichnung löschen");
+				jBtnLoeschen.setBounds(418, 330, 125, 23);
+				jBtnLoeschen.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
+						jBtnLoeschenActionPerformed(evt);
+					}
+				});
+			}
+			{
 				jBtnEnde = new JButton();
 				getContentPane().add(jBtnEnde);
 				jBtnEnde.setText("Ende");
-				jBtnEnde.setBounds(418, 349, 125, 23);
+				jBtnEnde.setBounds(418, 381, 125, 23);
 				jBtnEnde.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
 						jBtnEndeActionPerformed(evt);
@@ -325,7 +363,6 @@ public class JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 extends javax
 			jLPositionX2.setText("Breite:");
 			jLPositionY2.setText("Höhe:");
 		}
-			
 	}
 	
 	private void jRBtnReckteckActionPerformed(ActionEvent evt) {	// bei wählen des radiobuttons rechteck
@@ -342,8 +379,6 @@ public class JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 extends javax
 		jLPositionY2.setVisible(false);				// y2 label unsichtbar machen, weil höhe bei kreis nicht gewählt werden soll
 		jTFPositionY2.setVisible(false); 			// y2 TF unsichtbar machen, 					"
 		figur = 'K';								// char-variable 0 (für geom. Figur kreis) für spätere verwendung im switch-case der zeichnen-methode 
-				
-		
 	}
 	
 	private void jRBtnOvalActionPerformed(ActionEvent evt) {	// bei wählen des radiobuttons oval
@@ -362,12 +397,49 @@ public class JPanel_StandardKomponente_ZumHineinZeichnen_Zeichnen2 extends javax
 		figur = 'L';								// char-variable L (für geom. Figur linie) für spätere verwendung im switch-case der zeichnen-methode 
 	}
 	
-	private void jBtnZeichnenActionPerformed(ActionEvent evt) {
-		
+	private void jBtnZeichnenActionPerformed(ActionEvent evt) {	// methode zum zeichnen der geometrischen figuren auf das jPanelZeichenflaeche
+		try {
+			x1 = Integer.parseInt(jTFPositionX1.getText());		// parameterwerte aus den TextFeldern zwischenspeichern
+			y1 = Integer.parseInt(jTFPositionY1.getText());		// "
+			x2 = Integer.parseInt(jTFPositionX2.getText());		// "
+			y2 = Integer.parseInt(jTFPositionY2.getText());		// "
+			switch (figur) {									// switch-case für die jeweilige geometrische figur die zu zeichnen ist
+			case 'R':																// im fall variable R für rechteck..
+				if (jCheckBgefuellt.isSelected()){									// wenn checkbox angehakt
+					jPanelZeichenflaeche.getGraphics().fillRect(x1, y1, x2, y2);	// gefülltes rechteck zeichneN, via methode getGraphics() die für alle komponenten
+				} else {															// ..(nachfahren der Klasse component) zur verfügung steht & kontext / referenz auf Graphics gibt
+					jPanelZeichenflaeche.getGraphics().drawRect(x1, y1, x2, y2);	// leeres rechteck
+				}
+				break;
+			case 'K':																// alles analog rechteck:
+				if (jCheckBgefuellt.isSelected()){
+					jPanelZeichenflaeche.getGraphics().fillOval(x1, y1, x2, x2);	// x2, x2, weil höhe + breite gleich bei kreis
+				} else {
+					jPanelZeichenflaeche.getGraphics().drawOval(x1, y1, x2, x2);
+				}
+				break;
+			case 'O':																// alles analog rechteck:
+				if (jCheckBgefuellt.isSelected()) {
+					jPanelZeichenflaeche.getGraphics().fillOval(x1, y1, x2, y2);
+				} else {
+					jPanelZeichenflaeche.getGraphics().drawOval(x1, y1, x2, y2);
+				}
+				break;
+			case 'L':																// analog rechteck aber nur die ungefüllte version weil linie
+				jPanelZeichenflaeche.getGraphics().drawLine(x1, y1, x2, y2);
+				break;
+			}
+		} catch (Exception e){									// fehlerausgabe für fehler beim zeichnen
+			JOptionPane.showMessageDialog(this, "Die Eingaben sind ungültig");
+		}
 	}
 	
 	private void jBtnEndeActionPerformed(ActionEvent evt) {
 		System.exit(0);
+	}
+	
+	private void jBtnLoeschenActionPerformed(ActionEvent evt) {
+		jPanelZeichenflaeche.repaint();							// panel leeer neu zeichnen
 	}
 
 }

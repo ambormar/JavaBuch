@@ -80,12 +80,12 @@
  *  		1. PANEL-KOMPONENTE MIT VERÄNDERTEM AUSSEHEN:
  *  			-> komponente, die sich ein wenig vom aussehen der standard-komponente unterscheidet
  * 
- * 				SIEHE: 		13.1.2		PanelKomponente_MitVerändertemAussehen			s.398
+ * 				SIEHE: 		13.1.2		JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1			s.398
  * 
  * 			2. ZEICHNEN IN EINE STANDARD-KOPMONENTE: 
  * 				-> standard-komponente verwenden, deren aussehen sich während der laufzeit aber immer wieder verändern lässt.
  * 
- * 				SIEHE:		13.2		StandardKopmonenten_ZumHineinZeichnen			s.403
+ * 				SIEHE:		13.2		JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen2			s.403
  * 
  * 
  */

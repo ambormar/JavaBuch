@@ -6,6 +6,6 @@
 
 package uebungen13;
 
-public class CheckBox_JRadioButton_RadioGroup {
+public class GetGraphics_MethodeFuerKomponenten {
 
 }
