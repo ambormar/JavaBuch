@@ -20,7 +20,7 @@ package uebungen02;
  * 
  * 	float		kommazahl			4		32		ca 1.4*10hoch-45 ... 3.4 *10hoch38, genauigkeit bis ca. 7 stellen
  * 
- * 	double		kommazahl			2		16		ca 4.9*10hoch-324 ... 1.8 *10hoch308, genauigkeit bis ca. 15 stellen
+ * 	double		kommazahl			8		64		ca 4.9*10hoch-324 ... 1.8 *10hoch308, genauigkeit bis ca. 15 stellen
  */
 
 public class Datentypen_Primitive {

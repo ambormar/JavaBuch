@@ -1,4 +1,4 @@
-/* TODO 13.2.1   s.403,	 (2. ANSATZ)
+/* TODO 13.2.1.   s.403,	 (2. ANSATZ)
  * class 	JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen2
  * 
  * 		SIEHE AUCH:		13.1.2.   JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1	&	JMyPanel 		s.400+(398), 	(= 1. ANSATZ)
@@ -10,15 +10,16 @@
  * 
  * 			=> JPanel/JFrame mit Möglichkeit für den anwender zum interaktiv hineinzeichnen
  * 		
- * 			=> mit repaint() als button		= um die vorhandenen zeichnungen zu entfernen
+ * 			=> MIT repaint() als button		= um die vorhandenen zeichnungen zu entfernen
  * 											= achtung: repaint() für jPanel nicht in der selben methode wo gezeichnet wird, sondern extra methode oder von ausserhalb 
  * 
- * 			=> ohne repaint() fürs frame	= wenn man den Frame verzieht / bewegt, verschwindet das gezeichnete
+ * 			=> OHNE repaint() fürs frame	= wenn man den Frame verzieht / bewegt, verschwindet das gezeichnete
  * 
  * 
  * 		K&K:	 	Programm Zeichnen2
  * 					Dem Anwender steht ein Panel, auf das er verschiedene geometrische Figuren zeichnen kann, zur Verfügung. 
  * 					Position und Größe der Figuren können frei bestimmt werden.
+ * 					Bei verändern des frames durch den anwender verschwindet die zeichnung, weil der zeichnen-teil in dieser version nicht ge-repaintet werden kann
  * 
  * 		VORGEHEN:	1. frame mit JPanel, worauf das gezeichnete dargestellt wird
  * 
