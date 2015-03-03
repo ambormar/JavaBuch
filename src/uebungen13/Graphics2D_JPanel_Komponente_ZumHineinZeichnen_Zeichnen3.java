@@ -1,18 +1,16 @@
 /* TODO 13.2.4.   s.413, oben (2. ANSATZ) mit Graphics2D; OHNE REPAINT() bei frameveränderungen 
- * class Graphics2D_JPanel_Komponente_ZumHineinZeichnen_Zeichnen3			s.413, 
+ * class Graphics2D_JPanel_Komponente_ZumHineinZeichnen_Zeichnen3			
  * 
  * 		SIEHE BASICS:		13.2.4.   Graphics2D_API_Klasse_Methoden_Basics												s.410
  * 
- * 		SIEHE AUCH:	 		13.2.1.   JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen2				s.403, (2. ANSATZ) OHNE REPAINT() bei frameveränderungen
+ * 		VERGLEICHE:	 		13.2.1.   JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen2				s.403, (2. ANSATZ) OHNE REPAINT() bei frameveränderungen
  *  		
  * 	[[[	SIEHE AUCH:			13.1.2.   JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1	&	JMyPanel 		s.400+(398), (= 1. ANSATZ) INKL. REPAINT() bei frameveränderungen	]]]
  * 
  * 
- * !!!!!!!!!!!!!!!!!!!!	HIER WEITERMACHEN , NOCH ALLES KOMMENTIEREN	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * 
  * JPANEL (OD. AUCH JFRAME) ALS STANDARD-KOMPONENTE ZUM HINEINZEICHNEN:		(= 2. ANSATZ)
  * 
- * 			=> JPanel/JFrame mit Anchorlayout mit Möglichkeit für den anwender zum interaktiv hineinzeichnen
+ * 			=> JPanel/JFrame mit Möglichkeit für den anwender zum interaktiv hineinzeichnen
  * 		
  * 			=> MIT repaint() als button		= um die vorhandenen zeichnungen zu entfernen
  * 											= achtung: repaint() für jPanel nicht in der selben methode wo gezeichnet wird, sondern extra methode oder von ausserhalb 
@@ -20,13 +18,14 @@
  * 			=> OHNE repaint() fürs frame	= wenn man den Frame verzieht / bewegt, verschwindet das gezeichnete
  * 
  * 
- * 		K&K:	 	Programm Zeichnen3 		
- * 					Unter Verwendung von Graphics2D statt Graphics	& 	mit AnchorLayout
+ * 		K&K:	 	Programm Zeichnen3 (variante von Zeichnen2)
+ * 					Unter Verwendung von Graphics2D statt Graphics	
  * 					Dem Anwender steht ein Panel, auf das er verschiedene geometrische Figuren zeichnen kann, zur Verfügung. 
  * 					Position und Größe der Figuren können frei bestimmt werden.
  * 					Bei verändern des frames durch den anwender verschwindet die zeichnung, weil der zeichnen-teil in dieser version nicht ge-repaintet werden kann
  * 
- * 		VORGEHEN:	1. frame mit JPanel, worauf das gezeichnete dargestellt wird
+ * 
+ * 	VORGEHEN: [[[	1. frame mit JPanel, worauf das gezeichnete dargestellt wird
  * 
  * 					2. 4 positions-textfelder zur eingabe jeweils benötigten parameterwerte für die zeichenmethoden (x, y, höhe, breite)
  * 							-> werden nach programmlogik ein-/ausgeblendet & benannt
@@ -55,22 +54,71 @@
  * 								& -> char-variablen figur speichert den jeweilige anfangsbuchstaben der aktuellen geometrischen figur (L, O, R oder K) 
  * 										-> .. für switch-case der methode jBtnZeichnen..(..) 
  * 
- * 							=> CODE siehe: 		jRBtnReckteck..(..)		&	jRBtnLinie..(..)	&	jRBtnOval..(..)		&		jRBtnKreis..(..)
+ * 							=> CODE siehe: 		jRBtnReckteck..(..)		&	jRBtnLinie..(..)	&	jRBtnOval..(..)		&		jRBtnKreis..(..)		]]]
  * 		
+ * 	GRAPHICS2D:		
  * 					9. methode zu zeichen der geometrischen figuren jBtnZeichnen:
  * 
  * 							=> auslesen der parameterwerte der textfelder in x1, x2, y1, y2
  * 							=> switch-case unter verwendung der, in char-variabel figur gespeicherten buchstaben (aus den action-listener-methoden der radiobuttons) 
  * 							=> prüfen des checkbox-status bei den 2-dim figuren, ob gefüllt oder ungefüllt zeichnen 	
  * 									-> bsp:		if (jCheckBox.isSelected)
- * 							=> zeichenen der figuren	=> referenz auf Graphics mit .getGraphics() 	= zugriffs-methode aller komponenten (nachfahren der kalsse Component)
- * 														=> zeichenmethoden & die nötigen parameterwerte		
- * 									-> bsp: 	jPanelZeichenflaeche.getGraphics.fillRect(x1, y1, x2. y2)
- * 	
- * 							=> CODE siehe:		private void jBtnZeichnen..(..)
+ *							=> zeichenen der figuren	=> unter verwendung eines Graphics2D-objekts zum darauf/damit zeichnen durch:	getGraphics() &	Type-cast auf Graphics2D:
+ *							
+ * 															BSP:	 	Graphics2D g2 = (Graphics2D) jPanelZeichenflaeche.getGraphics();
+ * 
+ *														=> form-objekt (Rectangle2D.Float, Ellipse2D.Float etc.) aus dem package JAVA.AWT.GEOM erzeugen mit x,y,breite, höhe
+ *														
+ *															BSP:		Rectangle2D.Float rechteck = new Rectangle2D.Float(x1, y1, x2, y2);
+ *															
+ * 														=> fill() oder draw() via Graphics2D-objekt aufrufen & form-objekt als parameter mitgeben
+ * 
+ * 															BSP:		g2d.fill(rechteck); 	
+ * 
+ * 														=> farbverläufe:		 mit Klasse GradientPaint & setPaint()
+ * 														=> linienstil:			 mit Klasse BasicStrocke & setStroke()
+ * 
+ * 														=> BASICS SIEHE :		13.2.4.   Graphics2D_API_Klasse_Methoden_Basics		s.410
+ * 
+ * 		=> KERNCODE:	
+ * 
+ * 			import java.awt.BasicStroke;			
+ *			import java.awt.GradientPaint;			 
+ *			import java.awt.Graphics2D;				 
+ *			import java.awt.geom.Rectangle2D;													// dito für kreis & oval & linie
+ *
+ *			private Graphics2D g2d;																// als attribut der klasse: variable für 2d grafik-objekt 
+ *
+ *			private void jBtnZeichnen..(..) {
+ *				try {
+ *					x1 = Integer.parseInt(jTFPositionX1.getText());								// alle parameterwerte x1,y1,x2,y2 aus den TextFeldern zwischenspeichern
+ *					..
+ *					g2d = (Graphics2D) jPanelZeichenflaeche.getGraphics();						// verwendung des Graphics2D-objekts durch:	getGraphics() & Type-cast auf Graphics2D
+ *					g2d.setColor(Color.red);																	// zeichenfarbe des g2d-objekts auf rot setzen
+ *					BasicStroke stil = new BasicStroke(30.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL);	// objekt für linienstil mit parametern: breite, linienende, kreuzungspunkte
+ *					g2d.setStroke(stil);																		// linienart auf linienstil stil setzen
+ *					GradientPaint fuellung = new GradientPaint(0, 0, Color.red, 100, 100, Color.yellow, true);	// objekt für farbverlauf mit parametern: anfangs-punkt, dessen farbe, endpunk, dessen farbe, wiederholungs-boolean
+ *					g2d.setPaint(fuellung);																		// farbart auf farbverlauf (objekt fuellung) setzen
+ *					switch (figur) {																			// switch-case für die jeweilige geometrische figur die zu zeichnen ist
+ *					case 'R':																	// im fall variable R für rechteck..
+ *						Rectangle2D.Float rechteck = new Rectangle2D.Float(x1, y1, x2, y2);		// rechteck-objekt erzeugen mit x,y,breite, höhe
+ *						if (jCheckBgefuellt.isSelected()){										// wenn checkbox angehakt
+ *							g2d.fill(rechteck);													// objekt rechteck ausgefüllt ins objekt g2d malen
+ *						} else {																// sonst
+ *							g2d.draw(rechteck);													// objekt rechteck leer ins objekt g2d zeichnen
+ *						}
+ *						break;
+ *					case 'K':																	// alles analog rechteck:
+ *						..
+ *					case 'O':																	// alles analog rechteck:
+ *						..
+ *					case 'L':																	// analog rechteck aber nur die ungefüllte version weil linie
+ *						..
+ *				} catch (..){
+ *			}
  * 
  * 
- * 	JCHECKBOX:		
+ *[[ JCHECKBOX:		
  * 
  * 			=> häckchen box
  * 			=> gut zur abfrage von wahrheitswert (true - false)
@@ -114,14 +162,7 @@
  *			=> jedem RadioButton in den properties unter eigenschaft buttonGroup die RadioGroup (hier: BtnGrpFigure) zuordnen 
  * 				
  * 			=> CODE:   		getBtnGrpFigure().add(jRBtnReckteck);		// bsp ergänzung  im initGUI() um jRBtnRechteck der ButtonGroup BtnGrpFigur zuzuordnen
- * 																		// via getter-methode verschaft sich der frame zugriff auf die readiogroup (BtnGrpFigure)
- * 
- * 	METHODE GETGRAPHICS():		=> komponenten stammen von der klasse Component ab
- * 								=> mit getGraphics() ermöglicht so die klasse component so für alle komponenten zugriff auf Graphics 
- * 
- * 								=> bsp:		JPanelXY.getGraphics.drawLine(x1,y1,x2,y2)
- * 			
- * 
+ * 																		// via getter-methode verschaft sich der frame zugriff auf die readiogroup (BtnGrpFigure)		]]]
  */
 
 package uebungen13;
@@ -363,7 +404,7 @@ public class Graphics2D_JPanel_Komponente_ZumHineinZeichnen_Zeichnen3 extends ja
 		}
 	}
 
-	// getter-methode für ButtonGroup;  Jigloo-erzeugt; entsprechende variable wird oben auch autoerzeugt
+	   // getter-methode für ButtonGroup;  Jigloo-erzeugt; entsprechende variable wird oben auch autoerzeugt
 	private ButtonGroup getBtnGrpFigure() {		// methode liefert referenz auf die ButtonGroup
 		if(BtnGrpFigure == null) {				// prüft ob bereits objekt erzeugt wurde, wenn nicht ..
 			BtnGrpFigure = new ButtonGroup();	// .. wird konstruktor aufgerufen (objekt erzeugt) ..
@@ -371,7 +412,7 @@ public class Graphics2D_JPanel_Komponente_ZumHineinZeichnen_Zeichnen3 extends ja
 		return BtnGrpFigure;					// .. und die referenz auf das objekt zurückgeliefert
 	}
 	
-	//  Methode zum beschriften/anpassen der textfelder je nach radiobutton-auswahl (rechteck, kreis, oval oder linie!!)
+	   //  Methode zum beschriften/anpassen der textfelder je nach radiobutton-auswahl (rechteck, kreis, oval oder linie!!)
 	private void setzeBeschriftungen(){ 			
 		if (jRBtnLinie.isSelected()) {				// wenn linie gewählt ist: ..
 			jLPositionX1.setText("Startpunkt x:");	// .. verschiedene labels für die textfelder anpassen für parameter-werte (x1,y1,x2,y2) [y1 bleibt immer gleich]
