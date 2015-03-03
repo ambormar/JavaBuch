@@ -1,11 +1,11 @@
-/* TODO 13.1.2.   s.400+(398), (eins. v. JMyPanel statt JPanel)	(1. ANSATZ)
+/* TODO 13.1.2.   s.400+(398), (JMyPanel anstelle JPanel) (1. ANSATZ) INKL. REPAINT() bei Frameveränderungen
  * class JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1		&	JMyPanel  	
  * 
  * 		SIEHE:			13.1.2.  	JMyPanel				s.398+(400),	(1. ANSATZ, TEIL)
  * 
  * 		SIEHE AUCH:	 	13.1.1.   	Graphics_Klasse_Basics_Paint_Repaint_Invalidate_Canvas_InKoponentenZeichnen2Ansaetze			s.396,	
  * 
- * 		SIEHE AUCH:		13.2.1.		JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen2		s.403		(= 2. ANSATZ)
+ * 		SIEHE AUCH:		13.2.1.		JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen2		s.403, (= 2. ANSATZ) OHNE REPAINT() bei frameveränderungen
  * 									
  * 
  * JPANEL (OD. AUCH JFRAME) ALS KOMPONENTE MIT VERÄNDERTEM AUSSEHEN ERSTELLEN:		(= 1. ANSATZ)

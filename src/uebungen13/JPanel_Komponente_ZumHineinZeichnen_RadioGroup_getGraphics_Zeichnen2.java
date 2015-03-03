@@ -1,7 +1,7 @@
-/* TODO 13.2.1.   s.403,	 (2. ANSATZ)
+/* TODO 13.2.1.   s.403, (2. ANSATZ) OHNE REPAINT() bei frameveränderungen  
  * class 	JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen2
  * 
- * 		SIEHE AUCH:		13.1.2.   JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1	&	JMyPanel 		s.400+(398), 	(= 1. ANSATZ)
+ * 		SIEHE AUCH:		13.1.2.   JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1	&	JMyPanel 		s.400+(398),	(= 1. ANSATZ) INKL. REPAINT() bei Frameveränderungen
  * 
  * 		SIEHE AUCH:	 	13.1.1.   Graphics_Klasse_Basics_Paint_Repaint_Invalidate_Canvas_InKoponentenZeichnen2Ansaetze			s.396,		
  * 
@@ -9,11 +9,11 @@
  * JPANEL (OD. AUCH JFRAME) ALS STANDARD-KOMPONENTE ZUM HINEINZEICHNEN:		(= 2. ANSATZ)
  * 
  * 			=> JPanel/JFrame mit Möglichkeit für den anwender zum interaktiv hineinzeichnen
+ * 
+ * 			=> OHNE repaint() fürs frame	= wenn man den Frame verzieht / bewegt, verschwindet das gezeichnete
  * 		
  * 			=> MIT repaint() als button		= um die vorhandenen zeichnungen zu entfernen
  * 											= achtung: repaint() für jPanel nicht in der selben methode wo gezeichnet wird, sondern extra methode oder von ausserhalb 
- * 
- * 			=> OHNE repaint() fürs frame	= wenn man den Frame verzieht / bewegt, verschwindet das gezeichnete
  * 
  * 
  * 		K&K:	 	Programm Zeichnen2
@@ -58,7 +58,7 @@
  * 							=> switch-case unter verwendung der, in char-variabel figur gespeicherten buchstaben (aus den action-listener-methoden der radiobuttons) 
  * 							=> prüfen des checkbox-status bei den 2-dim figuren, ob gefüllt oder ungefüllt zeichnen 	
  * 									-> bsp:		if (jCheckBox.isSelected)
- * 							=> zeichenen der figuren	=> referenz auf Graphics mit .getGraphics() 	= zugriffs-methode aller komponenten (nachfahren der kalsse Component)
+ * 							=> zeichenen der figuren	=> referenz auf Graphics mit .getGraphics() 	= zugriffs-methode aller komponenten (nachfahren der klasse Component)
  * 														=> zeichenmethoden & die nötigen parameterwerte		
  * 									-> bsp: 	jPanelZeichenflaeche.getGraphics.fillRect(x1, y1, x2. y2)
  * 	
@@ -111,7 +111,7 @@
  * 			=> CODE:   		getBtnGrpFigure().add(jRBtnReckteck);		// bsp ergänzung  im initGUI() um jRBtnRechteck der ButtonGroup BtnGrpFigur zuzuordnen
  * 																		// via getter-methode verschaft sich der frame zugriff auf die readiogroup (BtnGrpFigure)
  * 
- * 	METHODE GETGRAPHICS():		=> komponenten stammen von der klasse Component ab
+ * 	METHODE GETGRAPHICS():		=> die komponenten (von jigloo) stammen von der klasse Component ab
  * 								=> mit getGraphics() ermöglicht so die klasse component so für alle komponenten zugriff auf Graphics 
  * 
  * 								=> bsp:		JPanelXY.getGraphics.drawLine(x1,y1,x2,y2)
@@ -120,6 +120,7 @@
  */
 
 package uebungen13;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -347,8 +348,8 @@ public class JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen
 	
 	// getter-methode für ButtonGroup;  Jigloo-erzeugt; entsprechende variable wird oben auch autoerzeugt
 	private ButtonGroup getBtnGrpFigure() {		// methode liefert referenz auf die ButtonGroup
-		if(BtnGrpFigure == null) {				// prüft ob bereits objekt erzeugt wurde..
-			BtnGrpFigure = new ButtonGroup();	// .. wenn nicht, wird konstruktor aufgerufen (objekt erzeugt) ..
+		if(BtnGrpFigure == null) {				// prüft ob bereits objekt erzeugt wurde, wenn nicht ..
+			BtnGrpFigure = new ButtonGroup();	// .. wird konstruktor aufgerufen (objekt erzeugt) ..
 		}
 		return BtnGrpFigure;					// .. und die referenz auf das objekt zurückgeliefert
 	}

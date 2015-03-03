@@ -45,8 +45,7 @@ import javax.swing.SwingUtilities;
  * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
  * ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
-public class Zeichnen3 extends javax.swing.JFrame
-{
+public class Zeichnen3 extends javax.swing.JFrame {
 	private JLabel jLZeichenflaeche;
 	private JPanel jPanelZeichenflaeche;
 	private JLabel jLPositionx1;
@@ -65,17 +64,16 @@ public class Zeichnen3 extends javax.swing.JFrame
 	private JRadioButton jRBtnKreis;
 	private JRadioButton jRBtnRechteck;
 	private ButtonGroup jBtnGrpFigur;
-	private char figur = 'R';
+	private char figur = 'K';
 	private int x1, y1, x2, y2;
 	private Graphics2D g2d;
 
 	{
 		// Set Look & Feel
-		try
-		{
-			javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch (Exception e)
-		{
+		try {
+			javax.swing.UIManager
+					.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -83,12 +81,9 @@ public class Zeichnen3 extends javax.swing.JFrame
 	/**
 	 * Auto-generated main method to display this JFrame
 	 */
-	public static void main(String[] args)
-	{
-		SwingUtilities.invokeLater(new Runnable()
-		{
-			public void run()
-			{
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
 				Zeichnen3 inst = new Zeichnen3();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
@@ -96,25 +91,34 @@ public class Zeichnen3 extends javax.swing.JFrame
 		});
 	}
 
-	public Zeichnen3()
-	{
+	public Zeichnen3() {
 		super();
 		initGUI();
 	}
 
-	private void initGUI()
-	{
-		try
-		{
+	private void initGUI() {
+		try {
 			AnchorLayout thisLayout = new AnchorLayout();
 			getContentPane().setLayout(thisLayout);
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setTitle("Zeichnen3");
-			getContentPane().setBackground(new java.awt.Color(236,233,216));
+			getContentPane().setBackground(new java.awt.Color(236, 233, 216));
 			{
 				jRBtnLinie = new JRadioButton();
-				getContentPane().add(getJBtnEnde(), new AnchorConstraint(756, 756, 819, 616, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-				getContentPane().add(getJBtnZeichnen(), new AnchorConstraint(530, 831, 591, 616, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
+				getContentPane().add(
+						getJBtnEnde(),
+						new AnchorConstraint(756, 756, 819, 616,
+								AnchorConstraint.ANCHOR_REL,
+								AnchorConstraint.ANCHOR_REL,
+								AnchorConstraint.ANCHOR_REL,
+								AnchorConstraint.ANCHOR_REL));
+				getContentPane().add(
+						getJBtnZeichnen(),
+						new AnchorConstraint(530, 831, 591, 616,
+								AnchorConstraint.ANCHOR_REL,
+								AnchorConstraint.ANCHOR_REL,
+								AnchorConstraint.ANCHOR_REL,
+								AnchorConstraint.ANCHOR_REL));
 				getContentPane().add(
 						getJCheckBgefuellt(),
 						new AnchorConstraint(224, 971, 287, 804,
@@ -131,10 +135,8 @@ public class Zeichnen3 extends javax.swing.JFrame
 								AnchorConstraint.ANCHOR_REL));
 				jRBtnLinie.setText("Linie");
 				jRBtnLinie.setPreferredSize(new java.awt.Dimension(80, 23));
-				jRBtnLinie.addActionListener(new ActionListener()
-				{
-					public void actionPerformed(ActionEvent evt)
-					{
+				jRBtnLinie.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
 						jRBtnLinieActionPerformed(evt);
 					}
 				});
@@ -151,10 +153,8 @@ public class Zeichnen3 extends javax.swing.JFrame
 								AnchorConstraint.ANCHOR_REL));
 				jRBtnOval.setText("Oval");
 				jRBtnOval.setPreferredSize(new java.awt.Dimension(80, 23));
-				jRBtnOval.addActionListener(new ActionListener()
-				{
-					public void actionPerformed(ActionEvent evt)
-					{
+				jRBtnOval.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
 						jRBtnOvalActionPerformed(evt);
 					}
 				});
@@ -171,11 +171,9 @@ public class Zeichnen3 extends javax.swing.JFrame
 								AnchorConstraint.ANCHOR_REL));
 				jRBtnKreis.setText("Kreis");
 				jRBtnKreis.setPreferredSize(new java.awt.Dimension(80, 23));
-				jRBtnKreis.setBackground(new java.awt.Color(236,233,216));
-				jRBtnKreis.addActionListener(new ActionListener()
-				{
-					public void actionPerformed(ActionEvent evt)
-					{
+				jRBtnKreis.setBackground(new java.awt.Color(236, 233, 216));
+				jRBtnKreis.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent evt) {
 						jRBtnKreisActionPerformed(evt);
 					}
 				});
@@ -192,7 +190,7 @@ public class Zeichnen3 extends javax.swing.JFrame
 								AnchorConstraint.ANCHOR_REL));
 				jRBtnRechteck.setText("Rechteck");
 				jRBtnRechteck.setPreferredSize(new java.awt.Dimension(80, 23));
-				jRBtnRechteck.setBackground(new java.awt.Color(236,233,216));
+				jRBtnRechteck.setBackground(new java.awt.Color(236, 233, 216));
 				jRBtnRechteck.setSelected(true);
 				jRBtnRechteck.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
@@ -307,8 +305,15 @@ public class Zeichnen3 extends javax.swing.JFrame
 			}
 			{
 				jPanelZeichenflaeche = new JPanel();
-				getContentPane().add(jPanelZeichenflaeche, new AnchorConstraint(97, 546, 979, 13, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-				jPanelZeichenflaeche.setPreferredSize(new java.awt.Dimension(287, 320));
+				getContentPane().add(
+						jPanelZeichenflaeche,
+						new AnchorConstraint(97, 546, 979, 13,
+								AnchorConstraint.ANCHOR_REL,
+								AnchorConstraint.ANCHOR_REL,
+								AnchorConstraint.ANCHOR_REL,
+								AnchorConstraint.ANCHOR_REL));
+				jPanelZeichenflaeche.setPreferredSize(new java.awt.Dimension(
+						287, 320));
 				jPanelZeichenflaeche.setBackground(new java.awt.Color(255, 255,
 						255));
 			}
@@ -322,30 +327,26 @@ public class Zeichnen3 extends javax.swing.JFrame
 								AnchorConstraint.ANCHOR_REL,
 								AnchorConstraint.ANCHOR_REL));
 				jLZeichenflaeche.setText("Zeichenfläche");
-				jLZeichenflaeche.setPreferredSize(new java.awt.Dimension(91, 16));
+				jLZeichenflaeche
+						.setPreferredSize(new java.awt.Dimension(91, 16));
 			}
 			pack();
 			this.setSize(547, 397);
-		} catch (Exception e)
-		{
+		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();
 		}
 	}
 
-	private ButtonGroup getBtnGrpFigur()
-	{
-		if (jBtnGrpFigur == null)
-		{
+	private ButtonGroup getBtnGrpFigur() {
+		if (jBtnGrpFigur == null) {
 			jBtnGrpFigur = new ButtonGroup();
 		}
 		return jBtnGrpFigur;
 	}
 
-	private JCheckBox getJCheckBgefuellt()
-	{
-		if (jCheckBgefuellt == null)
-		{
+	private JCheckBox getJCheckBgefuellt() {
+		if (jCheckBgefuellt == null) {
 			jCheckBgefuellt = new JCheckBox();
 			jCheckBgefuellt.setText("gefüllt");
 			jCheckBgefuellt.setPreferredSize(new java.awt.Dimension(90, 23));
@@ -353,17 +354,13 @@ public class Zeichnen3 extends javax.swing.JFrame
 		return jCheckBgefuellt;
 	}
 
-	private JButton getJBtnZeichnen()
-	{
-		if (jBtnZeichnen == null)
-		{
+	private JButton getJBtnZeichnen() {
+		if (jBtnZeichnen == null) {
 			jBtnZeichnen = new JButton();
 			jBtnZeichnen.setText("Zeichnen");
 			jBtnZeichnen.setPreferredSize(new java.awt.Dimension(114, 22));
-			jBtnZeichnen.addActionListener(new ActionListener()
-			{
-				public void actionPerformed(ActionEvent evt)
-				{
+			jBtnZeichnen.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
 					jBtnZeichnenActionPerformed(evt);
 				}
 			});
@@ -371,17 +368,13 @@ public class Zeichnen3 extends javax.swing.JFrame
 		return jBtnZeichnen;
 	}
 
-	private JButton getJBtnEnde()
-	{
-		if (jBtnEnde == null)
-		{
+	private JButton getJBtnEnde() {
+		if (jBtnEnde == null) {
 			jBtnEnde = new JButton();
 			jBtnEnde.setText("Ende");
 			jBtnEnde.setPreferredSize(new java.awt.Dimension(75, 23));
-			jBtnEnde.addActionListener(new ActionListener()
-			{
-				public void actionPerformed(ActionEvent evt)
-				{
+			jBtnEnde.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
 					jBtnEndeActionPerformed(evt);
 				}
 			});
@@ -389,26 +382,22 @@ public class Zeichnen3 extends javax.swing.JFrame
 		return jBtnEnde;
 	}
 
-	private void jBtnEndeActionPerformed(ActionEvent evt)
-	{
+	private void jBtnEndeActionPerformed(ActionEvent evt) {
 		System.exit(0);
 	}
 
-	private void setzeBeschriftungen()
-	{
-		if (jRBtnLinie.isSelected())
-		{
+	private void setzeBeschriftungen() {
+		if (jRBtnLinie.isSelected()) {
 			jLPositionx1.setText("Startpunkt x:");
 			jLPositionx2.setText("Endpunkt x:");
 			jLPositiony2.setText("y:");
-		} else
-		{
+		} else {
 			jLPositionx1.setText("Position x:");
 			jLPositionx2.setText("Breite:");
 			jLPositiony2.setText("Höhe:");
 		}
 	}
-	
+
 	private void jRBtnRechteckActionPerformed(ActionEvent evt) {
 		setzeBeschriftungen();
 		jCheckBgefuellt.setVisible(true);
@@ -417,8 +406,7 @@ public class Zeichnen3 extends javax.swing.JFrame
 		figur = 'R';
 	}
 
-	private void jRBtnKreisActionPerformed(ActionEvent evt)
-	{
+	private void jRBtnKreisActionPerformed(ActionEvent evt) {
 		setzeBeschriftungen();
 		jCheckBgefuellt.setVisible(true);
 		jLPositiony2.setVisible(false);
@@ -426,8 +414,7 @@ public class Zeichnen3 extends javax.swing.JFrame
 		figur = 'K';
 	}
 
-	private void jRBtnOvalActionPerformed(ActionEvent evt)
-	{
+	private void jRBtnOvalActionPerformed(ActionEvent evt) {
 		setzeBeschriftungen();
 		jCheckBgefuellt.setVisible(true);
 		jLPositiony2.setVisible(true);
@@ -435,8 +422,7 @@ public class Zeichnen3 extends javax.swing.JFrame
 		figur = 'O';
 	}
 
-	private void jRBtnLinieActionPerformed(ActionEvent evt)
-	{
+	private void jRBtnLinieActionPerformed(ActionEvent evt) {
 		setzeBeschriftungen();
 		jCheckBgefuellt.setVisible(false);
 		jLPositiony2.setVisible(true);
@@ -444,64 +430,53 @@ public class Zeichnen3 extends javax.swing.JFrame
 		figur = 'L';
 	}
 
-	private void jBtnZeichnenActionPerformed(ActionEvent evt)
-	{
-		try
-		{
+	private void jBtnZeichnenActionPerformed(ActionEvent evt) {
+		try {
 			x1 = Integer.parseInt(jTFPositionx1.getText());
 			y1 = Integer.parseInt(jTFPositiony1.getText());
 			x2 = Integer.parseInt(jTFPositionx2.getText());
 			y2 = Integer.parseInt(jTFPositiony2.getText());
-			g2d = (Graphics2D)jPanelZeichenflaeche.getGraphics();
+			g2d = (Graphics2D) jPanelZeichenflaeche.getGraphics();
 			g2d.setColor(Color.red);
-			BasicStroke stil = new BasicStroke(30.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL);
+			BasicStroke stil = new BasicStroke(30.0f, BasicStroke.CAP_ROUND,
+					BasicStroke.JOIN_BEVEL);
 			g2d.setStroke(stil);
-			GradientPaint fuellung = new GradientPaint(0,0,Color.yellow,100,100,Color.red, true);
+			GradientPaint fuellung = new GradientPaint(0, 0, Color.yellow, 100,
+					100, Color.red, true);
 			g2d.setPaint(fuellung);
- 			switch (figur)
-			{
+			switch (figur) {
 			case 'R':
-				Rectangle2D.Float rechteck = new Rectangle2D.Float(x1,y1,x2,y2);
-				if (jCheckBgefuellt.isSelected())
-				{
+				Rectangle2D.Float rechteck = new Rectangle2D.Float(x1, y1, x2,
+						y2);
+				if (jCheckBgefuellt.isSelected()) {
 					g2d.fill(rechteck);
-				}
-				else
-				{
+				} else {
 					g2d.draw(rechteck);
 				}
 				break;
 			case 'K':
 				Ellipse2D.Float oval = new Ellipse2D.Float(x1, y1, x2, x2);
-				if (jCheckBgefuellt.isSelected())
-				{
+				if (jCheckBgefuellt.isSelected()) {
 					g2d.fill(oval);
-				}
-				else
-				{
+				} else {
 					g2d.draw(oval);
 				}
 				break;
 			case 'O':
 				Ellipse2D.Float kreis = new Ellipse2D.Float(x1, y1, x2, y2);
-				if (jCheckBgefuellt.isSelected())
-				{
+				if (jCheckBgefuellt.isSelected()) {
 					g2d.fill(kreis);
-				}
-				else
-				{
+				} else {
 					g2d.draw(kreis);
 				}
 				break;
 			case 'L':
-				Line2D.Float linie = new Line2D.Float(x1,y1,x2,y2);
+				Line2D.Float linie = new Line2D.Float(x1, y1, x2, y2);
 				g2d.draw(linie);
 				break;
 			}
-		} catch (Exception e)
-		{
-			JOptionPane.showMessageDialog(this,
-					"Die Eingaben sind ungültig.");
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Die Eingaben sind ungültig.");
 		}
 	}
 
