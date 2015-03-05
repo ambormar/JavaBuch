@@ -6,36 +6,29 @@
 
 package uebungen13;
 
-import java.awt.Dimension;
+import java.awt.LayoutManager;
 
-import javax.swing.WindowConstants;
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-public class JMyPaintPanel extends javax.swing.JPanel {
+public class JMyPaintPanel extends JPanel {
 
-	/**
-	* Auto-generated main method to display this 
-	* JPanel inside a new JFrame.
-	*/
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.getContentPane().add(new JMyPaintPanel());
-		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frame.pack();
-		frame.setVisible(true);
-	}
-	
 	public JMyPaintPanel() {
-		super();
-		initGUI();
+		// TODO Auto-generated constructor stub
 	}
-	
-	private void initGUI() {
-		try {
-			setPreferredSize(new Dimension(400, 300));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
+	public JMyPaintPanel(LayoutManager layout) {
+		super(layout);
+		// TODO Auto-generated constructor stub
+	}
+
+	public JMyPaintPanel(boolean isDoubleBuffered) {
+		super(isDoubleBuffered);
+		// TODO Auto-generated constructor stub
+	}
+
+	public JMyPaintPanel(LayoutManager layout, boolean isDoubleBuffered) {
+		super(layout, isDoubleBuffered);
+		// TODO Auto-generated constructor stub
 	}
 
 }
