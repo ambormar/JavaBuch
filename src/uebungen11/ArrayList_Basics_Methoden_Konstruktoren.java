@@ -22,6 +22,13 @@
  * 
  * 		ERZEUGEN BSP:	ArrayList<Double> zahlen = new ArrayList<Double>();			// objekttyp in spitzen klammern, keine grössenangaben -> konstruktorabhängig
  * 
+ * 	[	AUCH MÖGL.:		ArrayList zahlen = new Arraylist()							// ohne <datentyp> -angaben in spitzen klammern gibt eclipse eine warnung aus (kein fehler): ..
+ * 																					// .. datentyp ist dann nicht festgelegt und bei jedem hinzufügen eines neuen elements gibts eine warnung:
+ * 																					// .. (arraylist is a raw type. references to generic type ArrayList<E> should be parameterized) s. 416	]
+ * 
+ * 	[	AUCH MÖGL.:		ArrayList<? extends KlasseXY> xyName = new ArrayList<? extends KlasseXY>()	// => mit Generischen datentypen:	? = wildcard, <? extends KlasseXY> = irgendein .. 
+ * 																									//	..objektdatentyp, der von KlasseXY abgeleitet ist  (maja fragen)					]
+ * 
  * 		SCHEMA:			konstruktor<objekttyp>  bezeichner = new konstruktor<objekttyp>();	
  * 
  * 		[AUSGABEN:		mit for-schleifen oder foreach-schleifen die bearbeiteten daten ausgeben	] * 
