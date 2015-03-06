@@ -172,27 +172,34 @@
 
 package uebungen13;
 
-import java.awt.BasicStroke;
+
 import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;				
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 
 import javax.swing.ButtonGroup;						 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;						
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JRadioButton;					
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
 public class JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4 extends javax.swing.JFrame {
 
 	{
@@ -225,7 +232,8 @@ public class JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Z
 
 	private char figur = 'R';															// variable für anfangsbuchstaben der zu zeichnenden geom. figur ('L', 'O', 'K', 'R') für switch-case erkennung
 	private int x1, y1, x2, y2;															// variablen für speicherg. der parameterwerte aus den textfeldern
-	private Graphics2D g2d;																// variable für 2d grafik-objekt 
+	private JMyPaintPanel jPanelZeichenflaeche;					// zeichenfläche initialsieren, aber mit dem objektdatentyp JMyPaintPanel (geerbt von JPanel)
+	private Color farbe = Color.black;
 	
 	/**
 	* Auto-generated main method to display this JFrame
@@ -256,6 +264,12 @@ public class JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Z
 				getContentPane().add(jLZeichenflaeche);
 				jLZeichenflaeche.setText("Zeichenfläche");
 				jLZeichenflaeche.setBounds(12, 12, 135, 16);
+			}
+			{
+				jPanelZeichenflaeche = new JMyPaintPanel();							// zeichenfläche aus der selbsterstellten/abgeleiteten komponente JMyPaintPanel
+				getContentPane().add(jPanelZeichenflaeche);
+				jPanelZeichenflaeche.setBounds(12, 40, 336, 410);
+				jPanelZeichenflaeche.setBackground(new java.awt.Color(255,255,255));						// hintergrund auf weiss setzen mit gui properties
 			}
 			{
 				jLPositionX1 = new JLabel();
@@ -364,7 +378,7 @@ public class JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Z
 				jBtnZeichnen = new JButton();
 				getContentPane().add(jBtnZeichnen);
 				jBtnZeichnen.setText("Zeichnen");
-				jBtnZeichnen.setBounds(418, 280, 125, 23);
+				jBtnZeichnen.setBounds(418, 280, 202, 23);
 				jBtnZeichnen.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
 						jBtnZeichnenActionPerformed(evt);
@@ -374,8 +388,8 @@ public class JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Z
 			{
 				jBtnLoeschen = new JButton();
 				getContentPane().add(jBtnLoeschen);
-				jBtnLoeschen.setText("Zeichnung löschen");
-				jBtnLoeschen.setBounds(418, 330, 125, 23);
+				jBtnLoeschen.setText("Letzte Zeichnung löschen");
+				jBtnLoeschen.setBounds(418, 330, 202, 23);
 				jBtnLoeschen.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
 						jBtnLoeschenActionPerformed(evt);
@@ -386,7 +400,7 @@ public class JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Z
 				jBtnEnde = new JButton();
 				getContentPane().add(jBtnEnde);
 				jBtnEnde.setText("Ende");
-				jBtnEnde.setBounds(418, 381, 125, 23);
+				jBtnEnde.setBounds(418, 381, 202, 23);
 				jBtnEnde.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
 						jBtnEndeActionPerformed(evt);
@@ -454,11 +468,15 @@ public class JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Z
 		figur = 'L';																							// char-variable L (für geom. Figur linie) für spätere verwendung im switch-case der zeichnen-methode 
 	}
 	
-
+	
 	private void jBtnZeichnenActionPerformed(ActionEvent evt) {
 		try {
-			
-		
+			x1 = Integer.parseInt(jTFPositionX1.getText());
+			y1 = Integer.parseInt(jTFPositionY1.getText());
+			x2 = Integer.parseInt(jTFPositionX2.getText());
+			y2 = Integer.parseInt(jTFPositionY2.getText());
+			jPanelZeichenflaeche.addZeichObjekt(figur, jCheckBgefuellt.isSelected(), x1, y1, x2, y2, farbe, 1.0f);
+			jPanelZeichenflaeche.repaint();
 		} catch (Exception e){																					// fehlerausgabe für fehler beim zeichnen
 			JOptionPane.showMessageDialog(this, "Die Eingaben sind ungültig");
 		}
@@ -468,8 +486,10 @@ public class JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Z
 		System.exit(0);
 	}
 	
+	// methode JMyPaintPanel neu leer zu zeichnen
 	private void jBtnLoeschenActionPerformed(ActionEvent evt) {													// methode um panel leer neu zu zeichnen
-																												// xy.repaint() : panel leeer neu zeichnen
+			jPanelZeichenflaeche.loescheLetztesZeichenObjekt(); 	// aufruf der methode um das letzte zeichenobjekt aus der arrralist figuren (im JMyPaintPanel) zu löschen 								
+			jPanelZeichenflaeche.repaint();																		// xy.repaint() : panel neu zeichnen (inkl. verbleibende zeichenobjekte der arraylist figuren) 
 	}
 
 }

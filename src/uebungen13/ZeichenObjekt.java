@@ -28,7 +28,7 @@ public class ZeichenObjekt {		// klasse zur beschreibung einer geometrischen fig
 		y1 = 0;
 		x2 = 0;
 		y2 = 0;
-		col = Color.white;
+		col = Color.gray;
 		lbreite = 1.0f;
 	}
 	

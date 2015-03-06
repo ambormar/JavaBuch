@@ -30,13 +30,18 @@
 
 package uebungen13;
 
+import java.awt.BasicStroke;		
 import java.awt.Color;
 import java.awt.Graphics;			// guck
-import java.awt.Graphics2D;
+import java.awt.Graphics2D;			// guck
 import java.awt.LayoutManager;		// themenspez. import
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;			// guck
 
-import javax.swing.JPanel;
+import javax.swing.JPanel;			// guck
+
 
 public class JMyPaintPanel extends JPanel {
 	
@@ -67,12 +72,51 @@ public class JMyPaintPanel extends JPanel {
 		figuren.add(new ZeichenObjekt(t,f,x,y,v,w,c,lb));		// erstellen eines neuen Zeichenobjekts und ablegen im in der ArrayList unter übergabe aller werte
 	}
 	
-	// überschreiben der paintComponent(..)-methode der superklasse, um ein ZeichenObjekt nach dem anderen aus dem behälter (=ArrayList) zunemen und zu zeichnen
+	// methode zum löschen der zeichenobjekte als schnittstelle zwischen dem Zeichenprogramm (Zeichnen4) und der zeichenfläche (JMyPaintPanel)
+	public void loescheLetztesZeichenObjekt(){
+		figuren.remove(figuren.size()-1);										// leztes element der arraylist figuren löschen
+	}
+	
+	// überschreiben der paintComponent(..)-methode der superklasse (JPanel), um ein ZeichenObjekt nach dem anderen aus dem behälter (=ArrayList) zunemen und zu zeichnen
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);								// aufruf der methode paintComponent(..) der superklasse unter übergabe des 
-		Graphics2D g2D = (Graphics2D) g;						// hier weiter !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		
-		
+		super.paintComponent(g);								// aufruf der methode paintComponent(..) der superklasse unter übergabe des graphic-objekts g 
+		Graphics2D g2d = (Graphics2D) g;						// graphics2D-kontext-objekt g2d erstellen zurch zuweisen des gecasteten graphics-objekt g
+		for (int i= 0; i < figuren.size(); i++) {				// für alle im arraylist figuren gespeicherten zeichenobjekte
+			ZeichenObjekt zo = figuren.get(i);
+			g2d.setColor(zo.getCol());
+			BasicStroke stil = new BasicStroke(zo.getLbreite(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);
+			g2d.setStroke(stil);
+			switch (zo.getTyp()) {								// switch typ der zeichenobjekt-instanz
+			case 'R':	
+				Rectangle2D.Float rechteck = new Rectangle2D.Float(zo.getX1(), zo.getY1(), zo.getX2(), zo.getY2());
+				if (zo.isGefuellt()) {
+					g2d.fill(rechteck);
+				} else {
+					g2d.draw(rechteck);
+				}
+				break;
+			case 'K':
+				Ellipse2D.Float kreis = new Ellipse2D.Float(zo.getX1(), zo.getY1(), zo.getX2(), zo.getX2());
+				if (zo.isGefuellt()) {
+					g2d.fill(kreis);
+				} else {
+					g2d.draw(kreis);
+				}
+				break;
+			case 'O':
+				Ellipse2D.Float oval = new Ellipse2D.Float(zo.getX1(), zo.getY1(), zo.getX2(), zo.getY2());
+				if (zo.isGefuellt()) {
+					g2d.fill(oval);
+				} else {
+					g2d.draw(oval);
+				}
+				break;
+			case 'L':
+				Line2D.Float linie = new Line2D.Float(zo.getX1(), zo.getY1(), zo.getX2(), zo.getY2());
+				g2d.draw(linie);
+				break;
+			}
+		}
 	}
 
 }
