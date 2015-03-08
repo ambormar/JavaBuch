@@ -1,31 +1,101 @@
 /* TODO 13.2.5.   s.413, (3. ANSATZ)   JMyPaintPanel extends JPanel, PaintComponent überschrieben
- * class JMyPaintPanel	&	JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4	&	Zeichenobjekt
+ * class JMyPaintPanel	&	JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4	&	Zeichenobjekt
  * 
- * 	VORGHEN:	1. Klasse für die Zeichenfläche: JMyPaintPanel extends JPanel erstellen im Eclipse Dialog (inkl. autogenerierung der superclass-konstruktoren) mittels:		
- * 						- New > Class > Name: 			JMyPaintPanel 	
- * 										Superclass:		javax.swing.JPanel	
- * 										anhäckeln:		Construktors from superclass	
- * 					(man könnte JMyPaintPanel auch über:	New > Other > GUI-forms > swing > JPanel	erstellen, dann lassen sich aber die konstruktoren der superklasse nicht auto-generieren)
  * 
- * 				2. ArrayList (inkl. Objektdatentyp) zur aufnahme der zeichenobjekte:	- deklarieren (oben, als attribut der klasse):				private ArrayList<ZeichenObjekt> figuren;
- * 																						- & erzeugen des ArrayList-objekts in jedem konstruktor:	figuren = new ArrayList<ZeichenObjekt>();
+ * K&K:		Programm Zeichnen4 (erweiterung von Zeichnen3) 
+ * 			(Unter Verwendung von Graphics2D statt Graphics)
+ * 						
+ * 			Dem Anwender steht ein Panel, auf das er verschiedene geometrische Figuren zeichnen kann, zur Verfügung. 
+ * 			Position und Größe der Figuren können frei bestimmt werden.
+ * 			Die Zeichnungen bleiben beim Neuzeichnen z.B. nach Verschieben des Fensters dauerhaft erhalten.
  * 
- * 				3. methode zur übergabe des zeichenobjekts als schnittstelle zwischen dem Zeichenprogramm (Zeichnen4) und der Zeichenfläche (JMyPaintPanel):
  * 
- * 					public void addZeichObjekt(char t, boolean f, int x, int y, int v, int w, Color c, float lb) {
- *						figuren.add(new ZeichenObjekt(t,f,x,y,v,w,c,lb));		// erstellen eines neuen Zeichenobjekts (unter übergabe aller werte) und ablegen im in der ArrayList
- *					}
+ * PROGRAMM MIT STANDARDKOMPONENTE (hier Panel) MIT LERNFÄHIGER PAINT() / PAINTCOMPONENT-METHODE, 
+ * 												ZUM HINEINZEICHNEN VON ZEICHENOBJEKTEN - MIT REPAINT() BEI FRAMEVERÄNDERUNGEN (INKL. DER GEZEICHENETEN OBJEKTE), (3.ANSATZ):
+ * 
+ * 		BESTEHEND AUS:	
+ * 
+ * 			1. class Zeichenobjekt							=> klasse zur speicherung der informationen zu einer geometrischen figur
+ * 
+ * 			2. class JMyPaintPanel (extends JPanel)			=> von JPanel abgeleitete klasse mit:	behälter (ArrayList) für geometrische figuren	&	lernfähiger paintComponent()-methode
+ * 
+ * 			3. JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4			=> von JFrame abgeleitete klasse als zeichenproramm
+ * 
+ * 
+ * 1. ZEICHENOBJEKT
+ * 
+ * 		K&K:		Klasse Zeichenobjekt: Die Klasse beschreibt zu zeichnende Objekte so, dass sie in einer ArrayList gespeichert werden können.
+ * 
+ * 		VORGEHEN:	SIEHE: class ZeichenObjekt
+ * 
+ * 
+ * 2. JMYPAINTPANEL (EXTENDS JPANEL)
+ * 		
+ * 		K&K:		Klasse JMyPaintPanel. Die Klasse ist von der Standardkomponente JPanel abgeleitet. Sie dient der Demonstration des Zeichnens in eine Komponente.
+ * 		
+ * 		VORGHEN:	1. Klasse für die Zeichenfläche: 	JMyPaintPanel extends JPanel erstellen im Eclipse Dialog (inkl. autogenerierung der superclass-konstruktoren) mittels:		
+ * 											- New > Class > Name: 			JMyPaintPanel 	
+ * 															Superclass:		javax.swing.JPanel	
+ * 															anhäckeln:		Construktors from superclass	
+ * 						(man könnte JMyPaintPanel auch über:	New > Other > GUI-forms > swing > JPanel	erstellen, dann lassen sich aber die konstruktoren der superklasse nicht auto-generieren)
+ * 					
+ * 					2. ArrayList (inkl. Objektdatentyp) zur aufnahme der zeichenobjekte:	- deklarieren (oben, als attribut der klasse):				private ArrayList<ZeichenObjekt> figuren;
+ * 																							- & erzeugen des ArrayList-objekts in jedem konstruktor:	figuren = new ArrayList<ZeichenObjekt>();
+ * 					
+ * 					3. methode zur übergabe des zeichenobjekts als schnittstelle zwischen dem Zeichenprogramm (Zeichnen4) und der Zeichenfläche (JMyPaintPanel):
+ * 
+ * 						public void addZeichObjekt(char t, boolean f, int x, int y, int v, int w, Color c, float lb) {
+ *							figuren.add(new ZeichenObjekt(t,f,x,y,v,w,c,lb));		// erstellen eines neuen Zeichenobjekts (unter übergabe aller werte) und ablegen im in der ArrayList
+ *						}
  *
- *				4. überschreiben der paintCompnent(..)-Methode:		- ausführen der geerbten anweisungen 
- *																	- ein ZeichenObjekt nach dem anderen soll aus dem behälter (ArrayList) genommen & gezeichnet werden
+ *					4. überschreiben von paintComponent(..) der superklasse:	
+ *						=> damit sie "lernfähig" ist & darauf gezeichnete elemente (hier: zeichenobjekte) beim repaint() mitgezeichnet werden
+ *						=> nur in PAINT() ODER PAINTCOMPONENT() hinterlegte anweisungen, werden beim REPAINT() einer komponente (hier: panel) mitgezeichnet, 
+ *						
+ *						KERNCODE:
+ *																  															
+ *						public void paintComponent(Graphics g) {					// überschreiben der paintComponent(..)-Methode der superklasse (JPanel), um ein ZeichenObjekt nach dem anderen aus dem behälter (=ArrayList) zu nemen und zu zeichnen
+ *							super.paintComponent(g);								// aufruf der methode paintComponent(..) der superklasse unter übergabe des graphic-objekts g 
+ *							Graphics2D g2d = (Graphics2D) g;						// graphics2D-kontext-objekt g2d erstellen zurch zuweisen des gecasteten graphics-objekt g
+ *							for (int i= 0; i < figuren.size(); i++) {				// for-schleife für alle im 'behälter' arraylist figuren gespeicherten zeichenobjekte (eins nach dem anderen)
+ *								ZeichenObjekt zo = figuren.get(i);					// lokale instanz erstellen des jeweiligen elements aus arraylist figuren
+ *								g2d.setColor(zo.getCol());							// graphic2d-objekt g2d auf zeichenfarbe des jeweiligen zeichenobjekts setzen
+ *								BasicStroke stil = new BasicStroke(zo.getLbreite(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);	// objekt für linienstil mit parametern: breite, linienende, kreuzungspunkte
+ *								g2d.setStroke(stil);													// linienart auf linienstil stil setzen
+ *								switch (zo.getTyp()) {													// switch-case mit typ (der jeweilige geometrische figur) aus der jeweiligen zeichenobjekt-instanz
+ *								case 'R':																// im fall variable R für rechteck..
+ *									Rectangle2D.Float rechteck = new Rectangle2D.Float(zo.getX1(), zo.getY1(), zo.getX2(), zo.getY2());	// rechteck-objekt erzeugen mit x,y,breite, höhe (des jeweiligen zeichenobjekts)
+ *									if (zo.isGefuellt()) {												// wenn checkbox angehakt
+ *										g2d.fill(rechteck);												// objekt rechteck ausgefüllt ins objekt g2d malen
+ *									} else {															// sonst
+ *										g2d.draw(rechteck);												// objekt rechteck leer ins objekt g2d zeichnen
+ *									}
+ *									break;
+ *								case 'K':																// alles analog rechteck:
+ *									...
+ *								case 'O':																// alles analog rechteck:
+ *									...
+ *								case 'L':																// alles analog rechteck, aber nur die ungefüllte version weil linie:
+ *									...
+ *								}
+ *							}
+ *						}
+ *  
+ * 					5. (fakultativ) methode zum löschen des jeweils zuletztgezeichneten zeichenobjekts als schnittstelle zwischen dem Zeichenprogramm (Zeichnen4) und der zeichenfläche (JMyPaintPanel)
+ *						
+ *						public void loescheLetztesZeichenObjekt(){
+ *							figuren.remove(figuren.size()-1);						// das jeweils lezte element der arraylist figuren löschen
+ *						}
  * 
  * 
+ * 3. ZEICHENPROGRAMM - JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4
  * 
- * K&K:		Klasse JMyPaintPanel
- * 			Die Klasse ist von der Standardkomponente JPanel abgeleitet. Sie dient der Demonstration des Zeichnens in eine Komponente.
+ * 		K&K:		Programm Zeichnen4 (erweiterung von Zeichnen3) (Unter Verwendung von Graphics2D statt Graphics)
+ * 					Dem Anwender steht ein Panel, auf das er verschiedene geometrische Figuren zeichnen kann, zur Verfügung. Position und Größe der Figuren können frei bestimmt werden.
+ * 					Die Zeichnungen bleiben beim Neuzeichnen z.B. nach Verschieben des Fensters dauerhaft erhalten.
  * 
- * 
- * 
+ * 		VORGEHEN: 	SIEHE:	class JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4																
+ *
  */
 
 package uebungen13;

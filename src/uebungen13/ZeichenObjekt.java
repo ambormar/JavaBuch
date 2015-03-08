@@ -1,8 +1,56 @@
 /* TODO 13.2.5.   s.413, (3. ANSATZ)  (Kl. z. speichern der infos einer geom. figur) 
- * class	Zeichenobjekt	&	JMyPaintPanel	&	JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4	
+ * class	Zeichenobjekt	&	JMyPaintPanel	&	JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4	
  * 
- * K&K:		Klasse Zeichenobjekt
- * 			Die Klasse beschreibt zu zeichnende Objekte so, dass sie in einer ArrayList gespeichert werden können.
+ * K&K:		Programm Zeichnen4 (erweiterung von Zeichnen3) 
+ * 			(Unter Verwendung von Graphics2D statt Graphics)
+ * 						
+ * 			Dem Anwender steht ein Panel, auf das er verschiedene geometrische Figuren zeichnen kann, zur Verfügung. 
+ * 			Position und Größe der Figuren können frei bestimmt werden.
+ * 			Die Zeichnungen bleiben beim Neuzeichnen z.B. nach Verschieben des Fensters dauerhaft erhalten.
+ * 
+ * 
+ * PROGRAMM MIT STANDARDKOMPONENTE (hier Panel) MIT LERNFÄHIGER PAINT() / PAINTCOMPONENT-METHODE, 
+ * 												ZUM HINEINZEICHNEN VON ZEICHENOBJEKTEN - MIT REPAINT() BEI FRAMEVERÄNDERUNGEN (INKL. DER GEZEICHENETEN OBJEKTE), (3.ANSATZ):
+ * 
+ * 		BESTEHEND AUS:	
+ * 
+ * 			1. class Zeichenobjekt							=> klasse zur speicherung der informationen zu einer geometrischen figur
+ * 
+ * 			2. class JMyPaintPanel (extends JPanel)			=> von JPanel abgeleitete klasse mit:	behälter (ArrayList) für geometrische figuren	&	lernfähiger paintComponent()-methode
+ * 
+ * 			3. JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4			=> von JFrame abgeleitete klasse als zeichenproramm
+ * 
+ * 
+ * 1. ZEICHENOBJEKT
+ * 
+ * 		K&K:		Klasse Zeichenobjekt: Die Klasse beschreibt zu zeichnende Objekte so, dass sie in einer ArrayList gespeichert werden können.
+ * 
+ * 		VORGEHEN:	1. klasse ZeichenObjekt mit den Eigenschaften der zu zeichnenden figuren:	- typ der figur (rechteck, oval, kreis oder linie)
+ * 																								- gefüllte figur oder nur umrandung (checkbox jCheckBgefuellt)
+ * 																								- koordinaten der figur als x,y, höhe, breite 
+ * 																								- zeichenfarbe	&	lnienbreite
+ * 				[	2. fakultativ:	konstruktor um die werte der acht eigenschaften des zeichenobjekts zu initialisieren	]
+ * 
+ * 					3. konstruktor um die werte der acht eigenschaften des zeichenobjekts zu übergeben:		public ZeichenObjekt(char t, boolean f, int x, int y, int v, int w, Color c, float lb) {..}
+ * 					
+ * 					4. getter und setter für jede der 8 eigenschaften des zeichenobjekts
+ * 
+ * 
+ * 2. JMYPAINTPANEL (EXTENDS JPANEL)
+ * 		
+ * 		K&K:		Klasse JMyPaintPanel. Die Klasse ist von der Standardkomponente JPanel abgeleitet. Sie dient der Demonstration des Zeichnens in eine Komponente.
+ * 		
+ * 		VORGHEN:	SIEHE:	JMyPaintPanel
+ * 
+ * 
+ * 3. ZEICHENPROGRAMM - JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4
+ * 
+ * 		K&K:		Programm Zeichnen4 (erweiterung von Zeichnen3) (Unter Verwendung von Graphics2D statt Graphics)
+ * 					Dem Anwender steht ein Panel, auf das er verschiedene geometrische Figuren zeichnen kann, zur Verfügung. Position und Größe der Figuren können frei bestimmt werden.
+ * 					Die Zeichnungen bleiben beim Neuzeichnen z.B. nach Verschieben des Fensters dauerhaft erhalten.
+ * 
+ * 		VORGEHEN: 	SIEHE: 	JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4													
+ *
  */
 
 package uebungen13;

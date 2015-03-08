@@ -1,5 +1,5 @@
 /* TODO 13.2.5.   s.413, (3. ANSATZ)  MIT REPAINT() bei frameveränderungen; mit Graphics2D
- * class JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4	&	JMyPaintPanel	&	Zeichenobjekt
+ * class JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4	&	JMyPaintPanel	&	Zeichenobjekt
  * 
  * 		VERGLEICHE:			13.2.4.   Graphics2D_JPanel_Komponente_ZumHineinZeichnen_Zeichnen3							s.413, oben (2. ANSATZ) mit Graphics2D; OHNE REPAINT() bei frameveränderungen
  * 
@@ -23,35 +23,105 @@
  * 
  * 		BESTEHEND AUS:	
  * 
- * 			1. class Zeichenobjekt								=> klasse zur speicherung der informationen zu einer geometrischen figur
+ * 			1. class Zeichenobjekt							=> klasse zur speicherung der informationen zu einer geometrischen figur
  * 
- * 			2. class JMyPaintPanel (extends JPanel)				=> von JPanel abgeleitete klasse mit behälter für geometrische figuren		&	überschriebener paintComponent()-methode
+ * 			2. class JMyPaintPanel (extends JPanel)			=> von JPanel abgeleitete klasse mit:	behälter (ArrayList) für geometrische figuren	&	lernfähiger paintComponent()-methode
  * 
  * 			3. JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4			=> von JFrame abgeleitete klasse als zeichenproramm
  * 
  * 
- * !!!!!!!!!!!!!!!!!!!!!!!!!	HIER WEITERMACHEN	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * 1. ZEICHENOBJEKT
  * 
- * JPANEL (OD. AUCH JFRAME) ALS STANDARD-KOMPONENTE ZUM HINEINZEICHNEN:		(= 2. ANSATZ)
+ * 		K&K:		Klasse Zeichenobjekt: Die Klasse beschreibt zu zeichnende Objekte so, dass sie in einer ArrayList gespeichert werden können.
  * 
- * 			
+ * 		VORGEHEN:	1. klasse ZeichenObjekt mit den Eigenschaften der zu zeichnenden figuren:	- typ der figur (rechteck, oval, kreis oder linie)
+ * 																								- gefüllte figur oder nur umrandung (checkbox jCheckBgefuellt)
+ * 																								- koordinaten der figur als x,y, höhe, breite 
+ * 																								- zeichenfarbe	&	lnienbreite
+ * 				[	2. fakultativ:	konstruktor um die werte der acht eigenschaften des zeichenobjekts zu initialisieren	]
+ * 
+ * 					3. konstruktor um die werte der acht eigenschaften des zeichenobjekts zu übergeben:		public ZeichenObjekt(char t, boolean f, int x, int y, int v, int w, Color c, float lb) {..}
+ * 					
+ * 					4. getter und setter für jede der 8 eigenschaften des zeichenobjekts
+ * 
+ * 
+ * 2. JMYPAINTPANEL (EXTENDS JPANEL)
  * 		
- * 			=> MIT repaint() als button		= um die vorhandenen zeichnungen zu entfernen
- * 											= achtung: repaint() für jPanel nicht in der selben methode wo gezeichnet wird, sondern extra methode oder von ausserhalb 
+ * 		K&K:		Klasse JMyPaintPanel. Die Klasse ist von der Standardkomponente JPanel abgeleitet. Sie dient der Demonstration des Zeichnens in eine Komponente.
+ * 		
+ * 		VORGHEN:	1. Klasse für die Zeichenfläche: 	JMyPaintPanel extends JPanel erstellen im Eclipse Dialog (inkl. autogenerierung der superclass-konstruktoren) mittels:		
+ * 											- New > Class > Name: 			JMyPaintPanel 	
+ * 															Superclass:		javax.swing.JPanel	
+ * 															anhäckeln:		Construktors from superclass	
+ * 						(man könnte JMyPaintPanel auch über:	New > Other > GUI-forms > swing > JPanel	erstellen, dann lassen sich aber die konstruktoren der superklasse nicht auto-generieren)
+ * 					
+ * 					2. ArrayList (inkl. Objektdatentyp) zur aufnahme der zeichenobjekte:	- deklarieren (oben, als attribut der klasse):				private ArrayList<ZeichenObjekt> figuren;
+ * 																							- & erzeugen des ArrayList-objekts in jedem konstruktor:	figuren = new ArrayList<ZeichenObjekt>();
+ * 					
+ * 					3. methode zur übergabe des zeichenobjekts als schnittstelle zwischen dem Zeichenprogramm (Zeichnen4) und der Zeichenfläche (JMyPaintPanel):
  * 
- * 			=> OHNE repaint() fürs frame	= wenn man den Frame verzieht / bewegt, verschwindet das gezeichnete
+ * 						public void addZeichObjekt(char t, boolean f, int x, int y, int v, int w, Color c, float lb) {
+ *							figuren.add(new ZeichenObjekt(t,f,x,y,v,w,c,lb));		// erstellen eines neuen Zeichenobjekts (unter übergabe aller werte) und ablegen im in der ArrayList
+ *						}
+ *
+ *					4. überschreiben von paintComponent(..) der superklasse:	
+ *						=> damit sie "lernfähig" ist & darauf gezeichnete elemente (hier: zeichenobjekte) beim repaint() mitgezeichnet werden
+ *						=> nur in PAINT() ODER PAINTCOMPONENT() hinterlegte anweisungen, werden beim REPAINT() einer komponente (hier: panel) mitgezeichnet, 
+ *						
+ *						KERNCODE:
+ *																  															
+ *						public void paintComponent(Graphics g) {					// überschreiben der paintComponent(..)-Methode der superklasse (JPanel), um ein ZeichenObjekt nach dem anderen aus dem behälter (=ArrayList) zu nemen und zu zeichnen
+ *							super.paintComponent(g);								// aufruf der methode paintComponent(..) der superklasse unter übergabe des graphic-objekts g 
+ *							Graphics2D g2d = (Graphics2D) g;						// graphics2D-kontext-objekt g2d erstellen zurch zuweisen des gecasteten graphics-objekt g
+ *							for (int i= 0; i < figuren.size(); i++) {				// for-schleife für alle im 'behälter' arraylist figuren gespeicherten zeichenobjekte (eins nach dem anderen)
+ *								ZeichenObjekt zo = figuren.get(i);					// lokale instanz erstellen des jeweiligen elements aus arraylist figuren
+ *								g2d.setColor(zo.getCol());							// graphic2d-objekt g2d auf zeichenfarbe des jeweiligen zeichenobjekts setzen
+ *								BasicStroke stil = new BasicStroke(zo.getLbreite(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);	// objekt für linienstil mit parametern: breite, linienende, kreuzungspunkte
+ *								g2d.setStroke(stil);													// linienart auf linienstil stil setzen
+ *								switch (zo.getTyp()) {													// switch-case mit typ (der jeweilige geometrische figur) aus der jeweiligen zeichenobjekt-instanz
+ *								case 'R':																// im fall variable R für rechteck..
+ *									Rectangle2D.Float rechteck = new Rectangle2D.Float(zo.getX1(), zo.getY1(), zo.getX2(), zo.getY2());	// rechteck-objekt erzeugen mit x,y,breite, höhe (des jeweiligen zeichenobjekts)
+ *									if (zo.isGefuellt()) {												// wenn checkbox angehakt
+ *										g2d.fill(rechteck);												// objekt rechteck ausgefüllt ins objekt g2d malen
+ *									} else {															// sonst
+ *										g2d.draw(rechteck);												// objekt rechteck leer ins objekt g2d zeichnen
+ *									}
+ *									break;
+ *								case 'K':																// alles analog rechteck:
+ *									...
+ *								case 'O':																// alles analog rechteck:
+ *									...
+ *								case 'L':																// alles analog rechteck, aber nur die ungefüllte version weil linie:
+ *									...
+ *								}
+ *							}
+ *						}
+ *  
+ * 					5. (fakultativ) methode zum löschen des jeweils zuletztgezeichneten zeichenobjekts als schnittstelle zwischen dem Zeichenprogramm (Zeichnen4) und der zeichenfläche (JMyPaintPanel)
+ *						
+ *						public void loescheLetztesZeichenObjekt(){
+ *							figuren.remove(figuren.size()-1);						// das jeweils lezte element der arraylist figuren löschen
+ *						}
  * 
  * 
- * 	VORGEHEN: [[[	1. frame mit JPanel, worauf das gezeichnete dargestellt wird
+ * 3. ZEICHENPROGRAMM - JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4
+ * 
+ * 		K&K:		Programm Zeichnen4 (erweiterung von Zeichnen3) (Unter Verwendung von Graphics2D statt Graphics)
+ * 					Dem Anwender steht ein Panel, auf das er verschiedene geometrische Figuren zeichnen kann, zur Verfügung. Position und Größe der Figuren können frei bestimmt werden.
+ * 					Die Zeichnungen bleiben beim Neuzeichnen z.B. nach Verschieben des Fensters dauerhaft erhalten.
+ * 
+ * 		VORGEHEN: 	1. frame mit Panel worauf das gezeichnete dargestellt wird:	
+ * 
+ *							jPanelZeichenflaeche = new JMyPaintPanel();							// zeichenfläche aus der selbsterstellten/abgeleiteten komponente JMyPaintPanel
  * 
  * 					2. 4 positions-textfelder zur eingabe jeweils benötigten parameterwerte für die zeichenmethoden (x, y, höhe, breite)
  * 							-> werden nach programmlogik ein-/ausgeblendet & benannt
  * 
  * 					3. 3 buttons:	[=> wichtig alle vor buttongroup erstellen]
- * 									- zeichnen			=> zum auslösen des effektiven zeichenvorganges für die jeweiligen werte & auswahlen (checkbox + radiobuttons)
- * 									- zeichnung löschen	=> actionlistener-methode mit:		jPanelZeichenflaeche.repaint()
- * 															-> repaint() muss hier ausserhalb der zeichnen-methode benutzt werden 
- * 															-> repaint() funktioniert nur um das panel zu löschen, nicht für neuzeichnen bei frame-veräderungen 			
+ * 									- zeichnen			=> um via addZeichenObjekt(..) (von JMyPaintPanel) zeichenobjekte zu erstellen	&	in arraylist figuren zu speichern
+ * 														=> & mit repaint()> via paintComponent(..) (von JMyPaintPanel) neu zu zeichnen
+ * 									- zeichnung löschen	=> um via loescheLetztesZeichenObjekt()	(von JMyPaintPanel), das letzte zeichenobjekt aus arraylist figuren zu löschen
+ * 														=> & mit repaint()> via paintComponent(..) (von JMyPaintPanel) neu zu zeichnen	
  * 									- ende				=> beenden des programms 
  * 
  * 					4. 1 checkbox zum anhäckeln ob formen gefüllt werden oder nicht						=> siehe CHECKBOX unten
@@ -69,71 +139,30 @@
  *					8. die action-listener-methoden der radiobuttons 		-> rufen die methode setzeBeschriftung() auf (für die beschriftung)..
  *																			-> ..und steuern die sichtbarkeit der jeweils erwünschten komponenten (checkbox & y2)
  * 								& -> char-variablen figur speichert den jeweilige anfangsbuchstaben der aktuellen geometrischen figur (L, O, R oder K) 
- * 										-> .. für switch-case der methode jBtnZeichnen..(..) 
+ * 										-> .. für switch-case der methode addZeichObjekt(..) (klasse JMyPaintPanel)
  * 
  * 							=> CODE siehe: 		jRBtnReckteck..(..)		&	jRBtnLinie..(..)	&	jRBtnOval..(..)		&		jRBtnKreis..(..)		]]]
- * 		
- * 	GRAPHICS2D:		
- * 					9. methode zu zeichen der geometrischen figuren jBtnZeichnen:
+ * 				
+ * 					9. methode zum erstellen & indirekt zeichen der geometrischen figuren jBtnZeichnen..(..):
  * 
  * 							=> auslesen der parameterwerte der textfelder in x1, x2, y1, y2
- * 							=> switch-case unter verwendung der, in char-variabel figur gespeicherten buchstaben (aus den action-listener-methoden der radiobuttons) 
- * 							=> prüfen des checkbox-status bei den 2-dim figuren, ob gefüllt oder ungefüllt zeichnen 	
- * 									-> bsp:		if (jCheckBox.isSelected)
- *							=> zeichenen der figuren	=> unter verwendung eines Graphics2D-objekts zum darauf/damit zeichnen durch:	getGraphics() &	Type-cast auf Graphics2D:
- *							
- * 															BSP:	 	Graphics2D g2 = (Graphics2D) jPanelZeichenflaeche.getGraphics();
+ * 							=> aufruf von addZeichenObjekt(..) (der klasse JMyPaintPanel) zur übergabe der eigenschaften des zu zeichnenden zeichenobjekts an das panel
+ *								-> wobei die 8 eigenschaften aus den text- & optionsfeldern entnommen werden, die strichstärke direkt+unveränderlich, die farbe als eigenschaft des frames
+ * 			
+ * 									jPanelZeichenflaeche.addZeichObjekt(figur, jCheckBgefuellt.isSelected(), x1, y1, x2, y2, farbe, 1.0f);
  * 
- *														=> form-objekt (Rectangle2D.Float, Ellipse2D.Float etc.) aus dem package JAVA.AWT.GEOM erzeugen mit x,y,breite, höhe
- *														
- *															BSP:		Rectangle2D.Float rechteck = new Rectangle2D.Float(x1, y1, x2, y2);
- *															
- * 														=> fill() oder draw() via Graphics2D-objekt aufrufen & form-objekt als parameter mitgeben
+ * 							=> methode repaint für das zeichen-panel, 
+ * 								-> damit wird paintComponent(..) von JMyPaintPanel ausgelöst	&	und somit das übergebene zeichenobjekt auch unmittelbar dargestellt:
  * 
- * 															BSP:		g2d.fill(rechteck); 	
- * 
- * 														=> farbverläufe:		 mit Klasse GradientPaint & setPaint()
- * 														=> linienstil:			 mit Klasse BasicStrocke & setStroke()
- * 
- * 														=> BASICS SIEHE :		13.2.4.   Graphics2D_API_Klasse_Methoden_Basics		s.410
- * 
- * 		=> KERNCODE:	
- * 
- * 			import java.awt.BasicStroke;			
- *			import java.awt.GradientPaint;			 
- *			import java.awt.Graphics2D;				 
- *			import java.awt.geom.Rectangle2D;													// dito für kreis & oval & linie
+ *									jPanelZeichenflaeche.repaint()
  *
- *			private Graphics2D g2d;																// als attribut der klasse: variable für 2d grafik-objekt 
+ *					10. methode um JMyPaintPanel neu, minus das zuletzt hinzugefügte zeichenobjekt, zu zeichnen:
  *
- *			private void jBtnZeichnen..(..) {
- *				try {
- *					x1 = Integer.parseInt(jTFPositionX1.getText());								// alle parameterwerte x1,y1,x2,y2 aus den TextFeldern zwischenspeichern
- *					..
- *					g2d = (Graphics2D) jPanelZeichenflaeche.getGraphics();						// verwendung des Graphics2D-objekts durch:	getGraphics() & Type-cast auf Graphics2D
- *					g2d.setColor(Color.red);																	// zeichenfarbe des g2d-objekts auf rot setzen
- *					BasicStroke stil = new BasicStroke(30.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL);	// objekt für linienstil mit parametern: breite, linienende, kreuzungspunkte
- *					g2d.setStroke(stil);																		// linienart auf linienstil stil setzen
- *					GradientPaint fuellung = new GradientPaint(0, 0, Color.red, 100, 100, Color.yellow, true);	// objekt für farbverlauf mit parametern: anfangs-punkt, dessen farbe, endpunk, dessen farbe, wiederholungs-boolean
- *					g2d.setPaint(fuellung);																		// farbart auf farbverlauf (objekt fuellung) setzen
- *					switch (figur) {																			// switch-case für die jeweilige geometrische figur die zu zeichnen ist
- *					case 'R':																	// im fall variable R für rechteck..
- *						Rectangle2D.Float rechteck = new Rectangle2D.Float(x1, y1, x2, y2);		// rechteck-objekt erzeugen mit x,y,breite, höhe
- *						if (jCheckBgefuellt.isSelected()){										// wenn checkbox angehakt
- *							g2d.fill(rechteck);													// objekt rechteck ausgefüllt ins objekt g2d malen
- *						} else {																// sonst
- *							g2d.draw(rechteck);													// objekt rechteck leer ins objekt g2d zeichnen
- *						}
- *						break;
- *					case 'K':																	// alles analog rechteck:
- *						..
- *					case 'O':																	// alles analog rechteck:
- *						..
- *					case 'L':																	// analog rechteck aber nur die ungefüllte version weil linie
- *						..
- *				} catch (..){
- *			}
- * 
+ *							private void jBtnLoeschenActionPerformed(ActionEvent evt) {													
+ *								jPanelZeichenflaeche.loescheLetztesZeichenObjekt(); 	// aufruf der methode um das letzte zeichenobjekt aus der arrralist figuren (im JMyPaintPanel) zu löschen 								
+ *								jPanelZeichenflaeche.repaint();								// xy.repaint() : panel neu zeichnen (inkl. verbleibende zeichenobjekte der arraylist figuren) 
+ *							}																
+ *
  * 
  *[[ JCHECKBOX:		
  * 
@@ -185,9 +214,16 @@
 package uebungen13;
 
 
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;						 
 import javax.swing.JButton;
@@ -199,7 +235,7 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
-public class JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4 extends javax.swing.JFrame {
+public class JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4 extends javax.swing.JFrame {
 
 	{
 		//Set Look & Feel
@@ -240,14 +276,14 @@ public class JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZei
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4 inst = new JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4();
+				JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4 inst = new JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
 		});
 	}
 	
-	public JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4() {
+	public JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4() {
 		super();
 		initGUI();
 	}
@@ -467,7 +503,7 @@ public class JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZei
 		figur = 'L';																							// char-variable L (für geom. Figur linie) für spätere verwendung im switch-case der zeichnen-methode 
 	}
 	
-	// (abgeänderte) methode zum zeichnen der geometrischen figuren auf das jPanelZeichenflaeche
+	// (abgeänderte) methode zum indirekten zeichnen der geometrischen figuren auf das jPanelZeichenflaeche
 	private void jBtnZeichnenActionPerformed(ActionEvent evt) {
 		try {
 			x1 = Integer.parseInt(jTFPositionX1.getText());																							// parameterwerte aus den TextFeldern zwischenspeichern
@@ -487,7 +523,7 @@ public class JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZei
 		System.exit(0);
 	}
 	
-	// methode JMyPaintPanel neu leer zu zeichnen
+	// methode um JMyPaintPanel neu, minus das zuletzt hinzugefügte zeichenobjekt, zu zeichnen
 	private void jBtnLoeschenActionPerformed(ActionEvent evt) {													
 			jPanelZeichenflaeche.loescheLetztesZeichenObjekt(); 	// aufruf der methode um das letzte zeichenobjekt aus der arrralist figuren (im JMyPaintPanel) zu löschen 								
 			jPanelZeichenflaeche.repaint();																		// xy.repaint() : panel neu zeichnen (inkl. verbleibende zeichenobjekte der arraylist figuren) 
