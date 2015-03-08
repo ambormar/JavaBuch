@@ -1,5 +1,5 @@
 /* TODO 13.2.5.   s.413, (3. ANSATZ)  (Kl. z. speichern der infos einer geom. figur) 
- * class	Zeichenobjekt	&	JMyPaintPanel	&	JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4	
+ * class	Zeichenobjekt	&	JMyPaintPanel	&	JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4	
  * 
  * K&K:		Klasse Zeichenobjekt
  * 			Die Klasse beschreibt zu zeichnende Objekte so, dass sie in einer ArrayList gespeichert werden können.
@@ -13,12 +13,10 @@ public class ZeichenObjekt {		// klasse zur beschreibung einer geometrischen fig
 	
 	// attribute der zu zeichnenden geometrischen figur
 	private char typ;					// für typ der figur (rechteck, oval, kreis oder linie
-
-
 	private boolean gefuellt;			// gefüllte figur oder nur umrandung (checkbox jCheckBgefuellt)
 	private int x1, y1, x2, y2;			// für koordinaten, höhe, breite der figur
 	private Color col;					// zeichenfarbe
-	private float lbreite;					// lnienbreite
+	private float lbreite;				// lnienbreite
 	
 	// defaultkonstruktor (zum initialisieren der werte, aber eigentlich überflüssig, falls er nicht aufgerufen wird)
 	public ZeichenObjekt(){

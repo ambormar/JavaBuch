@@ -1,5 +1,5 @@
-/* TODO 13.2.5.   s.413, (3. ANSATZ)   JMyPaintPanel extends JPanel
- * class JMyPaintPanel	&	JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4	&	Zeichenobjekt
+/* TODO 13.2.5.   s.413, (3. ANSATZ)   JMyPaintPanel extends JPanel, PaintComponent überschrieben
+ * class JMyPaintPanel	&	JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4	&	Zeichenobjekt
  * 
  * 	VORGHEN:	1. Klasse für die Zeichenfläche: JMyPaintPanel extends JPanel erstellen im Eclipse Dialog (inkl. autogenerierung der superclass-konstruktoren) mittels:		
  * 						- New > Class > Name: 			JMyPaintPanel 	
@@ -47,23 +47,26 @@ public class JMyPaintPanel extends JPanel {
 	
 	private ArrayList<ZeichenObjekt> figuren;					// (als Eigenschaft der Klasse:) ArrayList figuren mit Objektdatentyp ZeichenObjekt => zur Aufnahme der zeichenobjekte	
 
-	public JMyPaintPanel() {									// autogenerierte konstruktoren der superclass JPanel
+	// autogenerierte konstruktoren der superclass JPanel
+	public JMyPaintPanel() {									
 		super();
 		figuren = new ArrayList<ZeichenObjekt>();				// erzeugen des ArrayList-objekts in jedem konstruktor
 	}
-
-	public JMyPaintPanel(LayoutManager arg0) {					// autogenerierte konstruktoren der superclass JPanel
+	
+	// autogenerierte konstruktoren der superclass JPanel
+	public JMyPaintPanel(LayoutManager arg0) {					
 		super(arg0);
 		figuren = new ArrayList<ZeichenObjekt>();				// erzeugen des ArrayList-objekts in jedem konstruktor
 	}
-
-	public JMyPaintPanel(boolean arg0) {						// autogenerierte konstruktoren der superclass JPanel
+	
+	// autogenerierte konstruktoren der superclass JPanel
+	public JMyPaintPanel(boolean arg0) {						
 		super(arg0);
 		figuren = new ArrayList<ZeichenObjekt>();				// erzeugen des ArrayList-objekts in jedem konstruktor
 	}
-
-	public JMyPaintPanel(LayoutManager arg0, boolean arg1) {	// autogenerierte konstruktoren der superclass JPanel
-		super(arg0, arg1);
+	
+	// autogenerierte konstruktoren der superclass JPanel
+	public JMyPaintPanel(LayoutManager arg0, boolean arg1) {	
 		figuren = new ArrayList<ZeichenObjekt>();				// erzeugen des ArrayList-objekts in jedem konstruktor
 	}
 	
@@ -72,38 +75,38 @@ public class JMyPaintPanel extends JPanel {
 		figuren.add(new ZeichenObjekt(t,f,x,y,v,w,c,lb));		// erstellen eines neuen Zeichenobjekts und ablegen im in der ArrayList unter übergabe aller werte
 	}
 	
-	// methode zum löschen der zeichenobjekte als schnittstelle zwischen dem Zeichenprogramm (Zeichnen4) und der zeichenfläche (JMyPaintPanel)
+	// (meine eigene) methode zum löschen des jeweils zuletztgezeichneten zeichenobjekts als schnittstelle zwischen dem Zeichenprogramm (Zeichnen4) und der zeichenfläche (JMyPaintPanel)
 	public void loescheLetztesZeichenObjekt(){
-		figuren.remove(figuren.size()-1);										// leztes element der arraylist figuren löschen
+		figuren.remove(figuren.size()-1);						// das jeweils lezte element der arraylist figuren löschen
 	}
 	
-	// überschreiben der paintComponent(..)-methode der superklasse (JPanel), um ein ZeichenObjekt nach dem anderen aus dem behälter (=ArrayList) zunemen und zu zeichnen
+	// überschreiben der paintComponent(..)-methode der superklasse (JPanel), um ein ZeichenObjekt nach dem anderen aus dem behälter (=ArrayList) zu nemen und zu zeichnen
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);								// aufruf der methode paintComponent(..) der superklasse unter übergabe des graphic-objekts g 
 		Graphics2D g2d = (Graphics2D) g;						// graphics2D-kontext-objekt g2d erstellen zurch zuweisen des gecasteten graphics-objekt g
-		for (int i= 0; i < figuren.size(); i++) {				// für alle im arraylist figuren gespeicherten zeichenobjekte
-			ZeichenObjekt zo = figuren.get(i);
-			g2d.setColor(zo.getCol());
-			BasicStroke stil = new BasicStroke(zo.getLbreite(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);
-			g2d.setStroke(stil);
-			switch (zo.getTyp()) {								// switch typ der zeichenobjekt-instanz
-			case 'R':	
-				Rectangle2D.Float rechteck = new Rectangle2D.Float(zo.getX1(), zo.getY1(), zo.getX2(), zo.getY2());
-				if (zo.isGefuellt()) {
-					g2d.fill(rechteck);
-				} else {
-					g2d.draw(rechteck);
+		for (int i= 0; i < figuren.size(); i++) {				// for-schleife für alle im 'behälter' arraylist figuren gespeicherten zeichenobjekte (eins nach dem anderen)
+			ZeichenObjekt zo = figuren.get(i);					// lokale instanz erstellen des jeweiligen elements aus arraylist figuren
+			g2d.setColor(zo.getCol());							// graphic2d-objekt g2d auf zeichenfarbe des jeweiligen zeichenobjekts setzen
+			BasicStroke stil = new BasicStroke(zo.getLbreite(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER);	// objekt für linienstil mit parametern: breite, linienende, kreuzungspunkte
+			g2d.setStroke(stil);													// linienart auf linienstil stil setzen
+			switch (zo.getTyp()) {													// switch-case mit typ (der jeweilige geometrische figur) aus der jeweiligen zeichenobjekt-instanz
+			case 'R':																// im fall variable R für rechteck..
+				Rectangle2D.Float rechteck = new Rectangle2D.Float(zo.getX1(), zo.getY1(), zo.getX2(), zo.getY2());	// rechteck-objekt erzeugen mit x,y,breite, höhe (des jeweiligen zeichenobjekts)
+				if (zo.isGefuellt()) {												// wenn checkbox angehakt
+					g2d.fill(rechteck);												// objekt rechteck ausgefüllt ins objekt g2d malen
+				} else {															// sonst
+					g2d.draw(rechteck);												// objekt rechteck leer ins objekt g2d zeichnen
 				}
 				break;
-			case 'K':
-				Ellipse2D.Float kreis = new Ellipse2D.Float(zo.getX1(), zo.getY1(), zo.getX2(), zo.getX2());
+			case 'K':																// alles analog rechteck:
+				Ellipse2D.Float kreis = new Ellipse2D.Float(zo.getX1(), zo.getY1(), zo.getX2(), zo.getX2());	// x2, x2, weil höhe + breite gleich bei kreis
 				if (zo.isGefuellt()) {
 					g2d.fill(kreis);
 				} else {
 					g2d.draw(kreis);
 				}
 				break;
-			case 'O':
+			case 'O':																// alles analog rechteck:
 				Ellipse2D.Float oval = new Ellipse2D.Float(zo.getX1(), zo.getY1(), zo.getX2(), zo.getY2());
 				if (zo.isGefuellt()) {
 					g2d.fill(oval);
@@ -111,7 +114,7 @@ public class JMyPaintPanel extends JPanel {
 					g2d.draw(oval);
 				}
 				break;
-			case 'L':
+			case 'L':																// alles analog rechteck, aber nur die ungefüllte version weil linie:
 				Line2D.Float linie = new Line2D.Float(zo.getX1(), zo.getY1(), zo.getX2(), zo.getY2());
 				g2d.draw(linie);
 				break;

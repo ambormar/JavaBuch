@@ -1,5 +1,5 @@
 /* TODO 13.2.5.   s.413, (3. ANSATZ)  MIT REPAINT() bei frameveränderungen; mit Graphics2D
- * class JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4	&	JMyPaintPanel	&	Zeichenobjekt
+ * class JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4	&	JMyPaintPanel	&	Zeichenobjekt
  * 
  * 		VERGLEICHE:			13.2.4.   Graphics2D_JPanel_Komponente_ZumHineinZeichnen_Zeichnen3							s.413, oben (2. ANSATZ) mit Graphics2D; OHNE REPAINT() bei frameveränderungen
  * 
@@ -7,27 +7,39 @@
  * 
  * 		VERGLEICHE:	 		13.2.1.   JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen2				s.403, (2. ANSATZ) OHNE REPAINT() bei frameveränderungen
  *  		
- * 	[[[	SIEHE AUCH:			13.1.2.   JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1	&	JMyPanel 		s.400+(398), (= 1. ANSATZ) INKL. REPAINT() bei frameveränderungen	]]]
+ * 	[[[	VERGL. AUCH:			13.1.2.   JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1	&	JMyPanel 		s.400+(398), (= 1. ANSATZ) INKL. REPAINT() bei frameveränderungen	]]]
  * 
  * 
- * ¨!!!!!!!!!!!!!!!!!!!!! AB HIER ÜBERARBEITEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * K&K:		Programm Zeichnen4 (erweiterung von Zeichnen3) 
+ * 			(Unter Verwendung von Graphics2D statt Graphics)
+ * 						
+ * 			Dem Anwender steht ein Panel, auf das er verschiedene geometrische Figuren zeichnen kann, zur Verfügung. 
+ * 			Position und Größe der Figuren können frei bestimmt werden.
+ * 			Die Zeichnungen bleiben beim Neuzeichnen z.B. nach Verschieben des Fensters dauerhaft erhalten.
+ * 
+ * 
+ * PROGRAMM MIT STANDARDKOMPONENTE (hier Panel) MIT LERNFÄHIGER PAINT() / PAINTCOMPONENT-METHODE, 
+ * 												ZUM HINEINZEICHNEN VON ZEICHENOBJEKTEN - MIT REPAINT() BEI FRAMEVERÄNDERUNGEN (INKL. DER GEZEICHENETEN OBJEKTE), (3.ANSATZ):
+ * 
+ * 		BESTEHEND AUS:	
+ * 
+ * 			1. class Zeichenobjekt								=> klasse zur speicherung der informationen zu einer geometrischen figur
+ * 
+ * 			2. class JMyPaintPanel (extends JPanel)				=> von JPanel abgeleitete klasse mit behälter für geometrische figuren		&	überschriebener paintComponent()-methode
+ * 
+ * 			3. JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4			=> von JFrame abgeleitete klasse als zeichenproramm
+ * 
+ * 
+ * !!!!!!!!!!!!!!!!!!!!!!!!!	HIER WEITERMACHEN	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * 
  * JPANEL (OD. AUCH JFRAME) ALS STANDARD-KOMPONENTE ZUM HINEINZEICHNEN:		(= 2. ANSATZ)
  * 
- * 			=> JPanel/JFrame mit Möglichkeit für den anwender zum interaktiv hineinzeichnen
+ * 			
  * 		
  * 			=> MIT repaint() als button		= um die vorhandenen zeichnungen zu entfernen
  * 											= achtung: repaint() für jPanel nicht in der selben methode wo gezeichnet wird, sondern extra methode oder von ausserhalb 
  * 
  * 			=> OHNE repaint() fürs frame	= wenn man den Frame verzieht / bewegt, verschwindet das gezeichnete
- * 
- * 
- * 		K&K:	 	Programm Zeichnen4 (erweiterung von Zeichnen3) 
- * 					Unter Verwendung von Graphics2D statt Graphics
- * 						
- * 					Dem Anwender steht ein Panel, auf das er verschiedene geometrische Figuren zeichnen kann, zur Verfügung. 
- * 					Position und Größe der Figuren können frei bestimmt werden.
- * 					Die Zeichnungen bleiben beim Neuzeichnen z.B. nach Verschieben des Fensters dauerhaft erhalten.
  * 
  * 
  * 	VORGEHEN: [[[	1. frame mit JPanel, worauf das gezeichnete dargestellt wird
@@ -187,20 +199,7 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
-
-/**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
-public class JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4 extends javax.swing.JFrame {
+public class JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4 extends javax.swing.JFrame {
 
 	{
 		//Set Look & Feel
@@ -232,7 +231,7 @@ public class JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Z
 
 	private char figur = 'R';															// variable für anfangsbuchstaben der zu zeichnenden geom. figur ('L', 'O', 'K', 'R') für switch-case erkennung
 	private int x1, y1, x2, y2;															// variablen für speicherg. der parameterwerte aus den textfeldern
-	private JMyPaintPanel jPanelZeichenflaeche;					// zeichenfläche initialsieren, aber mit dem objektdatentyp JMyPaintPanel (geerbt von JPanel)
+	private JMyPaintPanel jPanelZeichenflaeche;			// zeichenfläche initialsieren, aber mit dem objektdatentyp JMyPaintPanel (geerbt von JPanel)
 	private Color farbe = Color.black;
 	
 	/**
@@ -241,14 +240,14 @@ public class JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Z
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4 inst = new JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4();
+				JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4 inst = new JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
 		});
 	}
 	
-	public JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4() {
+	public JMyPaintPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Zeichnen4() {
 		super();
 		initGUI();
 	}
@@ -468,16 +467,18 @@ public class JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Z
 		figur = 'L';																							// char-variable L (für geom. Figur linie) für spätere verwendung im switch-case der zeichnen-methode 
 	}
 	
-	
+	// (abgeänderte) methode zum zeichnen der geometrischen figuren auf das jPanelZeichenflaeche
 	private void jBtnZeichnenActionPerformed(ActionEvent evt) {
 		try {
-			x1 = Integer.parseInt(jTFPositionX1.getText());
-			y1 = Integer.parseInt(jTFPositionY1.getText());
-			x2 = Integer.parseInt(jTFPositionX2.getText());
-			y2 = Integer.parseInt(jTFPositionY2.getText());
-			jPanelZeichenflaeche.addZeichObjekt(figur, jCheckBgefuellt.isSelected(), x1, y1, x2, y2, farbe, 1.0f);
-			jPanelZeichenflaeche.repaint();
-		} catch (Exception e){																					// fehlerausgabe für fehler beim zeichnen
+			x1 = Integer.parseInt(jTFPositionX1.getText());																							// parameterwerte aus den TextFeldern zwischenspeichern
+			y1 = Integer.parseInt(jTFPositionY1.getText());																							// "
+			x2 = Integer.parseInt(jTFPositionX2.getText());																							// "
+			y2 = Integer.parseInt(jTFPositionY2.getText());																							// "
+			// alle anweisungen zum zeichnen der zeichenobjekte fallen weg & werden durch die folgenden 2 anweisungen ersetzt:
+			jPanelZeichenflaeche.addZeichObjekt(figur, jCheckBgefuellt.isSelected(), x1, y1, x2, y2, farbe, 1.0f);// methoden-aufruf zur übergabe der eigenschaften des zu zeichnenden zeichenobjekts an das panel..
+												//.. die eigenschaften werden aus den text- & optionsfeldern entnommen, die strichstärke direkt, die farbe als eigenschaft des frames
+			jPanelZeichenflaeche.repaint();		// methode repaint für das zeichen-panel, damit wird das übergebene zeichenobjekt auch unmitelbar dargestellt
+		} catch (Exception e){																														// fehlerausgabe für fehler beim zeichnen
 			JOptionPane.showMessageDialog(this, "Die Eingaben sind ungültig");
 		}
 	}
@@ -487,9 +488,22 @@ public class JPanel_RepaintBeiFrameveraenderungen_Komponente_ZumHineinZeichnen_Z
 	}
 	
 	// methode JMyPaintPanel neu leer zu zeichnen
-	private void jBtnLoeschenActionPerformed(ActionEvent evt) {													// methode um panel leer neu zu zeichnen
+	private void jBtnLoeschenActionPerformed(ActionEvent evt) {													
 			jPanelZeichenflaeche.loescheLetztesZeichenObjekt(); 	// aufruf der methode um das letzte zeichenobjekt aus der arrralist figuren (im JMyPaintPanel) zu löschen 								
 			jPanelZeichenflaeche.repaint();																		// xy.repaint() : panel neu zeichnen (inkl. verbleibende zeichenobjekte der arraylist figuren) 
 	}
 
 }
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
