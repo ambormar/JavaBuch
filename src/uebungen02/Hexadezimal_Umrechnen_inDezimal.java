@@ -3,8 +3,10 @@ package uebungen02;
 /* TODO .2.3.6.b,   s.78, auch s.77
  * class Hexadezimal_Umrechnen_inDezimal
  * 
- * 	(UNICODEZEICHEN UMRECHNEN:  siehe Char_Hexadezimal_Zahlencode_Unicode_Variablen2 	.2.3.6,   s.78, auch s.77)
+ * 		(UNICODEZEICHEN UMRECHNEN SIEHE: 	2.3.6.		Char_Hexadezimal_Zahlencode_Unicode_Variablen2 	   		s.78, auch s.77)
  * 														
+ * 						VERGLEICHE AUCH: 	13.3.1.   	BinaerZahl_Umrechnen_inDezimal_BSPintRGB				s.421, 
+ * 
  * 
  * 	HEXADEZIMALZAHL IN DEZIMALZAHL UMRECHNEN:
  * 
@@ -17,6 +19,7 @@ package uebungen02;
  * 																														-----
  * 													hexzahl 00c4										=> dezimalzahl	=  63
  */
+
 public class Hexadezimal_Umrechnen_inDezimal {
 
 }
