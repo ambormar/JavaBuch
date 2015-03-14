@@ -5,58 +5,67 @@
  * 
  * 	  	SIEHE AUCH:	 		13.4.0.-13.4.2.   MouseEreignisse_Basics_Klassen_Methoden														s.425,
  *  
- *  !!!!!!!!!!!!! ALLES NOCH KOMMENTIEREN FÜR MOUSE-KOORDINATEN !!!!!!!!!!!!!!!!!!!!!!!
- * 
- * K&K:		Programm Zeichnen5 mit Farbauswahldialog JColorChoser (erweiterung von Zeichnen4) 
+ *  
+ * K&K:		Programm Zeichnen5b (erweiterung von Zeichnen5) 
  * 			
- * 					[	Zeichnen4 (Unter Verwendung von Graphics2D statt Graphics) 
+ * 					[	Zeichnen5 (Unter Verwendung von Graphics2D statt Graphics & JColorChooser) 
  * 						Dem Anwender steht ein Panel, auf das er verschiedene geometrische Figuren zeichnen kann, zur Verfügung. 
  * 						Position und Größe der Figuren können frei bestimmt werden.
  * 						Die Zeichnungen bleiben beim Neuzeichnen z.B. nach Verschieben des Fensters dauerhaft erhalten.	]
  * 
- * 			zur wahl der aktuellen zeichenfarbe für die zu zeichenenden zeichenobjekte wird ein farbauswahl-dialog eingebunden.
- * 			der farb-auswahldialog kann via einen button aufgerufen werden, die neue zeichenfarbe wird gesetzt mit dem beenden des dialogs durch ok.
+ * 			die mouse-zeiger-koordinaten innerhalb der zeichenfläche werden zur unterstützung der koordinaten-wahl, für das zeichnen der figuren, 
+ * 			in einem zusätzlichen label angezeigt.  
  * 						
  * 
- * KLASSE JCOLORCHOOSER:
+ * KLASSEN MouseListener, MouseMotionListener, MouseEvent:
+ * 
+ * 		SIEHE BASICS:	 		13.4.0.-13.4.2.   MouseEreignisse_Basics_Klassen_Methoden	 s.425,
  * 		
- * 		=> Farb-auswahl-dialog, ähnlich wie JFileChooser (Datei-auswahl-dialog)
- * 		=> Vorgefertigte komponente mit 5 möglichen ansichten (swatches-, HSB-, HSL-, RGB- oder CMYK- ansicht)
  * 
- * 		=> sog. MODALER DIALOG:		-> das laufende programm wird nach aufruf des dialogs solange blockiert, bis der anwender den dialog schliesst
- * 									-> schliesst man den dialog mit ok, liefert er die gewählte farbe zurück
- * 		
- * 		IMPORT:		javax.swing.JColorChooser
+ * METHODEN mouseEntered(), mouseExited(), mouseMoved(), getX(), getY()
  * 
- * 		METHODE:	public static showDialog (Component component, String title, Color initialColor)
+ * 		SIEHE BASICS:	 		13.4.0.-13.4.2.   MouseEreignisse_Basics_Klassen_Methoden	 s.425,
  * 
- * 		AUFRUF:		=> über die klassen-methode showDialog(..) ohne dass man eine instanz der klasse erzeugen muss ..
- * 					=> .. unter mitgabe der parameter (Eltern-komponente oder Null, dialog-fenster-titel, anfangs-farbe) 
+ * 
+ * IMPORTE:		import java.awt.event.MouseAdapter;						// guck macht jigloo z.b. automatisch beim erstellen von methoden der klasse MouseListener
+ *				import java.awt.event.MouseEvent;			
+ *				import java.awt.event.MouseMotionAdapter;
+ * 
+ * 
+ * VORGEHEN:	1. programm JColorChooser_.._Zeichnen5 als ausgangsbasis
+ * 
+ * 				2. jLabelMausposition erstellen, zur anzeige der Mauszeiger-koordinaten, wenn mauszeiger innerhalb von jPanelzeichenflaeche
+ * 						-> zu beginn auf:		jLMausPosition.setVisible(false);	setzen							// soll nur sichtbar sein wenn mauszeiger über dem panel ist
+ * 
+ * 				3. jLabelMausposition sichtbar machen wenn mauszeiger jPanelzeichenflaeche betritt mittels:
+ * 					-> mousEntered()-handler-methode der Klasse MouseListener	& 	anweisung darin:	jLMausPosition.setVisible(true);
+ * 						=> erstellen der methode mit Jigloo:		
+ * 							jPanelzeichenflaeche anklicken > outline > events > eventname > MouseListener > mouseEntered() > handler method
+ * 						=> oder Quelcode direkt:
+ * 							Komponentenname & anhängen MethodenName & parameter MouseEvent evt. 
  * 					
- * 					BSP:	farbe = JColorChooser.showDialog(null, "Wähle neue zeichenfarbe", Color.black);
+ * 					CODE:	private void jPanelZeichenflaecheMouseEntered(MouseEvent evt) {												// jigloo-autogenerierte mouseEntered(..)-handler-methode der klasse MouseListener für anweisungen bei eintritt des mauszeiger in die komponente jPanelZeichenflaeche
+ *								jLMausPosition.setVisible(true);																		// jLMausPosition (= koordinaten-anzeige) sichtbar setzen (bei eintritt des mauszeigers ins panel)
+ *							}
  * 
- * 		VORGEHEN:	- private Color farbe als attribut des frames
- * 
- * 					- jBtnFarbauswahl mit Event-handling um die zeichenfarbe via jFileChooser / Farbdialog zu wählen
+ * 				4. jLabelMausposition unsichtbar machen wenn mauszeiger jPanelZeichenflaeche verlässt mittels:
+ * 					-> mousExited()-handler-methode der Klasse MouseListener	& 	anweisung darin:	jLMausPosition.setVisible(false);
+ * 						=> analog 3. 
  * 					
- * 					- jColorPanel zusätzlichen kleinen farbauswahl-panel neben dem farbauswahl button 
- * 
- * 					- im event-handling:	
- * 										- dem attribut farbe:	 	wird der aufruf des JFileChoosers mittels der klassen-methode showDialog(..) zugewiesen..
- * 										 	& dabei die parameter: 		Eltern-komponente oder Null, dialog-fenster-titel, anfangs-farbe)		mitgegeben
- * 											
- * 										- dem JColorPanel wird die aktuelle zeichenfarbe als hintergrundfarbe zugewiesen
- * 
- * 		KERN-CODE:
- * 
- * 			private Color farbe;																// attribut des frames
- * 
- *			private void jBtnFarbwahlActionPerformed(ActionEvent evt) {							// methode um den Farbauswahl-Dialog JColorCooser aufzurufen & und so die zeichenfarbe zu setzen
- *																								// klassen-methode showDialog (..) von JColorCooser, aufruf über den Klassennamen, ohne erzeugte instanz der klasse..
- *				farbe = JColorChooser.showDialog(null, "Wähle neue zeichenfarbe", Color.black);	// .. mit parameter: eltern-komponente oder null, titel-text für dialogfenster, anfangsfarbe 
- *				jColorPanel.setBackground(farbe);												// vom zusätzlichen kleinen farbauswahl-panel wird die intergrundfarbe auf die aktuelle zeichenfarbe gesetzt + diese so im frame angezeigt						
- *			}
- * 
+ * 					CODE:	private void jPanelZeichenflaecheMouseExited(MouseEvent evt) {												// jigloo-autogenerierte mouseExited(..)-handler-methode der klasse MouseListener für anweisungen bei verlassen des mauszeigers aus der komponente jPanelZeichenflaeche
+ *								jLMausPosition.setVisible(false);																		// jLMausPosition (= koordinaten-anzeige) unsichtbar setzen (bei austritt des mauszeigers aus dem panel)
+ *							}	
+ *							
+ *				5. vorzu aktualisierte x,y - koordinaten anzeigen, solange mauszeiger über der jPanelZeichenflaeche ist mittels:
+ *					-> mousMoved()-handler-methode der Klasse MouseMotionListener zur erfassung der mausbewegung und erzeugung eines entsprechenden MouseEvents 	
+ * 						=> analog 3.
+ *					-> & darin mit:  evt.getX() / evt.getY()			x-y-koordinaten des ereignisses ermitteln + im label anzeigen	
+ *			
+ *					CODE:	private void jPanelZeichenflaecheMouseMoved(MouseEvent evt) {												// jigloo-autogenerierte mouseMoved(..)-handler-methode der klasse MouseMotionListener für anweisungen bei bewegen des mauszeigers (ohne tastendrücken) über der komponente jPanelZeichenflaeche
+ *								jLMausPosition.setText("x: " + evt.getX() +																// mittels methode getX() des MouseEvent evt, vorzu die aktuelle koordinate x der mausposition im label anzeigen,  
+ *										"   y: " + evt.getY()); 																		// mittels methode getY() des MouseEvent evt, vorzu die aktuelle koordinate y der mausposition im label anzeigen,
+ *							}
+ *
  * 
  */
 
@@ -71,7 +80,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;			// guck macht's automatisch beim erstellen von methoden der klasse MouseListener
 import java.awt.event.MouseEvent;			// guck
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseMotionAdapter;	// guck
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
