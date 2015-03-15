@@ -1,4 +1,4 @@
-/* TODO 13.4.3.   s.429, 
+/* TODO 13.4.3.   s.429, !!!!!!!!!!!!!!!!!!!!!!!!!!!! MouseListener / MouseAdapter - code ergänzungen im initGUI noch kommentieren!!!
  * class MausKoordinatenAnzeigen_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen5b		&	JMyPaintPanel	&	Zeichenobjekt
  * 
  * 		ERWEITERUNG VON:	13.3.2.	  JColorChooser_FarbauswahlDialog_JColorPanel_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen5	s.423, (3. ANSATZ)  MIT REPAINT() bei frameveränderungen; mit Graphics2D
@@ -32,7 +32,7 @@
  *				import java.awt.event.MouseMotionAdapter;
  * 
  * 
- * VORGEHEN:	1. programm JColorChooser_.._Zeichnen5 als ausgangsbasis
+ * VORGEHEN:	1. programm JColorChooser_.._Zeichnen5 als ausgangsbasis		!!!!!!!!!!!!!!!!!!!!!!!!!!!! MouseListener / MouseAdapter - code ergänzungen im initGUI noch kommentieren!!!
  * 
  * 				2. jLabelMausposition erstellen, zur anzeige der Mauszeiger-koordinaten, wenn mauszeiger innerhalb von jPanelzeichenflaeche
  * 						-> zu beginn auf:		jLMausPosition.setVisible(false);	setzen							// soll nur sichtbar sein wenn mauszeiger über dem panel ist
@@ -40,7 +40,7 @@
  * 				3. jLabelMausposition sichtbar machen wenn mauszeiger jPanelzeichenflaeche betritt mittels:
  * 					-> mousEntered()-handler-methode der Klasse MouseListener	& 	anweisung darin:	jLMausPosition.setVisible(true);
  * 						=> erstellen der methode mit Jigloo:		
- * 							jPanelzeichenflaeche anklicken > outline > events > eventname > MouseListener > mouseEntered() > handler method
+ * 							jPanelzeichenflaeche anklicken > gui properties > events > eventname > MouseListener > mouseEntered() > handler method
  * 						=> oder Quelcode direkt:
  * 							Komponentenname & anhängen MethodenName & parameter MouseEvent evt. 
  * 					
@@ -59,7 +59,7 @@
  *				5. vorzu aktualisierte x,y - koordinaten anzeigen, solange mauszeiger über der jPanelZeichenflaeche ist mittels:
  *					-> mousMoved()-handler-methode der Klasse MouseMotionListener zur erfassung der mausbewegung und erzeugung eines entsprechenden MouseEvents 	
  * 						=> analog 3.
- *					-> & darin mit:  evt.getX() / evt.getY()			x-y-koordinaten des ereignisses ermitteln + im label anzeigen	
+ *					-> & darin mit den methoden [der Klasse MouseEvent]:  evt.getX() / evt.getY() 			x-y-koordinaten des ereignisses ermitteln + im label anzeigen	
  *			
  *					CODE:	private void jPanelZeichenflaecheMouseMoved(MouseEvent evt) {												// jigloo-autogenerierte mouseMoved(..)-handler-methode der klasse MouseMotionListener für anweisungen bei bewegen des mauszeigers (ohne tastendrücken) über der komponente jPanelZeichenflaeche
  *								jLMausPosition.setText("x: " + evt.getX() +																// mittels methode getX() des MouseEvent evt, vorzu die aktuelle koordinate x der mausposition im label anzeigen,  
@@ -171,17 +171,18 @@ public class MausKoordinatenAnzeigen_MouseListener_MouseMotionListener_Fuer_JMyP
 				getContentPane().add(jPanelZeichenflaeche);
 				jPanelZeichenflaeche.setBounds(12, 40, 336, 410);
 				jPanelZeichenflaeche.setBackground(new java.awt.Color(255,255,255));														// hintergrund auf weiss setzen mit gui properties
-				jPanelZeichenflaeche.addMouseMotionListener(new MouseMotionAdapter() {
-					public void mouseMoved(MouseEvent evt) {
-						jPanelZeichenflaecheMouseMoved(evt);
+				// mouse-Ereignis-behandlung
+				jPanelZeichenflaeche.addMouseMotionListener(new MouseMotionAdapter() {	// MouseMotionListener mit MouseMotionAdapter für die komponente 
+					public void mouseMoved(MouseEvent evt) {							// gewünschte ereignis-methode mit ereignis-objekt als parameter
+						jPanelZeichenflaecheMouseMoved(evt);							// weitergabe an die komponenten-speziefischen (ausgelagerten) handler methode inkl ereignis-objekt
 					}
 				});
-				jPanelZeichenflaeche.addMouseListener(new MouseAdapter() {
-					public void mouseExited(MouseEvent evt) {
-						jPanelZeichenflaecheMouseExited(evt);
+				jPanelZeichenflaeche.addMouseListener(new MouseAdapter() {				// weitere mouse-ereignis-behandlungen mit 2 verschiedenen ereignis-methoden..
+					public void mouseExited(MouseEvent evt) {							// gewünschte ereignis-methode mit ereignis-objekt als parameter
+						jPanelZeichenflaecheMouseExited(evt);							// weitergabe an die komponenten-speziefischen (ausgelagerten) handler methode inkl ereignis-objekt
 					}
-					public void mouseEntered(MouseEvent evt) {
-						jPanelZeichenflaecheMouseEntered(evt);
+					public void mouseEntered(MouseEvent evt) {							// dito
+						jPanelZeichenflaecheMouseEntered(evt);							// dito
 					}
 				});
 			}
