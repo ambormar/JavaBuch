@@ -1,21 +1,25 @@
-/* TODO 13.4.3.   s.429,
- * class MausKoordinatenAnzeigen_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen5b		&	JMyPaintPanel	&	Zeichenobjekt
+/* TODO 13.4.4.   s.431, !!!!!!!!!!KOMMENTARE ÜBERARBEITEN !!!!!!!!!!!!!!
+ * class MausAlsZeichenGeraet_MausKoordinaten_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen6		&	JMyPaintPanel	&	Zeichenobjekt
  * 
- * 		ERWEITERUNG VON:	13.3.2.	  JColorChooser_FarbauswahlDialog_JColorPanel_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen5	s.423, (3. ANSATZ)  MIT REPAINT() bei frameveränderungen; mit Graphics2D
+ * 		ERWEITERUNG VON:	13.4.3.	  MausKoordinatenAnzeigen_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen5b	s.429, 
  * 
  * 	  	SIEHE AUCH:	 		13.4.0.-13.4.2.   MouseEreignisse_Basics_Klassen_Methoden														s.425,
  *  
  *  
- * K&K:		Programm Zeichnen5b (erweiterung von Zeichnen5) 
+ * K&K:		Programm Zeichnen6 mit maus als Zeichengerät (erweiterung von Zeichnen5b) 
  * 			
- * 					[	Zeichnen5 (Unter Verwendung von Graphics2D statt Graphics & JColorChooser) 
+ * 					[	Zeichnen5b (Unter Verwendung von Graphics2D statt Graphics & JColorChooser) 
  * 						Dem Anwender steht ein Panel, auf das er verschiedene geometrische Figuren zeichnen kann, zur Verfügung. 
  * 						Position und Größe der Figuren können frei bestimmt werden.
- * 						Die Zeichnungen bleiben beim Neuzeichnen z.B. nach Verschieben des Fensters dauerhaft erhalten.	]
+ * 						Die Zeichnungen bleiben beim Neuzeichnen z.B. nach Verschieben des Fensters dauerhaft erhalten.	
+ * 						die mouse-zeiger-koordinaten innerhalb der zeichenfläche werden zur unterstützung der koordinaten-wahl, 
+ * 						für das zeichnen der figuren, in einem zusätzlichen label angezeigt. 									]
+ * 			 
+ * 			die maus kann auf dem panel wie ein zeichengerät verwendet werden: man kann ein rechteck von oben li nach unten re aufziehen,
+ * 			in welches die figuren nach loslassen der maustaste gezeichnet werden.
  * 
- * 			die mouse-zeiger-koordinaten innerhalb der zeichenfläche werden zur unterstützung der koordinaten-wahl, für das zeichnen der figuren, 
- * 			in einem zusätzlichen label angezeigt.  
- * 						
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!AB HIER KOMMENTARE ÜBERARBEITEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * 
  * 
  * KLASSEN MouseListener, MouseMotionListener, MouseEvent:
  * 
@@ -117,6 +121,7 @@ import java.awt.event.MouseMotionAdapter;	// guck
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Float;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;						 
@@ -131,7 +136,7 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
-public class MausKoordinatenAnzeigen_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen5b extends javax.swing.JFrame {
+public class MausAlsZeichenGeraet_MausKoordinaten_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen6 extends javax.swing.JFrame {
 
 	{
 		//Set Look & Feel
@@ -168,6 +173,9 @@ public class MausKoordinatenAnzeigen_MouseListener_MouseMotionListener_Fuer_JMyP
 	private char figur = 'R';																												// variable für anfangsbuchstaben der zu zeichnenden geom. figur ('L', 'O', 'K', 'R') für switch-case erkennung
 	private int x1, y1, x2, y2;																												// variablen für speicherg. der parameterwerte aus den textfeldern
 	private Color farbe = Color.black;
+	private boolean zeichnen = false;					// variable für: 	zeichnen, nur wenn vorher mouseDragged() erfolgt ist 
+	private int xEnd, yEnd;								// variablen für x,y -koordinaten speziell an der stelle wo maustaste losgelasen wird
+	
 	
 	/**
 	* Auto-generated main method to display this JFrame
@@ -175,14 +183,14 @@ public class MausKoordinatenAnzeigen_MouseListener_MouseMotionListener_Fuer_JMyP
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				MausKoordinatenAnzeigen_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen5b inst = new MausKoordinatenAnzeigen_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen5b();
+				MausAlsZeichenGeraet_MausKoordinaten_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen6 inst = new MausAlsZeichenGeraet_MausKoordinaten_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen6();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
 		});
 	}
 	
-	public MausKoordinatenAnzeigen_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen5b() {
+	public MausAlsZeichenGeraet_MausKoordinaten_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen6() {
 		super();
 		initGUI();
 	}
@@ -191,7 +199,7 @@ public class MausKoordinatenAnzeigen_MouseListener_MouseMotionListener_Fuer_JMyP
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
-			this.setTitle("Zeichnen 3");
+			this.setTitle("Zeichnen 6");
 			getContentPane().setBackground(new java.awt.Color(236, 233, 216));
 			{
 				jLZeichenflaeche = new JLabel();
@@ -206,13 +214,22 @@ public class MausKoordinatenAnzeigen_MouseListener_MouseMotionListener_Fuer_JMyP
 				jPanelZeichenflaeche.setBackground(new java.awt.Color(255,255,255));														// hintergrund auf weiss setzen mit gui properties
 				// mouse-Ereignis-behandlung
 				jPanelZeichenflaeche.addMouseMotionListener(new MouseMotionAdapter() {	// MouseMotionListener mit MouseMotionAdapter für die komponente 
-					public void mouseMoved(MouseEvent evt) {							// gewünschte ereignis-methode mit ereignis-objekt als parameter
-						jPanelZeichenflaecheMouseMoved(evt);							// weitergabe an die komponenten-speziefischen (ausgelagerten) handler methode inkl ereignis-objekt
+					public void mouseDragged(MouseEvent evt) {							// gewünschte ereignis-methode mit ereignis-objekt als parameter
+						jPanelZeichenflaecheMouseDragged(evt);							// weitergabe an die komponenten-speziefischen (ausgelagerten) handler methode inkl ereignis-objekt
+					}
+					public void mouseMoved(MouseEvent evt) {							// dito
+						jPanelZeichenflaecheMouseMoved(evt);							// dito
 					}
 				});
 				jPanelZeichenflaeche.addMouseListener(new MouseAdapter() {				// weitere mouse-ereignis-behandlungen mit 2 verschiedenen ereignis-methoden..
-					public void mouseExited(MouseEvent evt) {							// gewünschte ereignis-methode mit ereignis-objekt als parameter
-						jPanelZeichenflaecheMouseExited(evt);							// weitergabe an die komponenten-speziefischen (ausgelagerten) handler methode inkl ereignis-objekt
+					public void mouseReleased(MouseEvent evt) {							// gewünschte ereignis-methode mit ereignis-objekt als parameter
+						jPanelZeichenflaecheMouseReleased(evt);							// weitergabe an die komponenten-speziefischen (ausgelagerten) handler methode inkl ereignis-objekt
+					}
+					public void mousePressed(MouseEvent evt) {							// dito
+						jPanelZeichenflaecheMousePressed(evt);							// dito
+					}
+					public void mouseExited(MouseEvent evt) {							// dito
+						jPanelZeichenflaecheMouseExited(evt);							// dito
 					}
 					public void mouseEntered(MouseEvent evt) {							// dito
 						jPanelZeichenflaecheMouseEntered(evt);							// dito
@@ -472,20 +489,68 @@ public class MausKoordinatenAnzeigen_MouseListener_MouseMotionListener_Fuer_JMyP
 			jPanelZeichenflaeche.repaint();																									// xy.repaint() : panel neu zeichnen (inkl. verbleibende zeichenobjekte der arraylist figuren) 
 	}
 
-	// jigloo-autogenerierte mouseEntered(..)-handler-methode der klasse MouseListener für anweisungen bei eintritt des mauszeiger in die komponente jPanelZeichenflaeche
+																	// jigloo-autogenerierte mouseEntered(..)-handler-methode der klasse MouseListener für anweisungen bei eintritt des mauszeiger in die komponente jPanelZeichenflaeche
 	private void jPanelZeichenflaecheMouseEntered(MouseEvent evt) {	
 		jLMausPosition.setVisible(true);							// jLMausPosition (= koordinaten-anzeige) sichtbar setzen (bei eintritt des mauszeigers ins panel)
 	}
 	
-	// jigloo-autogenerierte mouseExited(..)-handler-methode der klasse MouseListener für anweisungen bei verlassen des mauszeigers aus der komponente jPanelZeichenflaeche
+																	// jigloo-autogenerierte mouseExited(..)-handler-methode der klasse MouseListener für anweisungen bei verlassen des mauszeigers aus der komponente jPanelZeichenflaeche
 	private void jPanelZeichenflaecheMouseExited(MouseEvent evt) {	
 		jLMausPosition.setVisible(false);							// jLMausPosition (= koordinaten-anzeige) unsichtbar setzen (bei austritt des mauszeigers aus dem panel)
 	}
 	
-	// jigloo-autogenerierte mouseMoved(..)-handler-methode der klasse MouseMotionListener für anweisungen bei bewegen des mauszeigers (ohne tastendrücken) über der komponente jPanelZeichenflaeche
+																	// jigloo-autogenerierte mouseMoved(..)-handler-methode der klasse MouseMotionListener für anweisungen bei bewegen des mauszeigers (ohne tastendrücken) über der komponente jPanelZeichenflaeche
 	private void jPanelZeichenflaecheMouseMoved(MouseEvent evt) {
-		jLMausPosition.setText("x: " + evt.getX() +		// mittels methode getX() des MouseEvent evt, vorzu die aktuelle koordinate x der mausposition im label anzeigen,  
-								"   y: " + evt.getY()); // mittels methode getY() des MouseEvent evt, vorzu die aktuelle koordinate y der mausposition im label anzeigen,
+		jLMausPosition.setText("x: " + evt.getX() +					// mittels methode getX() des MouseEvent evt, vorzu die aktuelle koordinate x der mausposition im label anzeigen,  
+								"   y: " + evt.getY()); 			// mittels methode getY() des MouseEvent evt, vorzu die aktuelle koordinate y der mausposition im label anzeigen,	
+	}
+	
+	// wenn taste im panel gedrückt wird
+	private void jPanelZeichenflaecheMousePressed(MouseEvent evt) {
+		x1 = evt.getX();											// koordinate x bei tastendruck, mittels methode getX() des MouseEvent evt, in variable x1 speichern
+		y1 = evt.getY();											// koordinate y bei tastendruck, mittels methode getY() des MouseEvent evt, in variable y1 speichern
+		jTFPositionX1.setText(new Integer(x1).toString());			// x als string ins textfeld x1 setzen 							alternativ : jTFPositionX1.setText("" + x1);	
+		jTFPositionY1.setText(new Integer(y1).toString());			// y als string ins textfeld y1 setzen 							alternativ : jTFPositionY1.setText("" + y1);
+	}
+	
+	// wenn taste im panel losgelassen wird
+	private void jPanelZeichenflaecheMouseReleased(MouseEvent evt) {
+		if (zeichnen) {												// falls (zeichnen == True) => wenn also mouseDragged() erfolgt ist
+			xEnd = evt.getX();										// koordinate x bei tasten-loslassen, mittels methode getX() des MouseEvent evt, in variable xEnd speichern
+			yEnd = evt.getY();										// koordinate y bei tasten-loslassen, mittels methode getY() des MouseEvent evt, in variable yEnd speichern
+			x2 = evt.getX() - x1;									// breite (für alle figuren ausser linie)
+			y2 = evt.getY() - y1;									// höhe (für alle figuren ausser linie) 
+			if (figur == 'L'){										// falls figur == linie..
+				jPanelZeichenflaeche.addZeichObjekt(figur, jCheckBgefuellt.isSelected(), x1, y2, xEnd, yEnd, farbe, 1.0f);	// zeichenobjekt linie via methode addZeichenObjekt des JMyPaintPanel-objekts jPanelzeichenflaeche ..
+			} else {																										// ..  mit den parametern (figur, checkbox gefüllt/oder nicht, anfangs x y, end x y, farbe, linienbreite)
+				jPanelZeichenflaeche.addZeichObjekt(figur, jCheckBgefuellt.isSelected(), x1, y1, x2, y2, farbe, 1.0f);	// sonst: zeichenobjekt gewählte figur zeichnen via methode addZeichenObjekt des JMyPaintPanel-objekts jPanelzeichenflaeche ..
+			} 																											// ..  mit den parametern (figur, checkbox gefüllt/oder nicht, anfangs x y, breite, höhe, farbe, linienbreite)
+			jPanelZeichenflaeche.repaint();							// panel repainten (=> paintComponent in JMyPaintPanel aktivieren) inklusive dem neuesten zeichenobjekt
+			zeichnen = false;										// mouseDragged() vorbei weil taste losgelassen => zeichnen wieder auf false
+		}
+	}
+	
+	// wenn taste im panel gedrückt gezogen wird
+	private void jPanelZeichenflaecheMouseDragged(MouseEvent evt) {
+		xEnd = evt.getX();											// vorzu koordinate x während dem draggen, mittels methode getX() des MouseEvent evt, in variable xEnd speichern		
+		yEnd = evt.getY();											// vorzu koordinate y während dem draggen, mittels methode getY() des MouseEvent evt, in variable yEnd speichern
+		x2 = evt.getX() - x1;										// breite (für alle figuren ausser linie)
+		y2 = evt.getY() - y1;										// höhe (für alle figuren ausser linie) 
+		jPanelZeichenflaeche.repaint();								// repainten des panels damit beim aufziehen des aufzieh-rechtecks keine ausgefüllte fläche entsteht ..
+		Graphics2D g2d = (Graphics2D) jPanelZeichenflaeche.getGraphics();						// T	neues g2d objekt (für 2d grafik-kontext)
+		g2d.setColor(Color.black);																// |
+		BasicStroke stil = new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER); 	// |
+		g2d.setStroke(stil);																	// |
+		Rectangle2D.Float rechteck = new Rectangle2D.Float(x1, y1, x2, y2);						// v	(neues rechteck-objekt)
+		g2d.draw(rechteck);											// für grössen-eindruck wird ein aufzieh-rechteck direkt gezeichnet, ohne dass es an paintComponent() übermittelt wird  
+		if (figur == 'L') {											// falls figur == linie:
+			jTFPositionX2.setText(new Integer(xEnd).toString());	// .. textfeld x2 auf auf x end koordinate setzen
+			jTFPositionY2.setText(new Integer(yEnd).toString());	// .. textfeld y2 auf auf y end koordinate setzen
+		} else {													// sonst: ..
+			jTFPositionX2.setText(new Integer(x2).toString());		// .. textfeld x2 auf auf breite setzen
+			jTFPositionY2.setText(new Integer(y2).toString());		// .. textfeld y2 auf auf höhe setzen
+		}
+		zeichnen = true;											// variabel für: zeichnen, falls mouseDragged() erfolgt ist (kurzfristig) auf true
 	}
 
 }
