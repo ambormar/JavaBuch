@@ -38,11 +38,45 @@
  *				=> MouseMotionListener & MouseListener werden anscheinend nicht importiert auch in javadoc landet man bei der klasse MouseAdapter	??!!
  * 
  * 
- * 	!!!!!!!!!!!!!!!!!!!!!!!!!!!!! AB HIER NOCH ÜBERARBEITEM !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * VORGEHEN:	1. programm MausKoordinatenAnzeigen_.._Zeichnen6 als ausgangsbasis		
  * 
- * VORGEHEN:	1. programm MausKoordinatenAnzeigen_.._Zeichnen5b als ausgangsbasis		
+ * 			[ 	2. - 10.	SIEHE UNTEN:		(aus	MausKoordinatenAnzeigen_.._Zeichnen6	übernommen)		]
  * 
- * 			[[[	ÜBERNOMMEN AUS .._Zeichnen5b:	
+ * 				11. zusätzliche variablen oben:		private int xStart, yStart;				// zur speicherung der jeweiligen anfangs x-y-koordinaten, da wo maustaste gedrückt wird
+ * 
+ * 				12. zusätzliche ausgelagerte methode koordinatenBestimmen() zur bestimmung der kordinaten bzw. breite und höhe, 
+ * 														-> je nachdem wo der start-/end-punkt einer figur liegt, sodass in alle richtungen gezeichnet werden kann
+ * 
+ *					CODE:
+ *					
+ *						private void koordinatenBestimmen() {
+ *							if ((xEnd > xStart) && (yEnd > yStart)) {						// falls startpunkt der figur links oben:
+ *								x1 = xStart;
+ *								y1 = yStart;
+ *								x2 = xEnd - xStart;
+ *								y2 = yEnd - yStart;		
+ *							} else if ((xEnd < xStart) && (yEnd > yStart)) {				// falls startpunkt der figur rechts oben:
+ *								x1 = xEnd;
+ *								y1 = yStart;
+ *								x2 = xStart - xEnd;
+ *								y2 = yEnd - yStart;	
+ *							} else if ((xEnd > xStart) && (yEnd < yStart)) {				// falls startpunkt der figur links unten:
+ *								x1 = xStart;
+ *								y1 = yEnd;
+ *								x2 = xEnd - xStart;
+ *								y2 = yStart - yEnd;	
+ *							} else if ((xEnd < xStart) && (yEnd < yStart)) {				// falls startpunkt der figur rechts unten:
+ *								x1 = xEnd;
+ *								y1 = yEnd;
+ *								x2 = xStart - xEnd;
+ *								y2 = yStart - yEnd;	
+ *							}
+ *						} 
+ * 
+ * 
+ * 			[[[	2. - 10. ÜBERNOMMEN AUS .._Zeichnen6:		=> ausser kleinen anpassungen in 8., 9. + 10. 
+ * 																-> auf die neue methode koordinatenBestimmen()	&	die neuen variablen xStart, yStart;
+ * 														
  * 
  * 				2. jLabelMausposition erstellen, zur anzeige der Mauszeiger-koordinaten, wenn mauszeiger innerhalb von jPanelzeichenflaeche
  * 						-> zu beginn auf:		jLMausPosition.setVisible(false);	setzen												// soll nur sichtbar sein wenn mauszeiger über dem panel ist
@@ -66,12 +100,10 @@
  *										"   y: " + evt.getY()); 																		// mittels methode getY() des MouseEvent evt, vorzu die aktuelle koordinate y der mausposition im label anzeigen,
  *							}
  *
- *			]]]	AB HIER MausAlsZeichenGeraet_.._Zeichnen6:
- *
  *				6. zusätzliche variablen oben:
  *
- *						private boolean zeichnen = false;					// variable für: 	zeichnen, nur wenn vorher mouseDragged() vorher erfolgt ist 
- *						private int xEnd, yEnd;								// variablen für x,y -koordinaten speziell an der stelle wo maustaste losgelasen (released) wird
+ *						private boolean zeichnen = false;																				// variable für: 	zeichnen, nur wenn vorher mouseDragged() vorher erfolgt ist 
+ *						private int xEnd, yEnd;																							// variablen für x,y -koordinaten speziell an der stelle wo maustaste losgelasen (released) wird
  *
  *
  *				7. jPanelzeichenflaeche erhält 3 weitere Ereignis-methoden:	
@@ -81,23 +113,14 @@
  *					9. mousDragged()-methode der Klasse MouseMotionListener:	=> bei gedrückter maustaste ziehen:	koordinaten der breite + höhe des aufgezogenen rechtecks bzw. des linienendpunktes feststellen & in die textfelder übertragen,..
  *				   10. mousReleased()-methode der Klasse MouseListener.			=> bei maustaste loslassen:			wenn die maus zuvor gezogen wurde, die entsprechende figur zeichnen
  *
- *					KERN-CODE:  initGUI()-ergänzungen - Jigloo autogeneriert:
+ *					KERN-CODE:  initGUI()-ergänzungen - Jigloo autogeneriert:	 SCHEMA:
  *
  *						{
  *							jPanelZeichenflaeche = ..														
  *							...																		
- *							jPanelZeichenflaeche.addMouseMotionListener(new MouseMotionAdapter() {		// MouseMotionListener mit MouseMotionAdapter für die komponente 
- *								public void mouseDragged(MouseEvent evt) {								// gewünschte ereignis-methode mit ereignis-objekt als parameter
- *									jPanelZeichenflaecheMouseDragged(evt);								// weitergabe an die komponenten-spezifischen (ausgelagerten) handler methode inkl ereignis-objekt
- *								}
- *								...
- *							});
- *							jPanelZeichenflaeche.addMouseListener(new MouseAdapter() {					// MouseListener mit MouseAdapter für die komponente, mit 2 verschiedenen ereignis-methoden..
- *								public void mousePressed(MouseEvent evt) {								// gewünschte ereignis-methode mit ereignis-objekt als parameter
- *									jPanelZeichenflaecheMousePressed(evt);								// weitergabe an die komponenten-spezifischen (ausgelagerten) handler methode inkl ereignis-objekt
- *								}
- *								public void mouseReleased(MouseEvent evt) {								// dito
- *									jPanelZeichenflaecheMouseReleased(evt);								// dito
+ *							jPanelZeichenflaeche.addMouseListener(new MouseAdapter() {													// MouseListener mit MouseAdapter für die komponente, mit 2 verschiedenen ereignis-methoden..
+ *								public void mousePressed(MouseEvent evt) {																// gewünschte ereignis-methode mit ereignis-objekt als parameter
+ *									jPanelZeichenflaecheMousePressed(evt);																// weitergabe an die komponenten-spezifischen (ausgelagerten) handler methode inkl ereignis-objekt
  *								}
  *								...
  *							});
@@ -108,10 +131,10 @@
  * 					KERN-CODE:
  * 
  *	 					private void jPanelZeichenflaecheMousePressed(MouseEvent evt) {
- *							x1 = evt.getX();											// koordinate x bei tastendruck, mittels methode getX() des MouseEvent evt, in variable x1 speichern
- *							y1 = evt.getY();											// koordinate y bei tastendruck, mittels methode getY() des MouseEvent evt, in variable y1 speichern
- *							jTFPositionX1.setText(new Integer(x1).toString());			// x als string ins textfeld x1 setzen 							alternativ : jTFPositionX1.setText("" + x1);	
- *							jTFPositionY1.setText(new Integer(y1).toString());			// y als string ins textfeld y1 setzen 							alternativ : jTFPositionY1.setText("" + y1);
+ *							xStart = evt.getX();													// koordinate x bei tastendruck, mittels methode getX() des MouseEvent evt, in variable xStart speichern
+ *							yStart = evt.getY();													// koordinate y bei tastendruck, mittels methode getY() des MouseEvent evt, in variable yStart speichern
+ *							jTFPositionX1.setText(new Integer(xStart).toString());					// x als string ins textfeld x1 setzen 		alternativ : jTFPositionX1.setText("" + xStart);	
+ *							jTFPositionY1.setText(new Integer(yStart).toString());					// y als string ins textfeld y1 setzen 		alternativ : jTFPositionY1.setText("" + yStart);
  *						}
  * 
  *				9.	..mouseDragged() handler method:	bei gedrückter maustaste ziehen:	koordinaten der breite + höhe des aufgezogenen rechtecks bzw. des linienendpunktes feststellen & in die textfelder übertragen,..
@@ -119,25 +142,24 @@
  *					KERN-CODE:
  *	
  *						private void jPanelZeichenflaecheMouseDragged(MouseEvent evt) {
- *							xEnd = evt.getX();											// vorzu koordinate x während dem draggen, mittels methode getX() des MouseEvent evt, in variable xEnd speichern		
- *							yEnd = evt.getY();											// vorzu koordinate y während dem draggen, mittels methode getY() des MouseEvent evt, in variable yEnd speichern
- *							x2 = evt.getX() - x1;										// breite (für alle figuren ausser linie)
- *							y2 = evt.getY() - y1;										// höhe (für alle figuren ausser linie) 
- *							jPanelZeichenflaeche.repaint();								// repainten des panels damit beim aufziehen des aufzieh-rechtecks keine ausgefüllte fläche entsteht ..
- *							Graphics2D g2d = (Graphics2D) jPanelZeichenflaeche.getGraphics();						// T	neues g2d objekt (für 2d grafik-kontext)
- *							g2d.setColor(Color.black);																// |
- *							BasicStroke stil = new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER); 	// |
- *							g2d.setStroke(stil);																	// |
- *							Rectangle2D.Float rechteck = new Rectangle2D.Float(x1, y1, x2, y2);						// v	(neues rechteck-objekt)
- *							g2d.draw(rechteck);											// für grössen-eindruck wird ein aufzieh-rechteck direkt gezeichnet, ohne dass es an paintComponent() übermittelt wird  
- *							if (figur == 'L') {											// falls figur == linie:
- *								jTFPositionX2.setText(new Integer(xEnd).toString());	// .. textfeld x2 auf auf x end koordinate setzen
- *								jTFPositionY2.setText(new Integer(yEnd).toString());	// .. textfeld y2 auf auf y end koordinate setzen
- *							} else {													// sonst: ..
- *								jTFPositionX2.setText(new Integer(x2).toString());		// .. textfeld x2 auf auf breite setzen
- *								jTFPositionY2.setText(new Integer(y2).toString());		// .. textfeld y2 auf auf höhe setzen
+ *							xEnd = evt.getX();																										// vorzu koordinate x während dem draggen, mittels methode getX() des MouseEvent evt, in variable xEnd speichern		
+ *							yEnd = evt.getY();																										// vorzu koordinate y während dem draggen, mittels methode getY() des MouseEvent evt, in variable yEnd speichern
+ *							koordinatenBestimmen();													// aufruf der ausgelagerten methode zur bestimmung der kordinaten bzw. breite und höhe, je nachdem wo der start-/end-punkt einer figur liegt,
+ *							jPanelZeichenflaeche.repaint();																							// repainten des panels damit beim aufziehen des aufzieh-rechtecks keine ausgefüllte fläche entsteht ..
+ *							Graphics2D g2d = (Graphics2D) jPanelZeichenflaeche.getGraphics();														// T	neues g2d objekt (für 2d grafik-kontext)
+ *							g2d.setColor(Color.black);																								// |
+ *							BasicStroke stil = new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER); 									// |
+ *							g2d.setStroke(stil);																									// |
+ *							Rectangle2D.Float rechteck = new Rectangle2D.Float(x1, y1, x2, y2);														// v	(neues rechteck-objekt)
+ *							g2d.draw(rechteck);																										// für grössen-eindruck wird ein aufzieh-rechteck direkt gezeichnet, ohne dass es an paintComponent() übermittelt wird  
+ *							if (figur == 'L') {																										// falls figur == linie:
+ *								jTFPositionX2.setText(new Integer(xEnd).toString());																// .. textfeld x2 auf auf x end koordinate setzen
+ *								jTFPositionY2.setText(new Integer(yEnd).toString());																// .. textfeld y2 auf auf y end koordinate setzen
+ *							} else {																												// sonst: ..
+ *								jTFPositionX2.setText(new Integer(x2).toString());																	// .. textfeld x2 auf auf breite setzen
+ *								jTFPositionY2.setText(new Integer(y2).toString());																	// .. textfeld y2 auf auf höhe setzen
  *							}
- *							zeichnen = true;											// variabel für: zeichnen, falls mouseDragged() erfolgt ist (kurzfristig) auf true
+ *							zeichnen = true;																										// variabel für: zeichnen, falls mouseDragged() erfolgt ist (kurzfristig) auf true
  *						}
  *
  * 				10.	..mouseReleased() handler method:	bei maustaste loslassen:	wenn die maus zuvor gezogen wurde, die entsprechende figur zeichnen
@@ -145,20 +167,21 @@
  *					KERN-CODE:
  *	
  *						private void jPanelZeichenflaecheMouseReleased(MouseEvent evt) {
- *							if (zeichnen) {												// falls (zeichnen == True) => wenn also mouseDragged() erfolgt ist
- *								xEnd = evt.getX();										// koordinate x bei tasten-loslassen, mittels methode getX() des MouseEvent evt, in variable xEnd speichern
- *								yEnd = evt.getY();										// koordinate y bei tasten-loslassen, mittels methode getY() des MouseEvent evt, in variable yEnd speichern
- *								x2 = evt.getX() - x1;									// breite (für alle figuren ausser linie)
- *								y2 = evt.getY() - y1;									// höhe (für alle figuren ausser linie) 
- *								if (figur == 'L'){										// falls figur == linie..
- *									jPanelZeichenflaeche.addZeichObjekt(figur, jCheckBgefuellt.isSelected(), x1, y2, xEnd, yEnd, farbe, 1.0f);	// zeichenobjekt linie via methode addZeichenObjekt des JMyPaintPanel-objekts jPanelzeichenflaeche ..
- *								} else {																										// ..  mit den parametern (figur, checkbox gefüllt/oder nicht, anfangs x y, end x y, farbe, linienbreite)
+ *							if (zeichnen) {																											// falls (zeichnen == True) => wenn also mouseDragged() erfolgt ist
+ *								xEnd = evt.getX();																									// koordinate x bei tasten-loslassen, mittels methode getX() des MouseEvent evt, in variable xEnd speichern
+ *								yEnd = evt.getY();																									// koordinate y bei tasten-loslassen, mittels methode getY() des MouseEvent evt, in variable yEnd speichern
+ *								koordinatenBestimmen();												// aufruf der ausgelagerten methode zur bestimmung der kordinaten bzw. breite und höhe, je nachdem wo der start-/end-punkt einer figur liegt,
+ *								if (figur == 'L'){																									// falls figur == linie..
+ *									jPanelZeichenflaeche.addZeichObjekt(figur, jCheckBgefuellt.isSelected(), xStart, yStart, xEnd, yEnd, farbe, 1.0f);	// zeichenobjekt linie via methode addZeichenObjekt des JMyPaintPanel-objekts jPanelzeichenflaeche ..
+ *								} else {																											// ..  mit den parametern (figur, checkbox gefüllt/oder nicht, anfangs x y, end x y, farbe, linienbreite)
  *									jPanelZeichenflaeche.addZeichObjekt(figur, jCheckBgefuellt.isSelected(), x1, y1, x2, y2, farbe, 1.0f);	// sonst: zeichenobjekt gewählte figur zeichnen via methode addZeichenObjekt des JMyPaintPanel-objekts jPanelzeichenflaeche ..
- *								} 																											// ..  mit den parametern (figur, checkbox gefüllt/oder nicht, anfangs x y, breite, höhe, farbe, linienbreite)
- *								jPanelZeichenflaeche.repaint();							// panel repainten (=> paintComponent in JMyPaintPanel aktivieren) inklusive dem neuesten zeichenobjekt
- *								zeichnen = false;										// mouseDragged() vorbei weil taste losgelassen => zeichnen wieder auf false
+ *								} 																													// ..  mit den parametern (figur, checkbox gefüllt/oder nicht, anfangs x y, breite, höhe, farbe, linienbreite) 
+ *								jPanelZeichenflaeche.repaint();																						// panel repainten (=> paintComponent in JMyPaintPanel aktivieren) inklusive dem neuesten zeichenobjekt
+ *								zeichnen = false;																									// mouseDragged() vorbei weil taste losgelassen => zeichnen wieder auf false
  *							}
  *						}
+ *
+ *			]]]	2.-10. FERTIG
  *						
  */
 
@@ -230,7 +253,7 @@ public class MausAlsZeichenGeraet_FreiesFigurAufziehen_MausKoordinaten_MouseList
 	private int x1, y1, x2, y2;																												// variablen für speicherg. der parameterwerte aus den textfeldern
 	private Color farbe = Color.black;
 	private boolean zeichnen = false;																		// variable für: 	zeichnen, nur wenn vorher mouseDragged() erfolgt ist 
-	private int xStart, yStart, xEnd, yEnd;				// variablen für x,y -koordinaten speziell an der stelle wo maustaste gedrückt & wo losgelasen wird
+	private int xStart, yStart, xEnd, yEnd;				// variablen für x,y -koordinaten speziell an der stelle wo maustaste gedrückt & wo losgelassen wird
 	
 	
 	/**
