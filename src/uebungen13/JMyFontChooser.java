@@ -1,7 +1,9 @@
 /* TODO 13.4.5.   s.435 (eigtl. buchDVD), FontChooser zum aufrufen / benutzen
  * class JMyFontChooser extends Component
  * 
- * 		AUFRUF SIEHE:		13.5.	FontChooser_JMyFontChooser_??_Textzeichner2		Aufgabe 4, s.436 
+ * 		AUFRUF SIEHE:		13.5.		FontChooser_JMyFontChooser_??_Textzeichner2					Aufgabe 4, s.436 
+ * 
+ * 		BASICS SIEHE:		13.4.5.   	Font_Klasse_Basics_Methoden_Konstruktoren_Konstanten		s.434, 
  * 
  * K&K:		Klasse JMyFontChooser 
  *			fertige Klasse ist von buchDVD kopiert, zum benutzen als FontChooser. die klasse war nicht als übungsprogramm zum selber schreiben erklärt. 

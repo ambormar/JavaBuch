@@ -1,5 +1,5 @@
 /* TODO 13.4.5.   s.434, 
- * class Font_Klasse_Basics
+ * class Font_Klasse_Basics_Methoden_Konstruktoren_Konstanten
  * 
  * 			SIEHE AUCH: 	13.4.5.		JMyFontChooser 		s.435,
  * 							
@@ -50,6 +50,6 @@
 
 package uebungen13;
 
-public class Font_Klasse_Basics {
+public class Font_Klasse_Basics_Methoden_Konstruktoren_Konstanten {
 
 }

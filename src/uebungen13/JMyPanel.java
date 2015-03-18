@@ -12,8 +12,9 @@
  * 
  * 	VORGEHEN:	
  * 
- * 		KURZ:	1. klasse JMyPanel als erweiterung von JPanel erstellen und in der methode paintComponent(..) die grafischen ergänzungen/abänderungen vornehmen, 
- * 																																			die die standardkomponente (Jpanel) nicht hätte.
+ * 		KURZ:	1. klasse JMyPanel als erweiterung von JPanel erstellen ..
+ * 					& in der methode paintComponent(..) die grafischen ergänzungen/abänderungen vornehmen, die die standardkomponente (JPanel) nicht hätte.
+ * 
  * 				2. anwender-klasse JMyPanel_Zeichnen erstellen, mit JPanel als Jgloo-GUI_Standard-element. 
  * 					=> dann allerdings den namen des konstruktors von JPanel() ersetzen durch JMyPanel().
  * 					=> JPanel der superklasse wird so ganz normal angezeigt		
