@@ -128,6 +128,7 @@ public class JPanel_Komponente_MitVerändertemAussehen_JMyPanel_Zeichnen1 extends
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
+			this.setTitle("Zeichnen 1, jMyPanel statt jPanel");
 			{
 				jPanel1 = new JMyPanel();								// konstruktor JPanel() durch JMyPanel ersetzen
 				getContentPane().add(jPanel1);

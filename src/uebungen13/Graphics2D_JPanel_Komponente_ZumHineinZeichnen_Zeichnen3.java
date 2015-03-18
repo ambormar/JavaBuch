@@ -245,7 +245,7 @@ public class Graphics2D_JPanel_Komponente_ZumHineinZeichnen_Zeichnen3 extends ja
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
-			this.setTitle("Zeichnen 3");
+			this.setTitle("Zeichnen 3, Komponente zum hineinzeichnen mit Graphics2d");
 			getContentPane().setBackground(new java.awt.Color(236, 233, 216));
 			{
 				jLZeichenflaeche = new JLabel();

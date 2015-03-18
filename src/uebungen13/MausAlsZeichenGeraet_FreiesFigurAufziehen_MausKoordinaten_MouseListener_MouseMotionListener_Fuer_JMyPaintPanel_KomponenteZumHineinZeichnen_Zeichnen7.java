@@ -278,7 +278,7 @@ public class MausAlsZeichenGeraet_FreiesFigurAufziehen_MausKoordinaten_MouseList
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
-			this.setTitle("Zeichnen 7");
+			this.setTitle("Zeichnen 7, Komponente zum hineinzeichnen, mit Maus als Zeichengerät (freies Figuraufziehen)");
 			getContentPane().setBackground(new java.awt.Color(236, 233, 216));
 			{
 				jLZeichenflaeche = new JLabel();

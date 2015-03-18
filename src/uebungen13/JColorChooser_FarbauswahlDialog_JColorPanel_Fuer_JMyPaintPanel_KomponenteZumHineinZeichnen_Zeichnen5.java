@@ -146,7 +146,7 @@ public class JColorChooser_FarbauswahlDialog_JColorPanel_Fuer_JMyPaintPanel_Komp
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
-			this.setTitle("Zeichnen 3");
+			this.setTitle("Zeichnen 5, Komponente zum hineinzeichnen (auto-repaint()) & ColorChooser / Farbauswahldialog");
 			getContentPane().setBackground(new java.awt.Color(236, 233, 216));
 			{
 				jLZeichenflaeche = new JLabel();

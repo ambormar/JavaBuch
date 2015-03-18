@@ -254,7 +254,7 @@ public class MausAlsZeichenGeraet_MausKoordinaten_MouseListener_MouseMotionListe
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
-			this.setTitle("Zeichnen 6");
+			this.setTitle("Zeichnen 6, Komponente zum hineinzeichnen, mit Maus als Zeichengerät (oben li nach unten re)");
 			getContentPane().setBackground(new java.awt.Color(236, 233, 216));
 			{
 				jLZeichenflaeche = new JLabel();

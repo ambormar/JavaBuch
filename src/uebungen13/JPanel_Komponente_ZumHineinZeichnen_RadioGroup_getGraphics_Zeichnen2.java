@@ -193,7 +193,7 @@ public class JPanel_Komponente_ZumHineinZeichnen_RadioGroup_getGraphics_Zeichnen
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
-			this.setTitle("Zeichnen 2");
+			this.setTitle("Zeichnen 2, JMyPanel Komponente zum hineinzeichnen, ohne auto-repaint()");
 			{
 				jLZeichenflaeche = new JLabel();
 				getContentPane().add(jLZeichenflaeche);

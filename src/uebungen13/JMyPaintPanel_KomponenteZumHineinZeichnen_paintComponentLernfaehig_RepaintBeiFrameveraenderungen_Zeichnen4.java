@@ -292,7 +292,7 @@ public class JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
-			this.setTitle("Zeichnen 3");
+			this.setTitle("Zeichnen 4, Komponente zum hineinzeichnen mit autom. repaint() bei Frameveränderungen");
 			getContentPane().setBackground(new java.awt.Color(236, 233, 216));
 			{
 				jLZeichenflaeche = new JLabel();

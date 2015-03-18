@@ -191,7 +191,7 @@ public class MausKoordinatenAnzeigen_MouseListener_MouseMotionListener_Fuer_JMyP
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
-			this.setTitle("Zeichnen 3");
+			this.setTitle("Zeichnen 5b, Komponente zum hineinzeichnen, mit Anzeige der Mauskoordinaten");
 			getContentPane().setBackground(new java.awt.Color(236, 233, 216));
 			{
 				jLZeichenflaeche = new JLabel();
