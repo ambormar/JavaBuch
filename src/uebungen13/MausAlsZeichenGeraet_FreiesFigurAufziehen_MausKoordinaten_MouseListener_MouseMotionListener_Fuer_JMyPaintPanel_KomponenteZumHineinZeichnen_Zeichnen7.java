@@ -256,6 +256,7 @@ public class MausAlsZeichenGeraet_FreiesFigurAufziehen_MausKoordinaten_MouseList
 	private int xStart, yStart, xEnd, yEnd;				// variablen für x,y -koordinaten speziell an der stelle wo maustaste gedrückt & wo losgelassen wird
 	
 	
+	
 	/**
 	* Auto-generated main method to display this JFrame
 	*/
