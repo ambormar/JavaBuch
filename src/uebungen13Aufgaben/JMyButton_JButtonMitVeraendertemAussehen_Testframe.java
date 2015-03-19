@@ -1,4 +1,4 @@
-/* TODO 13.5.   Aufgabe 1, s.435, (extends JFrame) JMyButton anstelle JButton  
+/* TODO 13.5.   Aufgabe 1, s.435, (extends JFrame) JMyButton anstelle JButton  		
  * class JMyButton_JButtonMitVeraendertemAussehen_Testframe		& 	JMyButton
  * 
  * 		SIEHE:		13.1.2.   	JMyPanel														s.398+(400), (JMyPanel extends JPanel)
@@ -21,6 +21,7 @@ package uebungen13Aufgaben;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JPanel;
 
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
@@ -28,6 +29,7 @@ import javax.swing.SwingUtilities;
 public class JMyButton_JButtonMitVeraendertemAussehen_Testframe extends javax.swing.JFrame {
 
 	private JMyButton jBtnEnde;												// oben, attribut-typ JButton durch JMyButton ersetzen
+	private JZielPanel jPanel1;
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -56,13 +58,19 @@ public class JMyButton_JButtonMitVeraendertemAussehen_Testframe extends javax.sw
 				jBtnEnde = new JMyButton();									// konstruktor JButton() durch JMyButton ersetzen
 				getContentPane().add(jBtnEnde);
 				jBtnEnde.setText("Ende");
-				jBtnEnde.setBounds(258, 207, 103, 31);
+				jBtnEnde.setBounds(258, 209, 103, 31);
 				jBtnEnde.setBackground(new java.awt.Color(165,209,209));	// z.b. hintergrundfarbe weiterhin über die properties veränderbar
 				jBtnEnde.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
 						jBtnEndeActionPerformed(evt);
 					}
 				});
+			}
+			{
+				jPanel1 = new JZielPanel();
+				getContentPane().add(jPanel1);
+				jPanel1.setBounds(15, 20, 220, 220);
+				jPanel1.setBackground(new java.awt.Color(247,179,218));
 			}
 			pack();
 			setSize(400, 300);
