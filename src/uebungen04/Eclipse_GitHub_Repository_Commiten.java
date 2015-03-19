@@ -3,7 +3,7 @@
  * 
  * 	GITHUB - SYNCHRONISIERTES JAVAPROJEKT ERSTELLEN SIEHE: 		4.2.1.   Eclipse_GitHub_JavaProjekt_SynchronisiertErstellen		eigene bemerkung 
  * 
- * 				Git & SVN IM VERGLEICH	-	SIEHE AUCH:			4.2.1.   GIT_SVN_Repositorys_ImVergleich	eigene bemerkung 
+ * 				Git & SVN IM VERGLEICH	-	SIEHE AUCH:			4.2.1.   GIT_SVN_Repositorys_ImVergleich						eigene bemerkung 
  * 
  * 
  * 	COMMIT:		=> wenn projektordner & package-ordner einen > (pfeil) & klassen ein fragezeichen vor dem namen haben: 	
