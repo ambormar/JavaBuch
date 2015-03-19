@@ -1,20 +1,30 @@
-/* TODO 13.5.   Aufgabe 1, s.435, (extends JFrame) JMyButton anstelle JButton  		
- * class JMyButton_JButtonMitVeraendertemAussehen_Testframe		& 	JMyButton
+/* TODO 13.5.   Aufgabe 1+2, s.435, (extends JFrame) JMyButton statt JButton & JZielPanel statt JPanel 		
+ * class JMyButton_JZielPanel_KomponentenMitVeraendertemAussehen_TestFrame		& 	JMyButton		& 		JZielPanel
  * 
- * 		SIEHE:		13.1.2.   	JMyPanel														s.398+(400), (JMyPanel extends JPanel)
+ * 		SIEHE:			13.5.   	JMyButton															Aufgabe 1, s.435, (extends JButton)
  * 
- * 		SIEHE:		13.1.2.   	JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1		s.400+(398), (JMyPanel anstelle JPanel) 
+ *  	SIEHE:			13.5.   	JZielPanel															Aufgabe 2, s.435, (extends JZielPanel)		 
+ *   
+ * 		VERGLEICHE:		13.1.2.   	JMyPanel															s.398+(400), (JMyPanel extends JPanel)
+ * 
+ * 		VERGLEICHE:		13.1.2.   	JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1			s.400+(398), (JMyPanel anstelle JPanel) 
  *  
  * 
  * K&K:		Klasse JMyButton
  * 			Die Klasse ist von der Standardkomponente JButton abgeleitet. Sie besitzt als Erweiterung eine grüne Linie als zusätzlichen Rahmen.
  * 
- * K&K:		Programm JMyButton_JButtonMitVeraendertemAussehen_Testframe. Verwendet die Komponenten JMyButton. 
+ * K&K:		Programm JMyButton_JZielPanel_KomponentenMitVeraendertemAussehen_TestFrame. 
+ * 			Verwendet die Komponenten JZielPanel und JMyButton.
  * 
- * VORGEHEN:	JMyButton:		ANALOG:		13.1.2.   	JMyPanel		s.398+(400), (JMyPanel extends JPanel)
+ * K&K:	 	Klasse JZielPanel
+ *	 		Die Klasse ist von der Standardkomponente JPanel abgeleitet. Auf das Panel ist eine Zielscheibe eingezeichnet.
  * 
- * 				TestFrame:		ANALOG:		13.1.2.   JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1		s.400+(398), (JMyPanel anstelle JPanel) 
- * 											=> VORGEHEN KLASSE (ANWENDUNG)
+ * VORGEHEN:	JMyButton	&
+ * 				JZielPanel:			ANALOG:		13.1.2.   	JMyPanel		s.398+(400), (JMyPanel extends JPanel)
+ * 
+ * 				TestFrame:			ANALOG:		13.1.2.   	JPanel_Komponente_MitVerändertemAussehen_JMyPanelZeichnen1		s.400+(398), (JMyPanel anstelle JPanel) 
+ * 												=> VORGEHEN KLASSE (ANWENDUNG)
+ * 
  */
 
 package uebungen13Aufgaben;
@@ -26,7 +36,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
-public class JMyButton_JButtonMitVeraendertemAussehen_Testframe extends javax.swing.JFrame {
+public class JMyButton_JZielPanel_KomponentenMitVeraendertemAussehen_TestFrame extends javax.swing.JFrame {
 
 	private JMyButton jBtnEnde;												// oben, attribut-typ JButton durch JMyButton ersetzen
 	private JZielPanel jPanel1;
@@ -37,14 +47,14 @@ public class JMyButton_JButtonMitVeraendertemAussehen_Testframe extends javax.sw
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				JMyButton_JButtonMitVeraendertemAussehen_Testframe inst = new JMyButton_JButtonMitVeraendertemAussehen_Testframe();
+				JMyButton_JZielPanel_KomponentenMitVeraendertemAussehen_TestFrame inst = new JMyButton_JZielPanel_KomponentenMitVeraendertemAussehen_TestFrame();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
 		});
 	}
 	
-	public JMyButton_JButtonMitVeraendertemAussehen_Testframe() {
+	public JMyButton_JZielPanel_KomponentenMitVeraendertemAussehen_TestFrame() {
 		super();
 		initGUI();
 	}
