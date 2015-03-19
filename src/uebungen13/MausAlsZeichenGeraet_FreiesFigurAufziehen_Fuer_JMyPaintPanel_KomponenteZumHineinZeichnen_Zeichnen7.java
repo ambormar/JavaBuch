@@ -1,5 +1,5 @@
 /* TODO 13.4.4.   s.434,
- * class MausAlsZeichenGeraet_FreiesFigurAufziehen_MausKoordinaten_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen7		&	JMyPaintPanel	&	Zeichenobjekt
+ * class MausAlsZeichenGeraet_FreiesFigurAufziehen_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen7		&	JMyPaintPanel	&	Zeichenobjekt
  * 
  * 		ERWEITERUNG VON:	13.4.4.	  MausAlsZeichenGeraet_MausKoordinaten_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen6	s.431, 
  * 
@@ -215,7 +215,7 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
-public class MausAlsZeichenGeraet_FreiesFigurAufziehen_MausKoordinaten_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen7 extends javax.swing.JFrame {
+public class MausAlsZeichenGeraet_FreiesFigurAufziehen_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen7 extends javax.swing.JFrame {
 
 	{
 		//Set Look & Feel
@@ -263,14 +263,14 @@ public class MausAlsZeichenGeraet_FreiesFigurAufziehen_MausKoordinaten_MouseList
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				MausAlsZeichenGeraet_FreiesFigurAufziehen_MausKoordinaten_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen7 inst = new MausAlsZeichenGeraet_FreiesFigurAufziehen_MausKoordinaten_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen7();
+				MausAlsZeichenGeraet_FreiesFigurAufziehen_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen7 inst = new MausAlsZeichenGeraet_FreiesFigurAufziehen_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen7();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
 		});
 	}
 	
-	public MausAlsZeichenGeraet_FreiesFigurAufziehen_MausKoordinaten_MouseListener_MouseMotionListener_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen7() {
+	public MausAlsZeichenGeraet_FreiesFigurAufziehen_Fuer_JMyPaintPanel_KomponenteZumHineinZeichnen_Zeichnen7() {
 		super();
 		initGUI();
 	}
