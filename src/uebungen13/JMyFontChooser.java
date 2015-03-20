@@ -1,7 +1,7 @@
-/* TODO 13.4.5.   s.435 (eigtl. buchDVD), FontChooser zum aufrufen / benutzen		!!!!aufg.4
- * class JMyFontChooser extends Component
+/* TODO 13.4.5.   s.435 (eigtl. buchDVD), FontChooser (FarbauswahlDialog) zum aufrufen / benutzen		
+ * class JMyFontChooser extends Component		&		FontChooser_Fuer_JPanel_KomponenteFuerTextPerMausklick_RadioGroup_Graphics2d_TextZeichner2 (AUFRUF)
  * 
- * 		AUFRUF SIEHE:		13.5.		FontChooser_JMyFontChooser_??_Textzeichner2					Aufgabe 4, s.436 !!!!
+ * 		AUFRUF SIEHE:		13.5.		FontChooserAufruf_Fuer_JPanel_KomponenteFuerTextPerMausklick_RadioGroup_Graphics2d_TextZeichner2			Aufgabe 4, s.436, u.a. AUFRUF VON FONTCHOOSER
  * 
  * 		BASICS SIEHE:		13.4.5.   	Font_Klasse_Basics_Methoden_Konstruktoren_Konstanten		s.434, 
  * 
