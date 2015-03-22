@@ -1,5 +1,5 @@
 /* TODO 13.2.5.   s.413, (3. ANSATZ)   JMyPaintPanel extends JPanel, PaintComponent überschrieben
- * class JMyPaintPanel	&	JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4	&	Zeichenobjekt
+ * class JMyPaintPanel	&	JMyPaintPanel_Aufruf_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4	&	Zeichenobjekt
  * 
  * 
  * K&K:		Programm Zeichnen4 (erweiterung von Zeichnen3) 

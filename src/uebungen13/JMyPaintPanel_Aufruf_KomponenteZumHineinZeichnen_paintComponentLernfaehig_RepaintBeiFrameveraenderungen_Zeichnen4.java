@@ -1,5 +1,5 @@
 /* TODO 13.2.5.   s.413, (3. ANSATZ)  MIT REPAINT() bei frameveränderungen; mit Graphics2D
- * class JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4	&	JMyPaintPanel	&	Zeichenobjekt
+ * class JMyPaintPanel_Aufruf_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4	&	JMyPaintPanel	&	Zeichenobjekt
  * 
  * 		VERGLEICHE:			13.2.4.   Graphics2D_JPanel_Komponente_ZumHineinZeichnen_Zeichnen3							s.413, oben (2. ANSATZ) mit Graphics2D; OHNE REPAINT() bei frameveränderungen
  * 
@@ -235,7 +235,7 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
-public class JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4 extends javax.swing.JFrame {
+public class JMyPaintPanel_Aufruf_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4 extends javax.swing.JFrame {
 
 	{
 		//Set Look & Feel
@@ -276,14 +276,14 @@ public class JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4 inst = new JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4();
+				JMyPaintPanel_Aufruf_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4 inst = new JMyPaintPanel_Aufruf_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
 		});
 	}
 	
-	public JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4() {
+	public JMyPaintPanel_Aufruf_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4() {
 		super();
 		initGUI();
 	}

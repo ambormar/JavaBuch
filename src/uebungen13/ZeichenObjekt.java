@@ -1,5 +1,5 @@
 /* TODO 13.2.5.   s.413, (3. ANSATZ)  (Kl. z. speichern der infos einer geom. figur) 
- * class	Zeichenobjekt	&	JMyPaintPanel	&	JMyPaintPanel_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4	
+ * class	Zeichenobjekt	&	JMyPaintPanel	&	JMyPaintPanel_Aufruf_KomponenteZumHineinZeichnen_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_Zeichnen4	
  * 
  * K&K:		Programm Zeichnen4 (erweiterung von Zeichnen3) 
  * 			(Unter Verwendung von Graphics2D statt Graphics)
