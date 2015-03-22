@@ -1,4 +1,4 @@
-/* 13.5.   Aufgabe 5, s.437		!!!!!!!!!!!!!
+/* TODO 13.5.   Aufgabe 5, s.437		!!!!!!!!!!!!!
  * class TextAusgabeObjekt		& 	JMyTextPanel	&	JMyTextPanel_Aufruf_KomponenteFuerTextPerMausklick_paintComponentLernfaehig_RepaintBeiFrameveraenderungen_TextZeichner3
  * 
  */

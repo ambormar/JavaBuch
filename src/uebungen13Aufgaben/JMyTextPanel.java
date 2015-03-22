@@ -1,4 +1,4 @@
-/* 13.5.   Aufgabe 5, s.437, (extends JPanel) !!!!!!!!!!!!
+/* TODO 13.5.   Aufgabe 5, s.437, (extends JPanel) !!!!!!!!!!!!
  * class JMyTextPanel	&	TextAusgabeObjekt	&
  * 
  * 
