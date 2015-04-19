@@ -1,4 +1,4 @@
-/* TODO 12.3.6.  eigene bemerkung		???
+/* TODO 12.3.6.  eigene bemerkung
  * & TODO 13.5.  eigene bemerkung, (wegen Aufgabe 6, s.437 & mjs erklärung) 	
  * Serializable_Interface_SerialisierungVonObjekten_KlasseImplementsSerializable
  * 
