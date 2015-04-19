@@ -1,5 +1,5 @@
 /* TODO 12.3.6.  ->
- * IO_Serializable_Interface_SerialisierungVonObjekten_KlasseImplementsSerializable
+ * ObjekteSpeichern_ObjektInstanzenInDateienSpeichern_ObjekteSerialisieren
  * 
  * 		SIEHE:	 	12.3.6.  	Serializable_Interface_SerialisierungVonObjekten_KlasseImplementsSerializable	s.437,(eigtl. buchDVD uebungen13) eigene bemerkung
  * 		
@@ -8,7 +8,6 @@
 
 package uebungen12;
 
-public class IO_Serializable_Interface_SerialisierungVonObjekten_KlasseImplementsSerializable {
-
+public class ObjekteSpeichern_ObjektInstanzenInDateienSpeichern_ObjekteSerialisieren {
 
 }
