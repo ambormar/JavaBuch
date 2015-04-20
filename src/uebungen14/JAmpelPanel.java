@@ -1,8 +1,8 @@
 /* TODO 14.2.1.  s.440, (extends JPanel)
- * class 	JAmpelPanel		& 		OhneEigenenThread_OhnePaintImmediately_Ampelsteuerung1
+ * class 	JAmpelPanel		& 		OhneZweitenThread_MitPaintImmediately_Einfache_Ampelsteuerung2
  * 
  * 
- * K&K:		Programm Ampelsteuerung1:		 
+ * K&K:		Programm Ampelsteuerung2:		 
  * 
  *			Klasse JAmpelPanel:			(von der Komponente JPanel abgeleitet)
  * 										Die Klasse dient der Darstellung einer Ampel mit den vier Ampelphasen.
@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 
 public class JAmpelPanel extends JPanel {
 
-	int phase = 0;									// variable für den switch der ampel-phasen (5 mögliche zustände: rot, gelb-rot, grün, gelb + aus)
+	int phase = 0;									// variable für die ampel-phasen für den switch (5 mögliche zustände: rot, gelb-rot, grün, gelb + aus)
 	Color cOben, cMitte, cUnten;					// farb-variablen für die 3 ampel-kreise oben, mitte, unten
 	
 	public JAmpelPanel() {							// standard-construktor ohne parameter
@@ -58,17 +58,23 @@ public class JAmpelPanel extends JPanel {
 			break;
 		}
 		int h = getHeight()/3 - 12;					// höhe des ampel-farb-kreis = gesamthöhe durch 3, minus 4 mal abstand von 3 px
-		int b = getWidth()/6;						// breite des ampel-farb-kreis = gesamtbreite des panels minus 2 mal abstand von 3 px
-		g.setColor(cOben);							// 
-		g.fillOval(3, 3, b, h);
-		g.setColor(cMitte);
-		g.fillOval(3, h + 6, b, h);
-		g.setColor(cUnten);
-		g.fillOval(3, 2*h + 9, b, h);
-		g.setColor(Color.black);
-		g.drawOval(3, 3, b, h);
-		g.drawOval(3, h + 6, b, h);
-		g.drawOval(3, 2*h + 9, b, h);
+		int b = getWidth()-6;						// breite des ampel-farb-kreis = gesamtbreite des panels minus 2 mal abstand von 3 px
+		g.setColor(cOben);							// jeweilige farbe von cOben (je nach case) für grafikobjket setzen
+		g.fillOval(3, 3, b, h);						// oberen kreis pinseln
+		g.setColor(cMitte);							// .. dasselbe für mittleren kreis
+		g.fillOval(3, getHeight()/3 + 6, b, h);
+		g.setColor(cUnten);							// .. + für den unteren
+		g.fillOval(3, 2*getHeight()/3 + 9, b, h);				
+		g.setColor(Color.black);					// farbe auf schwarz
+		g.drawOval(3, 3, b, h);						// + umranden der kreise
+		g.drawOval(3, getHeight()/3 + 6, b, h);				
+		g.drawOval(3, 2*getHeight()/3 + 9, b, h);
+	}
+	
+	// methode als schnittstelle nach aussen, um die ampel in die jeweilige phase versetzen zu können
+	public void setPhase(int i) {					// parameter i, um den zustand der phase beim aufruf übergeben zu können		
+		phase = i;									// phase auf i setzen
+		repaint();									// neuzeichnen der komponente
 	}
 
 }
