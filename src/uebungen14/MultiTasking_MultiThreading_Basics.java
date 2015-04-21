@@ -18,9 +18,9 @@
  * 			
  * 		MUSTER-BSP. FÜR THREADS:		=> programmierung zeitlicher abläufe (ampelsteuerung)
  * 											-> in abläufe, die sich in bestimmtem rythmus wiederholen + automatisch sind ..
- 											-> .. situations-abhängig eingreifen & z.b. den rythmus ändern
- 											
- 										SIEHE:  	14.2.1		Threads_Ampelsteuerung_Einfach		s.440
+ *											-> .. situations-abhängig eingreifen & z.b. den rythmus ändern
+ *											
+ *										SIEHE:  	14.2.1		Threads_Ampelsteuerung_Einfach		s.440
  * 
  * 
  *	MULTI-TASKING:			=> sequentielle oder echt gleichzeitige (bei mehrprozessor-systemen) abarbeitung von prozessen / tasks (programmen) 
