@@ -1,7 +1,9 @@
-/* TODO 14.2.1.  s.440,	!!!!!!!!!!
- * class 	PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2		&	JAmpelPanel			
+/* TODO 14.2.1.  s.440,	
+ * class 	PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2		&	JAmpelPanel	
  * 
- * 	
+ * 		SIEHE BASICS:			14.2.2.		Threads_Bsics_Methoden_2MethodenderThreadErstellung		s.447
+ * 
+ * 		VERGLEICHE AUCH:		14.2.2.		Tread_.._Ampelsteuerung3 	s.447
  * 
  * 
  * 	K&K:	Klasse JAmpelPanel:			(von der Komponente JPanel abgeleitet)
@@ -22,12 +24,20 @@
  * 																			-> auch bei blosser verwendung der methode, ohne dass ein 2. thread erzeugt wurde
  * 																	-> kann zu unterbrechungen des restlichen programm-ablaufs ( z.b. initGUI()) führen 
  * 																			-> fehler beim ablauf des komponenten darstellens z.b. mit paintImmediately() lösen		(diese programm)
- * 																			-> oder zusätzlichen thread machen 
+ * 																			-> oder besser einen zusätzlichen thread machen 
  * 																					SIEHE: 		14.2.2.		Tread_.._Ampelsteuerung3 	s.447
  * 
  * 		void paintImmediately(int x, 		der Klasse JComponent	-> methode zum sofortigen neuzeichnen der jeweiligen komponente mit vier int-werten für den betreffenden bereich
- * 			int y, int width, int height)							-> 
- * 																	-> bsp: 		jPanel1.paintImmediately(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
+ * 			int y, int width, int height)							-> parameter-angaben: 	-> bsp: 		jPanel1.paintImmediately(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
+ * 
+ * 
+ *	EXCEPTIONS:		
+ *
+ *		InterruptedException				der klasse Thread		-> bei verwendung von Threads können diese sich gegenseitig unterbrechen
+ *																	-> der unterbrochene thread wirft dann eine InterruptedException
+ *																	-> bei einsatz von Threads, alleine durch verwendung der methode sleep(..) 
+ *																		-> muss ein exception-handling für InterruptedExceptions erfolgen 
+ *																				->  Throws oder try-catch-block
  * 
  * 	VORGEHEN: 	
  * 
@@ -99,6 +109,9 @@
 								}							
 	 
 				=> handler methode für checkbox um automatik-modus (der ampelsteuerung) ein- und auszuschalten 
+					-> mit while-schleife in der durch die phasen geschaltet wird mit kurzen zeitunterbrechungen (für phasen-dauer) durch methode sleep(..) von klasse Thread
+						-> führt dazu. dass der gesamt programm-ablauf (auch GUI) unterbrochen wird, 
+						-> also muss das zeichnen der sich veränderneden komponenten sofort erzwungen werden mit paintImmediately(..) der klasse jComponent
 				
 						private void jCBAutomatikActionPerformed(ActionEvent evt) {
 							if (jCBAutomatik.isSelected()){																			// wenn checkbox (automatik) angewählt ist:
