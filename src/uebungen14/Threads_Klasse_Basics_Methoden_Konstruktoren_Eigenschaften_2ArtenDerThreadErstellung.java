@@ -5,7 +5,7 @@
  * 
  * 		SIEHE ANGEWANDT:		14.2.2.		Thread_.._Ampelsteuerung3		s.452 (ab 447)		!!!!!!!!!! klassenname evtl. noch anpassen
  * 
- * 					&:			14.2.2.		Stoppuhr						s.448				!!!!!!!!!! klassenname evtl. noch anpassen
+ * 					&:			14.2.2.		class StoppuhrTest	&	Thread_Stoppuhr			s.450				
  * 
  * 
  * THREAD BASICS:		=> ein Tread ist ein programmteil, der parallel zum übrigen programm abläuft			
@@ -66,7 +66,7 @@
  *					BSP: 	Stoppuhr stoppuhr = new Stoppuhr();
  *							stoppuhr.start();
  *			
- * 			BSP SIEHE:		14.2.2.		Stoppuhr	s.448									BSP SIEHE:		14.2.2.	Thread_.._Ampelsteuerung3		s.452 (ab 447)		!!!!!!!!!!
+ * 			BSP SIEHE:		14.2.2.	class  StoppuhrTest   &   Thread_Stoppuhr   s.450		BSP SIEHE:		14.2.2.	Thread_.._Ampelsteuerung3		s.452 (ab 447)		!!!!!!!!!!
  *
  *
  * 	PACKAGE:					=>	java.lang.Thread
