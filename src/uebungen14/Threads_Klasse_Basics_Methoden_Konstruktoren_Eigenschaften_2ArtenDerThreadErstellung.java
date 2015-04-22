@@ -52,7 +52,9 @@
  *	 		|___________________________________|											|___________________________________|
  *	  	
  *
- *			=> zum ableiten einer eigenen klasse thread muss man run() überschreiben 
+ * 			BSP SIEHE:		14.2.2.		Stoppuhr	s.448									BSP SIEHE:		14.2.2.	Thread_.._Ampelsteuerung3		s.452 (ab 447)		!!!!!!!!!!
+ *
+ *			=> zum ableiten einer eigenen klasse thread muss man run() überschreiben 		
  *
  *					BSP: 	Stoppuhr extends Thread {
  *								public void run {
@@ -61,16 +63,12 @@
  *							}
  *								
  *			=> verwenden eines eigenen Threads durch erzeugen mit Konstruktor-aufruf
- *				& starten mit methode start
+ *				&  (in diesem bsp.) starten mit methode start
  *	
  *					BSP: 	Stoppuhr stoppuhr = new Stoppuhr();
  *							stoppuhr.start();
  *			
  *
- * 			BSP SIEHE:		14.2.2.		Stoppuhr	s.448									BSP SIEHE:		14.2.2.	Thread_.._Ampelsteuerung3		s.452 (ab 447)		!!!!!!!!!!
- * 
- *  
- *   
  * 	PACKAGE:			=>	java.lang.Thread
  * 
  * 
