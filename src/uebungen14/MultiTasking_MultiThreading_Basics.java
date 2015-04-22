@@ -1,4 +1,4 @@
-/* TODO 14.1.1. (+14.1.2.)   s.438/439 
+/* TODO 14.1.1. (+14.1.2.)   s.438/439 !!!!!!!!!!!!!
  * MultiTasking_MultiThreading_Basics
  * 
  * 	
@@ -20,7 +20,7 @@
  * 											-> in abläufe, die sich in bestimmtem rythmus wiederholen + automatisch sind ..
  *											-> .. situations-abhängig eingreifen & z.b. den rythmus ändern
  *											
- *										SIEHE:  	14.2.1		Threads_Ampelsteuerung_Einfach		s.440
+ *										SIEHE:  	14.2.2		Thread_.._Ampelsteuerung3		s.447		!!!!!!!!!! klassenname evtl. noch anpassen
  * 
  * 
  *	MULTI-TASKING:			=> sequentielle oder echt gleichzeitige (bei mehrprozessor-systemen) abarbeitung von prozessen / tasks (programmen) 
