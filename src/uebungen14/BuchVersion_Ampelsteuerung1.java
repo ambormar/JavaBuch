@@ -1,4 +1,4 @@
-/* TODO 14.2.1.   s.440, ohne 2. thread, ohne paintImmediately()
+/* TODO 14.2.1,   s.440, ohne 2. thread, ohne paintImmediately()
  * class BuchVersion_Ampelsteuerung1	&	BuchVersion_JAmpelPanel1
  * 
  * 

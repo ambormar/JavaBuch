@@ -1,4 +1,4 @@
-/* TODO 14.2.1.  s.440, (extends JPanel)
+/* TODO 14.2.1.   s.440, (extends JPanel)
  * class 	JAmpelPanel		& 		PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2
  * 
  * 		SIEHE BASICS:			14.2.2.		Threads_Bsics_Methoden_Konstruktoren_Eigenschaften_2MethodenderDerThreadErstellung		s.447

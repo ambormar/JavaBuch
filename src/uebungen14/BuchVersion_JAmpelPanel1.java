@@ -1,4 +1,4 @@
-/* TODO 14.2.1.   s.440, ohne 2. thread, ohne paintImmediately()
+/* TODO 14.2.1,   s.440, ohne 2. thread, ohne paintImmediately()
  * class BuchVersion_JAmpelPanel1	&	BuchVersion_Ampelsteuerung1
  * 
  * ZUR VERANSCHAULICHUNG: 		programm funktioniert nicht fehlerfrei weil paintImmediately oder ein 2. thread fehlen

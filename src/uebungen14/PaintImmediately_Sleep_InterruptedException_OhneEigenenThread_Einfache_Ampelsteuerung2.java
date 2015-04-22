@@ -1,7 +1,7 @@
-/* TODO 14.2.1.   s.440,	
+/* TODO 14.2.1.   s.440, (verwendet JAmpelPanel)
  * class 	PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2		&	JAmpelPanel	
  * 
- * 		SIEHE BASICS:			14.2.2.		Threads_Bsics_Methoden_Konstruktoren_Eigenschaften_2MethodenderDerThreadErstellung		s.447
+ * 		SIEHE BASICS:			14.2.2.		Threads_Klasse_Basics_Methoden_Konstruktoren_Eigenschaften_2ArtenDerThreadErstellung		s.447
  * 
  * 		VERGLEICHE AUCH:		14.2.2.		Tread_.._Ampelsteuerung3 	s.447
  * 
