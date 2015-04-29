@@ -22,19 +22,22 @@
  *													}
  *												...																						// });
  *											}
+ *
+ *						=> ein erzeugter Thread existiert solange bis seine run()-methode beendet ist
  * 		
+ * 
  * 		
  *	2 MÖGLICHKEITEN ZUR ERSTELLUNG VON THREADS:		
  *					
- *		1. ABLEITEN EINER EIGENEN KLASSE VON DER KLASSE THREAD						2. OBJEKT DER ALLGEMEINEN KLASSE THREAD WIRD ERZEUGT, 
- *																						DEREN RUN()-METHODE VERWEISTAUF EINE RUN()-METHODE, DIE IN EINER ANDEREN KOMPONENTE IMPLEMENTIERT IST
+ *		1. ABLEITEN EINER EIGENEN KLASSE VON DER KLASSE THREAD						2. OBJEKT DER ALLGEMEINEN KLASSE THREAD WIRD ERZEUGT, DEREN RUN()-METHODE
+ *																						VERWEISTAUF EINE RUN()-METHODE, DIE WOANDERS (IN EINER ANDEREN KOMPONENTE ??) IMPLEMENTIERT IST
  *
  *			=> nur möglich für klassen, die nicht bereits abgeleitet wurden				=> für klassen die bereits von einer anderen klasse abgeleitet wurden
  *				-> also nicht z.b. bei von gui-komponenten abgeleiteteten klassen			-> bsp.:	von gui-komponenten abgeleiteteten klassen 
  *			=> hauptsächlich für konsolen-programme 
  *				(= programme deren ausgaben über die konsole gelesen werden)
  * 
- *	 		____________________________________											____________________________________________________________
+ *	 		 ___________________________________											 ___________________________________________________________
  *	 		|									|											|															|
  *	 		|	EigenKlasse extends Thread		|											|	EigenKlasse extends andereKlasse implements Runnable	|							
  *	 		|									|											|															|
@@ -42,14 +45,14 @@
  *	 		|___________________________________|											|_¦_________________________________________________________|
  *	 																						  ¦
  *	 					&																	  ¦				&
- *	 		____________________________________											__¦_________________________________________________________
+ *	 		 ___________________________________											 _¦_________________________________________________________
  *	 		|  									|											| ¦ 														|
- *	 		|	Anwendung	(TestKlasse)		|											| ¦ Anwendung (kann auch die obige / gleiche Klasse sein)	|
- *	 		|	________________________		|											| ¦	________________________								|
- *	 		|	|	new EigeneKlasse	|		|											| ¦	|	new Thread			|								|
- *	 		|	|						|		|											| ¦	|						|								|
- *	 		|	|	run()				|		|											| --|---run()				|								|
- *	 		|	|_______________________|		|											|	|_______________________|								|
+ *	 		|	Anwendung	(TestKlasse)		|											| ¦ Anwendung (kann auch in der obigen/gleichen Klasse sein)|
+ *	 		|	 _______________________		|											| ¦	 ___________________________							|
+ *	 		|	|	new EigeneKlasse	|		|											| ¦	|	Thread t = new Thread	|							|
+ *	 		|	|						|		|											| ¦	|							|							|
+ *	 		|	|	run()				|		|											| --|---run()					|							|
+ *	 		|	|_______________________|		|											|	|___________________________|							|
  *	 		|___________________________________|											|___________________________________________________________|
  *	  	
  *

@@ -1,8 +1,9 @@
-/* TODO 14.2.2.   s.450, eigene Version stoppuhr für gui-programm  !!!!!!!!!!
+/* TODO 14.2.2.   s.450, eigene Version stoppuhr für gui-programm  
+ * class Thread_VersionFuerGuiProgramme_Stoppuhr
  * 
+ * 		SIEHE:		14.2.2.   	Thread_Stoppuhr	&	StoppuhrTest			s.450, 1. Art Thread zu erstellen (=> extends Thread) 
  * 
- * 
-
+ * 	K&K:	
  */
 
 package uebungen14;
