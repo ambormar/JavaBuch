@@ -1,9 +1,9 @@
-/* TODO 14.2.1.   s.440, (verwendet JAmpelPanel)
+/* TODO 14.2.1.   s.440, (verwendet JAmpelPanel)  !!!!!!!
  * class 	PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2		&	JAmpelPanel	
  * 
  * 		SIEHE BASICS:			14.2.2.		Threads_Klasse_Basics_Methoden_Konstruktoren_Eigenschaften_2ArtenDerThreadErstellung		s.447
  * 
- * 		VERGLEICHE AUCH:		14.2.2.		Tread_.._Ampelsteuerung3 	s.447
+ * 		VERGLEICHE AUCH:		14.2.2.		Tread_.._Ampelsteuerung3 	s.447		!!!!!!!!!!!!
  * 
  * 
  * 	K&K:	Klasse JAmpelPanel:			(von der Komponente JPanel abgeleitet)
@@ -80,7 +80,7 @@
  *						}  	
  *										
  *										
- *		PROGRAMM Ampelsteuerung2:	
+ *		PROGRAMM Ampelsteuerung2:		(ACHTUNG BEIM LAUFEN LASSEN: AUTOMATIK-MODUS NUR STOP-BAR MITTELS STOP-KNOPF DER KONSOLE !)
  *		
  *				-> ohne eigenen Thread, aber mit paintImmediately(), sleep() und InterruptedException 
  *	  
@@ -147,6 +147,9 @@
  * 				=> PROBLEM-LÖSUNG: 	(=> checkbox automatik nach gebrauch wieder abwählbar machen:) 		
  * 									=> die anweisungen der while-schleife (Thread.sleep(rotPhase) etc.) müssen in einem 2. Thread ausgeführt werden
  * 										-> damit sie den restlichen programm-ablauf (initGUI()) nicht mit-unterbrechen
+ * 
+ * 									SIEHE:		14.2.2.		Thread_.._Ampelsteuerung3 	s.447		!!!!!!!!!!!!
+
  * 
  * 
  */

@@ -31,32 +31,33 @@
  *
  *			=> nur möglich für klassen, die nicht bereits abgeleitet wurden				=> für klassen die bereits von einer anderen klasse abgeleitet wurden
  *				-> also nicht z.b. bei von gui-komponenten abgeleiteteten klassen			-> bsp.:	von gui-komponenten abgeleiteteten klassen 
- *			=> hauptsächlich für konsolen-programme
+ *			=> hauptsächlich für konsolen-programme 
+ *				(= programme deren ausgaben über die konsole gelesen werden)
  * 
  *	 		____________________________________											____________________________________________________________
  *	 		|									|											|															|
  *	 		|	EigenKlasse extends Thread		|											|	EigenKlasse extends andereKlasse implements Runnable	|							
  *	 		|									|											|															|
- *	 		|		run()						|											| --->	run()												|
+ *	 		|		run()	->  überschreiben	|											| --->	run()			-> überschreiben (@override)		|
  *	 		|___________________________________|											|_¦_________________________________________________________|
  *	 																						  ¦
  *	 					&																	  ¦				&
- *	 		____________________________________											__¦__________________________________
- *	 		|  									|											| ¦ 								|
- *	 		|	Anwendung						|											| ¦ Anwendung						|
- *	 		|	________________________		|											| ¦	________________________		|
- *	 		|	|	new EigeneKlasse	|		|											| ¦	|	new Thread			|		|
- *	 		|	|						|		|											| ¦	|						|		|
- *	 		|	|	run()				|		|											| --|---run()				|		|
- *	 		|	|_______________________|		|											|	|_______________________|		|
- *	 		|___________________________________|											|___________________________________|
+ *	 		____________________________________											__¦_________________________________________________________
+ *	 		|  									|											| ¦ 														|
+ *	 		|	Anwendung	(TestKlasse)		|											| ¦ Anwendung (kann auch die obige / gleiche Klasse sein)	|
+ *	 		|	________________________		|											| ¦	________________________								|
+ *	 		|	|	new EigeneKlasse	|		|											| ¦	|	new Thread			|								|
+ *	 		|	|						|		|											| ¦	|						|								|
+ *	 		|	|	run()				|		|											| --|---run()				|								|
+ *	 		|	|_______________________|		|											|	|_______________________|								|
+ *	 		|___________________________________|											|___________________________________________________________|
  *	  	
  *
- *			=> zum ableiten einer eigenen klasse thread muss man run() überschreiben 		
+ *			=> zum ableiten einer eigenen klasse von thread muss man run() überschreiben 		
  *
  *					BSP: 	Stoppuhr extends Thread {
- *								public void run {
- *									überschreiben
+ *								public void run {						// überschreiben
+ *									gewünschte anweisungen für den 2. thread
  *								}
  *							}
  *								
@@ -72,15 +73,18 @@
  * 	PACKAGE:					=>	java.lang.Thread
  * 
  * 
- * 	EIGENSCHAFTEN:				EIGENSCHAFT:								BESCHREIBUNG:
- * 
+ * 	EIGENSCHAFTEN VON			EIGENSCHAFT:								BESCHREIBUNG:
+ * 	THREAD:
  * 								static int MAX_PRIORITY						maximal mögliche priorität
  * 								static int MIN_PRIORITY						minimal mögliche priorität
  * 								static int NORM_PRIORITY					standard-priorität
  * 
  * 
- * 	EINIGE KONSTRUKTOREN: 		KONSTRUKTOR:								BESCHREIBUNG:
- * 
+ * 	EINIGE KONSTRUKTOREN 		=> thread hat konstruktoren für alle denkbaren konstellationen von einem bis drei parameter 
+ * 	VON THREAD:						-> der thread-konstruktor kann max. 3 parameter haben, die nicht angegebenen parameterwerte werden mit standard-werten belegt
+ * 	
+ * 								KONSTRUKTOR:								BESCHREIBUNG:
+ * 	
  * 								public Thread()								erzeugt einen Thread ohne spez. gruppenzugehörigkeit & ohne externe zielangabe für eine run()-methode.
  * 																			er erhält einen automatisch vergebenen namen
  * 								public Thread(Runnable target)				erzeugt einen Thread, der die run-methode von target ausführt. 
@@ -89,8 +93,8 @@
  *  									Runnable tagret, String name)
  * 
  * 
- * 	WICHTIGE METHODEN:			METHODE:									BESCHREIBUNG:
- * 
+ * 	WICHTIGE METHODEN			METHODE:									BESCHREIBUNG:
+ * 	VON THREAD:
  * 								String getName()							liefert den namen des Threads.
  * 								static setName(String name)					setzt den namen des Threads auf name.
  * 								static Thread currentThread()				liefert eine referenz auf den laufenden Thread.
