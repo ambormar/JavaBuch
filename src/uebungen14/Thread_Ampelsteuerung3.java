@@ -1,35 +1,34 @@
-/* TODO 14.2.1.   s.440, (verwendet JAmpelPanel)  !!!!!!!
- * class 	PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2		&	JAmpelPanel	
+/* TODO 14.2.2.   s.451, 2. Art Thread zu erstellen für GUI-klassen (verwendet JAmpelPanel_3)  
+ * class 	Thread_Ampelsteuerung3		&	JAmpelPanel_3
  * 
- * 		SIEHE BASICS:			14.2.2.		Threads_Klasse_Basics_Methoden_Konstruktoren_Eigenschaften_2ArtenDerThreadErstellung		s.447
+ * 		SIEHE BASICS:			14.2.2.   Threads_Bsics_Methoden_Konstruktoren_Eigenschaften_2MethodenderDerThreadErstellung									s.447
  * 
- * 		VERGLEICHE AUCH:		14.2.2.		Thread_.._Ampelsteuerung3 	s.451		!!!!!!!!!!!!
+ * 		VERGLEICHE AUCH:		14.2.1.   PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2		&	JAmpelPanel			s.440, (verwendet JAmpelPanel) 
  * 
  * 
- * 	K&K:	Klasse JAmpelPanel:			(von der Komponente JPanel abgeleitet)
+ * 	K&K:	Klasse JAmpelPanel_3:		(von der Komponente JPanel abgeleitet) 			(( ist ausser dem namen identisch mit der klasse JAmpelPanel von PaintImmediately_.._Ampelsteuerung2 ))
  * 										Die Klasse dient der Darstellung einer Ampel mit den vier Ampelphasen.
  * 
  * 
- * 			Programm Ampelsteuerung2:	(ohne eigenen Thread, aber mit paintImmediately(), sleep() und InterruptedException )
+ * 			Programm Ampelsteuerung3:	(mit eigenem Thread) abgeänderte version von PaintImmediately_.._Ampelsteuerung2
  * 
- * 										Das Programm nutzt die Klasse JAmpelPanel. Die Ampel kann manuell in die vier Ampelphasen geschaltet und ausgeschaltet werden.
- * 										Die Phasenwechsel werden im Automatikbetrieb -  mit hilfe von paintImmediately() der klasse jComponent - sichtbar, aber die Automatik 
- * 										versetzt die Ampelsteuerung in eine Endlosschleife, die aus der Entwicklungsumgebung nur noch über den Stop-Button der Console-
- * 										View gestoppt werden kann. 	 
+ * 										[ Ampelsteuerung2: 	Das Programm nutzt die Klasse JAmpelPanel. Die Ampel kann manuell in die vier Ampelphasen geschaltet und ausgeschaltet werden.
+ * 															Die Phasenwechsel werden im Automatikbetrieb -  mit hilfe von paintImmediately() der klasse jComponent - sichtbar, aber die Automatik 
+ * 															versetzt die Ampelsteuerung in eine Endlosschleife, die aus der Entwicklungsumgebung nur noch über den Stop-Button der Console-
+ * 															View gestoppt werden kann. 	] 
+ * 
+ * 										Das Programm nutzt die Klasse JAmpelPanel_3. Die Ampel kann manuell in die vier Ampelphasen geschaltet und ausgeschaltet werden.
+ * 										Der Automatikmodus funktioniert (mittels zusätzlichem thread), aber das Beenden der Automatik erfolgt offensichtlich nicht ganz korrekt. 
+ * 										Es werden noch die Ampelphasen bis zur Gelbphase weiter durchlaufen. Erst danach endet der Schleifendurchlauf. 
  * 
  * 	METHODEN (besondere):	
  * 				
  * 		void sleep(long m)					der Klasse Thread		-> erzwingt eine pause in der ausführung des laufenden threads (auch des main-threads) von m millisekunden.
  * 																	-> zwingt zu InterruptedException-handling, da threads wiedersprüche auslösen können. 
- * 																			-> auch bei blosser verwendung der methode, ohne dass ein 2. thread erzeugt wurde
- * 																	-> kann zu unterbrechungen des restlichen programm-ablaufs ( z.b. initGUI()) führen 
+ * 																			((-> auch bei blosser verwendung der methode, ohne dass ein 2. thread erzeugt wurde))
+ * 																	[ -> kann zu unterbrechungen des restlichen programm-ablaufs ( z.b. initGUI()) führen 
  * 																			-> fehler beim ablauf des komponenten darstellens z.b. mit paintImmediately() lösen		(diese programm)
- * 																			-> oder besser einen zusätzlichen thread machen 
- * 																					SIEHE: 		14.2.2.		Tread_.._Ampelsteuerung3 	s.447
- * 
- * 		void paintImmediately(int x, 		der Klasse JComponent	-> methode zum sofortigen neuzeichnen der jeweiligen komponente mit vier int-werten für den betreffenden bereich
- * 			int y, int width, int height)							-> parameter-angaben: 	-> bsp: 		jPanel1.paintImmediately(0, 0, jPanel1.getWidth(), jPanel1.getHeight());
- * 
+ * 																			-> oder besser einen zusätzlichen thread machen, wie in dieser klasse]
  * 
  *	EXCEPTIONS:		
  *
@@ -41,7 +40,7 @@
  * 
  * 	VORGEHEN: 	
  * 
- * 		KLASSE JAmpelPanel:		
+ * 		KLASSE JAmpelPanel_3:		
  * 
  * 			=> von der Komponente JPanel abgeleitet, um sie in der aufrufenden klasse Ampelsteuerung2 anstelle eines standard-jpanels einzusetzen
  * 
@@ -78,15 +77,21 @@
  *							phase = i;									// phase auf i setzen
  *							repaint();									// neuzeichnen der komponente
  *						}  	
+ *											
  *										
- *										
- *		PROGRAMM Ampelsteuerung2:		(ACHTUNG BEIM LAUFEN LASSEN: AUTOMATIK-MODUS NUR STOP-BAR MITTELS STOP-KNOPF DER KONSOLE !)
+ *		PROGRAMM Ampelsteuerung3:		(ACHTUNG: bei ausschalten der automatik läuft werden die ampelphasen noch bis zur 4. phase abgearbeitet: perfektes abbrechen der phasen: siehe 4.2.2. .._Ampelsteuerung4 s.353)
  *		
- *				-> ohne eigenen Thread, aber mit paintImmediately(), sleep() und InterruptedException 
+ *				-> mit zusätzlichem Thread durch implementieren von Runnable für diese klasse, 
+ *						& zwangsläufigem überschreiben der run()-methode des zusätzlichen threads (eclipse-fehlermeldung wenn kein run() erstellt wird) 
+ 							-> run()-methode könnte auch woanders als in diesre
  *	  
+						public class Thread_Ampelsteuerung3 extends JFrame implements Runnable {	// Programm-frame implementiert Runnabel, damit es eine run()-methode für einen Thread bereitstellen kann
+ *
+ *				!!!!!!!!!!! hier weiter !!!!!!!!!!
+ *
  *	  			=> JFrame mit JAmpelPanel (jAmpel) anstelle eines JPanels für die darstellung der Ampel
  *	  
- *	  					private JAmpelPanel jAmpel = new JAmpelPanel();
+ *	  					private JAmpelPanel_3 jAmpel = new JAmpelPanel_3();
  *	  
  *	  			=> 5 radiobuttons (aus, rot, rotgelb, grün, gelb) (inkl. ButtonGroup) mit handler-methoden für handsteuerung der ampelphasen 
  *	  					-> werden für bessere ordnung innerhalb eines jPanels mit titleborder (handsteuerung) dargestellt 
@@ -174,10 +179,10 @@ import javax.swing.border.TitledBorder;			// gui speziefisch (titel der umrandun
 
 import uebungen13Aufgaben.JPanel_KomponenteFuerTextPerMausklick_RadioGroup_Graphics2d_TextZeichner1;
 
-public class PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2 extends JFrame {
+public class Thread_Ampelsteuerung3 extends JFrame implements Runnable {	// Programm-frame implementiert Runnabel, damit es eine run()-methode für einen Thread bereitstellen kann
 	
-	private JAmpelPanel jAmpel;					// jPanel mit name jAmpel aber typ JPanel durch JAmpelPanel (selbstabgeleitete komponente von JPanel) ersetzen 
-	private JPanel jPanel1;						// zusätzliches panel wo die radio-buttons drin sind (gui vereinfachung) 
+	private JAmpelPanel_3 jAmpel;																								// jPanel mit name jAmpel aber typ JPanel durch JAmpelPanel_3 (selbstabgeleitete komponente von JPanel) ersetzen 
+	private JPanel jPanel1;																										// zusätzliches panel wo die radio-buttons drin sind (gui vereinfachung) 
 	private JRadioButton jRBGruen;
 	private ButtonGroup BtnGrpFigur;
 	private JRadioButton jRBAus;
@@ -185,10 +190,10 @@ public class PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfa
 	private JRadioButton jRBRotGelb;
 	private JRadioButton jRBRot;
 	private JCheckBox jCBAutomatik;
-	private int rotPhase = 3000;				// int-variablen für die zeiten der phasen in milisekunden (werden später der sleep-methode als parameter übergeben)
-	private int rotgelbPhase = 1000;			// int-variablen für die zeiten der phasen in milisekunden (werden später der sleep-methode als parameter übergeben)
-	private int gruenPhase = 3000;				// int-variablen für die zeiten der phasen in milisekunden (werden später der sleep-methode als parameter übergeben)
-	private int gelbPhase = 1000;				// int-variablen für die zeiten der phasen in milisekunden (werden später der sleep-methode als parameter übergeben)
+	private int rotPhase = 3000;																								// int-variablen für die zeiten der phasen in milisekunden (werden später der sleep-methode als parameter übergeben)
+	private int rotgelbPhase = 1000;																							// int-variablen für die zeiten der phasen in milisekunden (werden später der sleep-methode als parameter übergeben)
+	private int gruenPhase = 3000;																								// int-variablen für die zeiten der phasen in milisekunden (werden später der sleep-methode als parameter übergeben)
+	private int gelbPhase = 1000;																								// int-variablen für die zeiten der phasen in milisekunden (werden später der sleep-methode als parameter übergeben)
 	
 	{
 		//Set Look & Feel
@@ -205,7 +210,7 @@ public class PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfa
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2 inst = new PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2();
+				Thread_Ampelsteuerung3 inst = new Thread_Ampelsteuerung3();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
@@ -213,7 +218,7 @@ public class PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfa
 	}
 	
 	
-	public PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2() {
+	public Thread_Ampelsteuerung3() {
 		super();
 		initGUI();
 	}
@@ -225,7 +230,7 @@ public class PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfa
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			this.setTitle("Einfache Ampelsteuerung 1, JAmpelPanel gesteuert über RadioButtons / Checkbox");
 			{
-				jCBAutomatik = new JCheckBox();			// checkbox um auf automatik-modus der ampelsteuerung zu wechseln
+				jCBAutomatik = new JCheckBox();																					// checkbox um auf automatik-modus der ampelsteuerung zu wechseln
 				getContentPane().add(jCBAutomatik, new AnchorConstraint(783, 829, 877, 430, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
 				jCBAutomatik.setText("Automatik");
 				jCBAutomatik.setPreferredSize(new java.awt.Dimension(153, 34));
@@ -237,7 +242,7 @@ public class PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfa
 				});
 			}
 			{
-				jPanel1 = new JPanel();					// jPanel (zur gui-zusammenfassung aller radio-buttons (= die gesamte handsteuerung der ampel)
+				jPanel1 = new JPanel();																							// jPanel (zur gui-zusammenfassung aller radio-buttons (= die gesamte handsteuerung der ampel)
 				getContentPane().add(jPanel1, new AnchorConstraint(73, 829, 725, 430, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
 				jPanel1.setPreferredSize(new java.awt.Dimension(153, 236));
 				jPanel1.setBorder(BorderFactory.createTitledBorder(null, "Handsteuerung", TitledBorder.LEADING, TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial",1,11))); // umrandung des jPanels
@@ -308,83 +313,87 @@ public class PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfa
 				}
 			}
 			{
-				jAmpel = new JAmpelPanel();		// jPanel mit name jAmpel aber typ JPanel durch JAmpelPanel (selbstabgeleitete komponente von JPanel) ersetzen
+				jAmpel = new JAmpelPanel_3();																					// jPanel mit name jAmpel aber typ JPanel durch JAmpelPanel_3 (selbstabgeleitete komponente von JPanel) ersetzen
 				getContentPane().add(jAmpel, new AnchorConstraint(73, 326, 924, 66, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
 				jAmpel.setPreferredSize(new java.awt.Dimension(100, 308));
 			}
 			pack();
 			this.setSize(400, 400);
-			jAmpel.setPhase(0);		// jAmpel initialisieren: aufruf schnittstellen-methode setPhase(..) der klasse JAmpelPanel unter mitgabe von int-wert 0 (=> phase : aus)
+			jAmpel.setPhase(0);																									// jAmpel initialisieren: aufruf schnittstellen-methode setPhase(..) der klasse JAmpelPanel unter mitgabe von int-wert 0 (=> phase : aus)
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private ButtonGroup getBtnGrpFigur() {																	// buttongroup für zusammenspiel der radiobuttons
+	private ButtonGroup getBtnGrpFigur() {																						// buttongroup für zusammenspiel der radiobuttons
 		if(BtnGrpFigur == null) {
 			BtnGrpFigur = new ButtonGroup();
 		}
 		return BtnGrpFigur;
 	}
 	
-	private void jRBAusActionPerformed(ActionEvent evt) {	// handsteuerung: radiobutton aus: 
-		jAmpel.setPhase(0);									// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 0 (= aus) setzen, repaint() wird in setPhase() erledigt
+	private void jRBAusActionPerformed(ActionEvent evt) {																		// handsteuerung: radiobutton aus: 
+		jAmpel.setPhase(0);																										// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 0 (= aus) setzen, repaint() wird in setPhase() erledigt
 	}
 	
-	private void jRBRotActionPerformed(ActionEvent evt) {	// handsteuerung: radiobutton rot: 
-		jAmpel.setPhase(1);									// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 1 (= rot) setzen, repaint() wird in setPhase() erledigt
+	private void jRBRotActionPerformed(ActionEvent evt) {																		// handsteuerung: radiobutton rot: 
+		jAmpel.setPhase(1);																										// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 1 (= rot) setzen, repaint() wird in setPhase() erledigt
 	}
 	
-	private void jRBRotGelbActionPerformed(ActionEvent evt){// handsteuerung: radiobutton rotgelb: 
-		jAmpel.setPhase(2);									// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 2 (= rotgelb) setzen, repaint() wird in setPhase() erledigt
+	private void jRBRotGelbActionPerformed(ActionEvent evt){																	// handsteuerung: radiobutton rotgelb: 
+		jAmpel.setPhase(2);																										// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 2 (= rotgelb) setzen, repaint() wird in setPhase() erledigt
 	}
 	
-	private void jRBGruenActionPerformed(ActionEvent evt) {	// handsteuerung: radiobutton grün: 
-		jAmpel.setPhase(3);									// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 3 (= grün) setzen, repaint() wird in setPhase() erledigt
+	private void jRBGruenActionPerformed(ActionEvent evt) {																		// handsteuerung: radiobutton grün: 
+		jAmpel.setPhase(3);																										// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 3 (= grün) setzen, repaint() wird in setPhase() erledigt
 	}
 	
-	private void jRBGelbActionPerformed(ActionEvent evt) { 	// handsteuerung: radiobutton gelb: 
-		jAmpel.setPhase(4);									// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 4 (= gelb) setzen, repaint() wird in setPhase() erledigt
+	private void jRBGelbActionPerformed(ActionEvent evt) { 																		// handsteuerung: radiobutton gelb: 
+		jAmpel.setPhase(4);																										// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 4 (= gelb) setzen, repaint() wird in setPhase() erledigt
 	}
 	
-	// handler methode für checkbox um automatik-modus (der ampelsteuerung) ein- und auszuschalten 
+																																// handler methode für checkbox um automatik-modus (der ampelsteuerung) ein- und auszuschalten 
 	private void jCBAutomatikActionPerformed(ActionEvent evt) {
-		if (jCBAutomatik.isSelected()){						// wenn checkbox (automatik) angewählt ist:
-			jRBAus.setEnabled(false);						// alle readiobuttons (der handsteuerung) inaktiv setzen
+		if (jCBAutomatik.isSelected()){																							// wenn checkbox (automatik) angewählt ist:
+			jRBAus.setEnabled(false);																							// alle readiobuttons (der handsteuerung) inaktiv setzen
 			jRBRot.setEnabled(false);						
 			jRBRotGelb.setEnabled(false);
 			jRBGruen.setEnabled(false);
 			jRBGelb.setEnabled(false);
-			jPanel1.paintImmediately(0, 0, jPanel1.getWidth(), jPanel1.getHeight());	// von JComponent weitervererbte methode zum neuzeichnen der jeweiligen komponente mit vier int-werten für den betreffenden bereich
-			while (jCBAutomatik.isSelected()) {				// schleife um immer wieder die 4 ampelphasen durchlaufen zu lassen
-				try {
-					jCBAutomatik.paintImmediately(0, 0, jCBAutomatik.getWidth(), jCBAutomatik.getHeight());		// checkbox immediately neuzeichnen 
-					jAmpel.setPhase(1);																			// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 1 (= rot) setzen, repaint() wird in setPhase() erledigt
-					jAmpel.paintImmediately(0, 0, jAmpel.getWidth(), jAmpel.getHeight());						// jAmpel immediately neuzeichnen 
-					Thread.sleep(rotPhase);																		// thread unterbrechen (rotphasen => milisekunden)
-					jAmpel.setPhase(2);																			// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 2 (= rotgelb) setzen, repaint() wird in setPhase() erledigt
-					jAmpel.paintImmediately(0, 0, jAmpel.getWidth(), jAmpel.getHeight());						// jAmpel immediately neuzeichnen 
-					Thread.sleep(rotgelbPhase);																	// thread unterbrechen (rotgelbphasen => milisekunden)
-					jAmpel.setPhase(3);																			// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 3 (= grün) setzen, repaint() wird in setPhase() erledigt
-					jAmpel.paintImmediately(0, 0, jAmpel.getWidth(), jAmpel.getHeight());						// jAmpel immediately neuzeichnen 
-					Thread.sleep(gruenPhase);																	// thread unterbrechen (gruenphasen => milisekunden)
-					jAmpel.setPhase(4);																			// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 4 (= gelb) setzen, repaint() wird in setPhase() erledigt
-					jAmpel.paintImmediately(0, 0, jAmpel.getWidth(), jAmpel.getHeight());						// jAmpel immediately neuzeichnen 
-					Thread.sleep(gelbPhase);																	// thread unterbrechen (gelbphasen => milisekunden)
-				} catch (InterruptedException e) {																// Thread-speziefische exception: sobald threads im spiel sind (es reicht schon die methode sleep() von thread
-					e.printStackTrace();
-				}
-			}
-		} else {											// wenn automatik nicht (mehr) eingeschaltet ist..
-			jRBAus.setSelected(true);						// radiobutton aus auf angewählt setzen
-			jRBAus.setEnabled(true);						// alle radiobuttons aktiv setzen
-			jRBRot.setEnabled(true);						// dito
-			jRBRotGelb.setEnabled(true);					// dito
-			jRBGruen.setEnabled(true);						// dito
-			jRBGelb.setEnabled(true);						// dito
-			jAmpel.setPhase(0);								// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase wieder auf 0 (= aus) setzen, repaint() wird in setPhase() erledigt
+			Thread t = new Thread(this, "Automatik");	// bei klicken des eveent-handlings wird der neue Thread mit parameter this (= runnable target => verweist auf run()-methode in der selben klasse) & name des Threads ("automatik")
+			t.start();
+		} else {																												// wenn automatik nicht (mehr) eingeschaltet ist..
+			jRBAus.setSelected(true);																							// radiobutton aus auf angewählt setzen
+			jRBAus.setEnabled(true);																							// alle radiobuttons aktiv setzen
+			jRBRot.setEnabled(true);																							// dito
+			jRBRotGelb.setEnabled(true);																						// dito
+			jRBGruen.setEnabled(true);																							// dito
+			jRBGelb.setEnabled(true);																							// dito
+			jAmpel.setPhase(0);																									// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase wieder auf 0 (= aus) setzen, repaint() wird in setPhase() erledigt
 		}
 
+	}
+
+
+	@Override				// siehe 12.4.2.  AtOverride  eigene bemerkung:  => wie ein kommentar bei absichtlichem überschreiben von methoden der superklasse. -> heute java7: ist's guter programmierstil -> evtl. ab java 8 oder 9 unumgänglich, 
+	public void run() {		// Auto-generated method stub (= methoden-rumpf) bei implements Runnable: für den zusätzlichen thread, der die ampel parallel laufen lässt, checkbox automatik blockiert jetzt  ..
+							// ..nicht mehr, aber achtung:bei ausschalten der automatik läuft die phase noch bis zum ende durch: perfektes abbrechen der phase: siehe 4.2.2. .._Ampelsteuerung4 s.353
+		while (jCBAutomatik.isSelected()) {			// schleife um immer wieder die 4 ampelphasen durchlaufen zu lassen, neu in der Thread-methode run():
+			try {
+				//..								// alle jAmpel & jAmpelcheckbox immediately neuzeichnen braucht's mit dem zusätzlichen thread nicht mehr, da durch sleep() keine unterbrechungsfehler mehr im GUI passieren
+				jAmpel.setPhase(1);																							// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 1 (= rot) setzen, repaint() wird in setPhase() erledigt
+				Thread.sleep(rotPhase);																						// thread unterbrechen (rotphasen => milisekunden)
+				jAmpel.setPhase(2);																							// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 2 (= rotgelb) setzen, repaint() wird in setPhase() erledigt
+				Thread.sleep(rotgelbPhase);																					// thread unterbrechen (rotgelbphasen => milisekunden)
+				jAmpel.setPhase(3);																							// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 3 (= grün) setzen, repaint() wird in setPhase() erledigt
+				Thread.sleep(gruenPhase);																					// thread unterbrechen (gruenphasen => milisekunden)
+				jAmpel.setPhase(4);																							// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 4 (= gelb) setzen, repaint() wird in setPhase() erledigt
+				Thread.sleep(gelbPhase);																					// thread unterbrechen (gelbphasen => milisekunden)
+			} catch (InterruptedException e) {																				// Thread-speziefische exception: sobald threads im spiel sind (es reicht schon die methode sleep() von thread
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 }
