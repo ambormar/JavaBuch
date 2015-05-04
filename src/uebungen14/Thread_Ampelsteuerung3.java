@@ -81,15 +81,47 @@
  *										
  *		PROGRAMM Ampelsteuerung3:		(ACHTUNG: bei ausschalten der automatik läuft werden die ampelphasen noch bis zur 4. phase abgearbeitet: perfektes abbrechen der phasen: siehe 4.2.2. .._Ampelsteuerung4 s.353)
  *		
- *				-> mit zusätzlichem Thread durch implementieren von Runnable für diese klasse, 
- *						& zwangsläufigem überschreiben der run()-methode des zusätzlichen threads (eclipse-fehlermeldung wenn kein run() erstellt wird) 
- 							-> run()-methode könnte auch woanders als in diesre
+ *				THREAD-SPEZIEFISCHE HAUPT-VORGEHENSWEISE VORWEG K&K :
+ *
+ *						=> 	Klasse extends JFrame implements Runnable {..}			Runnable von Thread für die klasse implementieren 
+ *
+ *						=> 	@Override												Run()-methode von Thread überschreiben inkl. den nötigen anweisungen für den neuen Thread
+ *						   	public void run() {
+ *								Anweisungen für den neuen Threads;
+ *							} 	
+ *
+ *						=> 	Thread t = new Thread(this, "Automatik");				Thread-objekt für neuen thread dort erstelen wo er beginnen soll & starten
+ *							t.start();											
+ *
+ *				-> mit zusätzlichem Thread durch implementieren von Runnable für diese klasse (erfordert überschreiben der run()-methode)
  *	  
-						public class Thread_Ampelsteuerung3 extends JFrame implements Runnable {	// Programm-frame implementiert Runnabel, damit es eine run()-methode für einen Thread bereitstellen kann
+ *						public class Thread_Ampelsteuerung3 extends JFrame implements Runnable {	// Programm-frame implementiert Runnabel, damit es eine run()-methode für einen Thread bereitstellen kann
  *
- *				!!!!!!!!!!! hier weiter !!!!!!!!!!
+ *				-> überschreiben der run()-methode für den zusätzlichen threads (eclipse-fehlermeldung wenn kein run() erstellt wird, weil implements Runnable dies zwangsläufig erfordert)  
+ *					-> methoden-rumpf (method stub) erstellt sich bei der fehlerbehebung von eclipse (mit quickfix) von selbst 
+ *					-> while-schleife um immer wieder die 4 ampelphasen durchlaufen zu lassen wird neu in die Thread-methode run() verlegt, (um es parallel/unabhängig zum programm-gui-thread laufen zu lassen)
+ * 						-> durch die phasen geschaltet wird mit kurzen zeitunterbrechungen (für phasen-dauer) durch methode sleep(..) von klasse Thread
+ *							[ -> das zeichnen der sich veränderneden komponenten muss nicht mehr sofort erzwungen werden mit paintImmediately(..) der klasse jComponent, weil der programm-gui-thread wieder richtig funktioniert + nicht durch sleep() mitunterbrochen wird ]
+ * 						-> achtung:bei ausschalten der checkbox automatik läuft die phase noch bis zum ende durch: perfektes abbrechen der phase: siehe 4.2.2. .._Ampelsteuerung4 s.353
+ * 					
+ *						@Override										// siehe 12.4.2.  AtOverride  eigene bemerkung:  => wie ein kommentar bei absichtlichem überschreiben von methoden der superklasse. -> heute java7: ist's guter programmierstil -> evtl. ab java 8 oder 9 unumgänglich, 
+ *						public void run() {								// Auto-generated method stub (= methoden-rumpf) bei implements Runnable: für den zusätzlichen thread, der die ampel parallel laufen lässt, checkbox automatik blockiert jetzt  ..
+ *																		// ..nicht mehr, aber achtung:bei ausschalten der automatik läuft die phase noch bis zum ende durch: perfektes abbrechen der phase: siehe 4.2.2. .._Ampelsteuerung4 s.353
+ *							while (jCBAutomatik.isSelected()) {			// schleife um immer wieder die 4 ampelphasen durchlaufen zu lassen, neu in der Thread-methode run():
+ *								try {
+ *									..									// alle jAmpel & jAmpelcheckbox immediately neuzeichnen braucht's mit dem zusätzlichen thread nicht mehr, da durch sleep() keine unterbrechungsfehler mehr im GUI passieren
+ *									jAmpel.setPhase(1);																							// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 1 (= rot) setzen, repaint() wird in setPhase() erledigt
+ *									Thread.sleep(rotPhase);																						// thread unterbrechen (rotphasen => milisekunden)
+ *									..																											// obere 2 anweisungen wiederholen für jede der 4 phasen
+ *								} catch (InterruptedException e) {																				// Thread-speziefische exception: sobald threads im spiel sind (es reicht schon die methode sleep() von thread
+ *									e.printStackTrace();
+ *								}
+ *							}
+ *							
+ *						} 							 
  *
- *	  			=> JFrame mit JAmpelPanel (jAmpel) anstelle eines JPanels für die darstellung der Ampel
+ *
+ *	  			=> JFrame mit JAmpelPanel_3 (jAmpel) anstelle eines standard-JPanels für die darstellung der Ampel
  *	  
  *	  					private JAmpelPanel_3 jAmpel = new JAmpelPanel_3();
  *	  
@@ -103,59 +135,42 @@
  *	  			=> fields: 		private int rotPhase = 3000;		// int-variablen für die zeiten der phasen in milisekunden (werden später der sleep-methode als parameter übergeben)
  *	  							... usw								// .. für gelbrotPhase, gruenPhase, gelbPhase
  *	  
- * 	  			=> ende initGUI():	jAmpel.setPhase(0);		// jAmpel initialisieren: aufruf schnittstellen-methode setPhase(..) der klasse JAmpelPanel unter mitgabe von int-wert 0 (=> phase : aus)
+ * 	  			=> ende initGUI():	jAmpel.setPhase(0);		// jAmpel initialisieren: aufruf schnittstellen-methode setPhase(..) der klasse JAmpelPanel_3 unter mitgabe von int-wert 0 (=> phase : aus)
  *	   	
  *	  			=> handler methoden der 5 radaiobuttons zur handsteuerung implementieren:
- *	  				-> via schnittstellen-methode setPhase(..) von JAmpelPanel, wird private int phase (von JAmpelPanel)  auf 0-4 (5 ampelzustände) gesetzt setzen, 
- *	  				-> der repaint() wird auch gleich in setPhase() (von JAmpelPanel) erledigt
+ *	  				-> via schnittstellen-methode setPhase(..) von JAmpelPanel, wird private int phase (von JAmpelPanel_3)  auf 0-4 (5 ampelzustände) gesetzt setzen, 
+ *	  				-> der repaint() wird auch gleich in setPhase() (von JAmpelPanel_3) erledigt
  *	  
- *			 		BSP:	private void jRBAusActionPerformed(ActionEvent evt) {		// handsteuerung: radiobutton aus: 
- *									jAmpel.setPhase(0);										// phase auf 0 (= aus) setzen
+ *			 		BSP:	private void jRBAusActionPerformed(ActionEvent evt) {													// handsteuerung: radiobutton aus: 
+ *									jAmpel.setPhase(0);																				// phase auf 0 (= aus) setzen
  *								}							
  *	 
  *				=> handler methode für checkbox um automatik-modus (der ampelsteuerung) ein- und auszuschalten 
- *					-> mit while-schleife in der durch die phasen geschaltet wird mit kurzen zeitunterbrechungen (für phasen-dauer) durch methode sleep(..) von klasse Thread
- *						-> führt dazu. dass der gesamt programm-ablauf (auch GUI) unterbrochen wird, 
- *						-> also muss das zeichnen der sich veränderneden komponenten sofort erzwungen werden mit paintImmediately(..) der klasse jComponent
+ *					-> bei klicken des eveent-handlings wird das neue Thread-objekt erzeugt mit parameter this (= runnable target => verweist auf run()-methode in der selben klasse).. 
+ *																											.. & name des Threads ("automatik")
+ *					-> thread wird gestartet über thread-objekt t + methode start() der Klasse Thread
+ *						
  *				
  *						private void jCBAutomatikActionPerformed(ActionEvent evt) {
  *							if (jCBAutomatik.isSelected()){																			// wenn checkbox (automatik) angewählt ist:
  *								jRBAus.setEnabled(false);																			// alle readiobuttons (der handsteuerung) inaktiv setzen
- *								...																									
- *								jPanel1.paintImmediately(0, 0, jPanel1.getWidth(), jPanel1.getHeight());							// von JComponent weitervererbte methode zum neuzeichnen der jeweiligen komponente mit vier int-werten für den betreffenden bereich
- *								while (jCBAutomatik.isSelected()) {																	// schleife um immer wieder die 4 ampelphasen durchlaufen zu lassen
- *									try {
- *										jCBAutomatik.paintImmediately(0, 0, jCBAutomatik.getWidth(), jCBAutomatik.getHeight());		// checkbox immediately neuzeichnen 
- *										jAmpel.setPhase(1);																			// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 1 (= rot) setzen, repaint() wird in setPhase() erledigt
- *										jAmpel.paintImmediately(0, 0, jAmpel.getWidth(), jAmpel.getHeight());						// jAmpel immediately neuzeichnen 
- *										Thread.sleep(rotPhase);																		// thread unterbrechen (rotphasen => milisekunden)
- *										jAmpel.setPhase(2);																			// usw. für jede der 4 farb-phasen
- * 										... 
- *	 								} catch (InterruptedException e) {																// Thread-speziefische exception: sobald threads im spiel sind (es reicht schon die methode sleep() von thread
- *										e.printStackTrace();
- *									}
- *								}
- *							} else {											// wenn automatik nicht (mehr) eingeschaltet ist..
- *								jRBAus.setSelected(true);						// radiobutton aus auf angewählt setzen
- *								jRBAus.setEnabled(true);						// alle radiobuttons aktiv setzen
- *								...						// 
- *								jAmpel.setPhase(0);								// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase wieder auf 0 (= aus) setzen, repaint() wird in setPhase() erledigt
+ *								...																									// .. dito alle
+ *								Thread t = new Thread(this, "Automatik");		// bei klicken des eveent-handlings wird das neue Thread-objekt erzeugt mit parameter this (= runnable target => verweist auf run()-methode in der selben klasse) & name des Threads ("automatik")
+ *								t.start();										// thread wird gestartet über thread-objekt + methode start() der Klasse Thread
+ *							} else {																								// wenn automatik nicht (mehr) eingeschaltet ist..
+ *								jRBAus.setSelected(true);																			// radiobutton Aus auf angewählt setzen
+ *								jRBAus.setEnabled(true);																			// radiobuttons aktiv setzen ..
+ *								...																									// .. dito für alle radiobuttons
+ *								jAmpel.setPhase(0);																					// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase wieder auf 0 (= aus) setzen, repaint() wird in setPhase() erledigt
  *							}
  *					
  *						}  
  * 
  *
- * 				=> PROBLEMCHEN:		Die Phasenwechsel werden im Automatikbetrieb -  mit hilfe von paintImmediately() der klasse jComponent - sichtbar, aber die Automatik 
- * 									versetzt die Ampelsteuerung in eine Endlosschleife, die aus der Entwicklungsumgebung nur noch über den Stop-Button der Console-
- * 									View gestoppt werden kann. 
+ * 				=> REST-PROBLEMCHEN:	-> bei ausschalten der automatik werden die ampelphasen noch bis zur 4. phase abgearbeitet.
+ * 										-> perfektes abbrechen der phasen: 		SIEHE:	 	4.2.2. 			Thread_.._Ampelsteuerung4 		s.353 			!!!!!!!!!!!!!!!!!!
  * 
- * 				=> PROBLEM-LÖSUNG: 	(=> checkbox automatik nach gebrauch wieder abwählbar machen:) 		
- * 									=> die anweisungen der while-schleife (Thread.sleep(rotPhase) etc.) müssen in einem 2. Thread ausgeführt werden
- * 										-> damit sie den restlichen programm-ablauf (initGUI()) nicht mit-unterbrechen
- * 
- * 									SIEHE:		14.2.2.		Thread_.._Ampelsteuerung3 	s.447		!!!!!!!!!!!!
-
- * 
+ * 		!!!!!!!!!! HIER WEITER, EVTL. NOCH SCHEMA FÜR 2. ART DER THREAD-ERSTELLUNG REINKOPIEREN
  * 
  */
 
@@ -360,8 +375,8 @@ public class Thread_Ampelsteuerung3 extends JFrame implements Runnable {	// Prog
 			jRBRotGelb.setEnabled(false);
 			jRBGruen.setEnabled(false);
 			jRBGelb.setEnabled(false);
-			Thread t = new Thread(this, "Automatik");	// bei klicken des eveent-handlings wird der neue Thread mit parameter this (= runnable target => verweist auf run()-methode in der selben klasse) & name des Threads ("automatik")
-			t.start();
+			Thread t = new Thread(this, "Automatik");	// bei klicken des eveent-handlings wird das neue Thread-objekt erzeugt mit parameter this (= runnable target => verweist auf run()-methode in der selben klasse) & name des Threads ("automatik")
+			t.start();									// thread wird gestartet über thread-objekt + methode start() der Klasse Thread
 		} else {																												// wenn automatik nicht (mehr) eingeschaltet ist..
 			jRBAus.setSelected(true);																							// radiobutton aus auf angewählt setzen
 			jRBAus.setEnabled(true);																							// alle radiobuttons aktiv setzen
