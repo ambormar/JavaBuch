@@ -19,6 +19,8 @@
  * 				
  * 					=> konkretes angewandtes BSP:	SIEHE:		14.2.4.		Thread_Synchronisation_..		s.454		!!!!!!!!!!!
  * 
+ * 		!!!! hier weiter !!!!!!!!
+ * 
  */
 
 package uebungen14;
