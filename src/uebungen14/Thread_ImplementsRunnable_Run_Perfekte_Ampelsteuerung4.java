@@ -10,6 +10,7 @@
  * 		&:						14.2.2.b.		class StoppuhrTest	&	Thread_Stoppuhr																			s.450, 1. Art mit extends Thread
  * 
  * 
+ * 
  * 	K&K:	Klasse JAmpelPanel_4:		(von der Komponente JPanel abgeleitet) 			(( ist ausser dem namen identisch mit der klasse JAmpelPanel_3 ))
  * 										Die Klasse dient der Darstellung einer Ampel mit den vier Ampelphasen.
  * 
