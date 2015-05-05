@@ -1,27 +1,65 @@
-/* TODO 14.2.2.d.   s.451, (extends JPanel) 
- * class 	JAmpelPanel_3		& 		Thread_ImplementsRunnable_Run_Ampelsteuerung3
+/* TODO 14.2.2.e.   s.453, (extends JPanel) 
+ * class 	JAmpelPanel_4		& 		Thread_ImplementsRunnable_Run_Perfekte_Ampelsteuerung4
  * 
  * 		SIEHE BASICS:			14.2.2.a.   Threads_Bsics_Methoden_Konstruktoren_Eigenschaften_2MethodenderDerThreadErstellung									s.447
+ * 		SIEHE BASICS:			14.2.2.a.   Threads_Basics_Methoden_Konstruktoren_Eigenschaften_2MethodenderDerThreadErstellung									s.447
+ * 
+ * 		VORGÄNGERVERSION:		14.2.2.d.	Thread_ImplementsRunnable_Run_Ampelsteuerung3	& 	JAmpelPanel	_3													s.451
  * 
  * 		VERGLEICHE AUCH:		14.2.1.   PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2		&	JAmpelPanel			s.440, (verwendet JAmpelPanel) 
  * 
  * 		&:						14.2.2.b.		class StoppuhrTest	&	Thread_Stoppuhr																			s.450, 1. Art mit extends Thread
-
  * 
- * 	K&K:	Klasse JAmpelPanel_3:		(von der Komponente JPanel abgeleitet) 			(( ist ausser dem namen identisch mit der klasse JAmpelPanel von PaintImmediately_.._Ampelsteuerung2 ))
+ * 
+ * 	K&K:	Klasse JAmpelPanel_4:		(von der Komponente JPanel abgeleitet) 			(( ist ausser dem namen identisch mit der klasse JAmpelPanel_3 ))
  * 										Die Klasse dient der Darstellung einer Ampel mit den vier Ampelphasen.
  * 
  * 
- * 			Programm Ampelsteuerung3:	(mit eigenem Thread) abgeänderte version von PaintImmediately_.._Ampelsteuerung2
+ * 			Programm Ampelsteuerung4:	(mit zusätzlichem Thread & neu perfekt funktionierender) abgeänderte version von Thread_ImplementsRunnable_Run_Ampelsteuerung3
  * 
- * 										[ Ampelsteuerung2: 	Das Programm nutzt die Klasse JAmpelPanel. Die Ampel kann manuell in die vier Ampelphasen geschaltet und ausgeschaltet werden.
- * 															Die Phasenwechsel werden im Automatikbetrieb -  mit hilfe von paintImmediately() der klasse jComponent - sichtbar, aber die Automatik 
- * 															versetzt die Ampelsteuerung in eine Endlosschleife, die aus der Entwicklungsumgebung nur noch über den Stop-Button der Console-
- * 															View gestoppt werden kann. 	] 
+ * 										[ Ampelsteuerung3: 	Das Programm nutzt die Klasse JAmpelPanel_3. Die Ampel kann manuell in die vier Ampelphasen geschaltet und ausgeschaltet werden.
+ * 															Der Automatikmodus funktioniert (mittels zusätzlichem thread), aber das Beenden der Automatik erfolgt offensichtlich nicht ganz 
+ * 															korrekt. Es werden noch die Ampelphasen bis zur Gelbphase weiter durchlaufen. Erst danach endet der Schleifendurchlauf. 	] 
  * 
- * 										Das Programm nutzt die Klasse JAmpelPanel_3. Die Ampel kann manuell in die vier Ampelphasen geschaltet und ausgeschaltet werden.
- * 										Der Automatikmodus funktioniert (mittels zusätzlichem thread), aber das Beenden der Automatik erfolgt offensichtlich nicht ganz korrekt. 
- * 										Es werden noch die Ampelphasen bis zur Gelbphase weiter durchlaufen. Erst danach endet der Schleifendurchlauf. 
+ * 										Das Programm nutzt die Klasse JAmpelPanel_4. Die Ampel kann manuell in die vier Ampelphasen geschaltet und ausgeschaltet werden.
+ * 										Der AUTOMATIKMODUS funktioniert und kann NEU auch unmittelbar GESTOPPT werden.   
+ * 
+ * 
+ *  EINZIG WICHTIGE VERÄNDERUNG IN DIESER VERSION SIEHE:
+ *  
+ *  	KLASSE JAmpelPanel_4:		keine veränderungen
+ *  		
+ *  	PROGRAMM Thread_ImplementsRunnable_Run_Perfekte_Ampelsteuerung4:
+ *  
+ *				=> FIELDS:	dauer der 4 ampelphasen WIRD NEU in einem Array definiert zur präzieseren verwendung in der while-schleife 
+ *	  							
+ *  					private int [] phasendauer = {3000, 1000, 3000, 1000};
+ *  
+ *  			=> optimierte while-schleife in der Thread-methode run() um NEU jede einzelne der 4 ampelphasen durchlaufen zu lassen 
+ * 					-> durch die phasen geschaltet wird mit kurzen zeitunterbrechungen (werte aus array phasendauer[]) durch methode sleep(..) von klasse Thread
+ * 					-> NEU lässt sich durch das einzelne durchlaufen jeder phase in der while-schleife auch die checkbox automatik unmittelbar stoppen.
+ * 																(es muss nicht mehr zuerst ein ganzer durchlauf durch alle phasen abgearbeitet werden bei abwahl der automatik)
+ * 					
+ *						@Override																													// siehe 12.4.2.  AtOverride  eigene bemerkung:  => wie ein kommentar bei absichtlichem überschreiben von methoden der superklasse. -> heute java7: ist's guter programmierstil -> evtl. ab java 8 oder 9 unumgänglich, 
+ *						public void run() {									// Auto-generated method stub (= methoden-rumpf) bei implements Runnable: für den zusätzlichen thread, der die ampel parallel laufen lässt, checkbox automatik blockiert ..
+ *																			// ..nicht & neu lässt sich durch das einzelne durchlaufen jeder phase in der while-schleife auch die checkbox automatik fehlerfrei bedienen (es muss nicht zuerst ein ganzer durchlauf durch die phasen abgearbeitet werden) bei abwahl der automatik
+ *							int i = 1;										// lokale variable für's handling der array-werte vom array phasendauer & auch der Phasen von jAmpel.setPhase()
+ *								while (jCBAutomatik.isSelected()) {			// schleife um - neu - eine ampelphase nach der anderen durchlaufen zu lassen, in der Thread-methode run():
+ *									try {
+ *										jAmpel.setPhase(i);					// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf i (=> 1 bis 4) setzen, repaint() wird in setPhase() erledigt
+ *										Thread.sleep(phasendauer[i-1]);		// thread unterbrechen (für array-wert von phasendauer[0 bis 3] milisekunden)
+ *										i++;								// i erhöhen für nächste jAmpel.setPhase() & nächsten array-wert der phasendauer[]
+ *										if (i > 4) {						// wenn i grösser als 4: sind alle phasen & phasendauer durchlaufen..
+ *											i = 1;							// drum i wieder auf anfang = 1
+ *										}
+ *									} catch (InterruptedException e) {																				// Thread-speziefische exception: sobald threads im spiel sind (es reicht schon die methode sleep() von thread
+ *										e.printStackTrace();
+ *									}
+ *								}
+ *						}
+ *  		
+ *  
+ * [[[ 		DER REST IST IDENTISCH MIT :		14.2.2.d.		Thread_ImplementsRunnable_Run_Ampelsteuerung3	& 	JAmpelPanel	_3			s.451
  * 
  * 
  * 	ZWEITE ART DER ERSTELLUNG VON THREADS:		MIT IMPEMENTS RUNNABLE	&	ÜBERSCHREIBEN DER RUN()-METHODE:	(
@@ -72,15 +110,16 @@
  * 
  * 	VORGEHEN: 	
  * 
- * 		KLASSE JAmpelPanel_3:		
+ * 		KLASSE JAmpelPanel_4:		
  * 
- * 			=> von der Komponente JPanel abgeleitet, um sie in der aufrufenden klasse Ampelsteuerung2 anstelle eines standard-jpanels einzusetzen
+ * 			=> von der Komponente JPanel abgeleitet, um sie in der aufrufenden klasse Ampelsteuerung4 anstelle eines standard-jpanels einzusetzen
  * 
  * 			=> Die Klasse dient der Darstellung einer Ampel mit den vier Ampelphasen.
  * 
- * 			=> fields: 		int phase = 0;					// variable für die ampel-phasen für den switch (5 mögliche zustände: rot, gelb-rot, grün, gelb + aus)
- *							Color cOben, cMitte, cUnten;	// farb-variablen für die 3 ampel-kreise oben, mitte, unten
- *							
+ * 			=> fields: 		int phase = 0;												// variable für die ampel-phasen für den switch (5 mögliche zustände: rot, gelb-rot, grün, gelb + aus)
+ *							Color cOben, cMitte, cUnten;								// farb-variablen für die 3 ampel-kreise oben, mitte, unten
+ *	  	
+ *						
  * 			=> paintComponent-methode der superklasse überschreiben, damit die änderungen der komponente (panel) jeweils neugezeichnet werden bei frame-veränderungen
  * 
  *						public void paintComponent(Graphics g) {
@@ -129,35 +168,37 @@
  *
  *				-> mit zusätzlichem Thread durch implementieren von Runnable für diese klasse (erfordert überschreiben der run()-methode)
  *	  
- *						public class Thread_Ampelsteuerung3 extends JFrame implements Runnable {	// Programm-frame implementiert Runnabel, damit es eine run()-methode für einen Thread bereitstellen kann
+ *						public class Thread_Ampelsteuerung4 extends JFrame implements Runnable {	// Programm-frame implementiert Runnabel, damit es eine run()-methode für einen Thread bereitstellen kann
  *
  *				-> überschreiben der run()-methode für den zusätzlichen threads (eclipse-fehlermeldung wenn kein run() erstellt wird, weil implements Runnable dies zwangsläufig erfordert)  
  *					-> methoden-rumpf (method stub) erstellt sich bei der fehlerbehebung von eclipse (mit quickfix) von selbst 
- *					-> while-schleife um immer wieder die 4 ampelphasen durchlaufen zu lassen wird neu in die Thread-methode run() verlegt, (um es parallel/unabhängig zum programm-gui-thread laufen zu lassen)
+ *					-> while-schleife in der Thread-methode run() um NEU jede einzelne der 4 ampelphasen durchlaufen zu lassen  (um es parallel/unabhängig zum programm-gui-thread laufen zu lassen)
  * 						-> durch die phasen geschaltet wird mit kurzen zeitunterbrechungen (für phasen-dauer) durch methode sleep(..) von klasse Thread
- *							[ -> das zeichnen der sich veränderneden komponenten muss nicht mehr sofort erzwungen werden mit paintImmediately(..) der klasse jComponent, weil der programm-gui-thread wieder richtig funktioniert + nicht durch sleep() mitunterbrochen wird ]
- * 						-> achtung:bei ausschalten der checkbox automatik läuft die phase noch bis zum ende durch: perfektes abbrechen der phase: siehe 4.2.2. .._Ampelsteuerung4 s.353
+ * 						-> NEU lässt sich durch das einzelne durchlaufen jeder phase in der while-schleife auch die checkbox automatik fehlerfrei stoppen 
+ * 																(es muss nicht mehr zuerst ein ganzer durchlauf durch alle phasen abgearbeitet werden) bei abwahl der automatik)
  * 					
- *						@Override										// siehe 12.4.2.  AtOverride  eigene bemerkung:  => wie ein kommentar bei absichtlichem überschreiben von methoden der superklasse. -> heute java7: ist's guter programmierstil -> evtl. ab java 8 oder 9 unumgänglich, 
- *						public void run() {								// Auto-generated method stub (= methoden-rumpf) bei implements Runnable: für den zusätzlichen thread, der die ampel parallel laufen lässt, checkbox automatik blockiert jetzt  ..
- *																		// ..nicht mehr, aber achtung:bei ausschalten der automatik läuft die phase noch bis zum ende durch: perfektes abbrechen der phase: siehe 4.2.2. .._Ampelsteuerung4 s.353
- *							while (jCBAutomatik.isSelected()) {			// schleife um immer wieder die 4 ampelphasen durchlaufen zu lassen, neu in der Thread-methode run():
- *								try {
- *									..									// alle jAmpel & jAmpelcheckbox immediately neuzeichnen braucht's mit dem zusätzlichen thread nicht mehr, da durch sleep() keine unterbrechungsfehler mehr im GUI passieren
- *									jAmpel.setPhase(1);																							// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf 1 (= rot) setzen, repaint() wird in setPhase() erledigt
- *									Thread.sleep(rotPhase);																						// thread unterbrechen (rotphasen => milisekunden)
- *									..																											// obere 2 anweisungen wiederholen für jede der 4 phasen
- *								} catch (InterruptedException e) {																				// Thread-speziefische exception: sobald threads im spiel sind (es reicht schon die methode sleep() von thread
- *									e.printStackTrace();
+ *						@Override																													// siehe 12.4.2.  AtOverride  eigene bemerkung:  => wie ein kommentar bei absichtlichem überschreiben von methoden der superklasse. -> heute java7: ist's guter programmierstil -> evtl. ab java 8 oder 9 unumgänglich, 
+ *						public void run() {									// Auto-generated method stub (= methoden-rumpf) bei implements Runnable: für den zusätzlichen thread, der die ampel parallel laufen lässt, checkbox automatik blockiert ..
+ *																			// ..nicht & neu lässt sich durch das einzelne durchlaufen jeder phase in der while-schleife auch die checkbox automatik fehlerfrei bedienen (es muss nicht zuerst ein ganzer durchlauf durch die phasen abgearbeitet werden) bei abwahl der automatik
+ *							int i = 1;										// lokale variable für's handling der array-werte vom array phasendauer & auch der Phasen von jAmpel.setPhase()
+ *								while (jCBAutomatik.isSelected()) {			// schleife um - neu - eine ampelphase nach der anderen durchlaufen zu lassen, in der Thread-methode run():
+ *									try {
+ *										jAmpel.setPhase(i);					// via schnittstellen-methode setPhase(..) von JAmpelPanel, phase auf i (=> 1 bis 4) setzen, repaint() wird in setPhase() erledigt
+ *										Thread.sleep(phasendauer[i-1]);		// thread unterbrechen (für array-wert von phasendauer[0 bis 3] milisekunden)
+ *										i++;								// i erhöhen für nächste jAmpel.setPhase() & nächsten array-wert der phasendauer[]
+ *										if (i > 4) {						// wenn i grösser als 4: sind alle phasen & phasendauer durchlaufen..
+ *											i = 1;							// drum i wieder auf anfang = 1
+ *										}
+ *									} catch (InterruptedException e) {																				// Thread-speziefische exception: sobald threads im spiel sind (es reicht schon die methode sleep() von thread
+ *										e.printStackTrace();
+ *									}
  *								}
- *							}
- *							
- *						} 							 
+ *						}						 
  *
  *
- *	  			=> JFrame mit JAmpelPanel_3 (jAmpel) anstelle eines standard-JPanels für die darstellung der Ampel
+ *	  			=> JFrame mit JAmpelPanel_4 (jAmpel) anstelle eines standard-JPanels für die darstellung der Ampel
  *	  
- *	  					private JAmpelPanel_3 jAmpel = new JAmpelPanel_3();
+ *	  					private JAmpelPanel_4 jAmpel = new JAmpelPanel_4();
  *	  
  *	  			=> 5 radiobuttons (aus, rot, rotgelb, grün, gelb) (inkl. ButtonGroup) mit handler-methoden für handsteuerung der ampelphasen 
  *	  					-> werden für bessere ordnung innerhalb eines jPanels mit titleborder (handsteuerung) dargestellt 
@@ -165,14 +206,12 @@
  *	  					SIEHE:		jPanel1  im  initGUI()
  *	  								
  *	  			=> checkbox jCBAutomatik mit handler method, um auf automatik-modus der ampelsteuerung zu wechseln
- *	  					
- *	  			=> fields: 		private int rotPhase = 3000;		// int-variablen für die zeiten der phasen in milisekunden (werden später der sleep-methode als parameter übergeben)
- *	  							... usw								// .. für gelbrotPhase, gruenPhase, gelbPhase
  *	  
- * 	  			=> ende initGUI():	jAmpel.setPhase(0);		// jAmpel initialisieren: aufruf schnittstellen-methode setPhase(..) der klasse JAmpelPanel_3 unter mitgabe von int-wert 0 (=> phase : aus)
+ *	  
+ * 	  			=> ende initGUI():	jAmpel.setPhase(0);		// jAmpel initialisieren: aufruf schnittstellen-methode setPhase(..) der klasse JAmpelPanel_4 unter mitgabe von int-wert 0 (=> phase : aus)
  *	   	
  *	  			=> handler methoden der 5 radaiobuttons zur handsteuerung implementieren:
- *	  				-> via schnittstellen-methode setPhase(..) von JAmpelPanel, wird private int phase (von JAmpelPanel_3)  auf 0-4 (5 ampelzustände) gesetzt setzen, 
+ *	  				-> via schnittstellen-methode setPhase(..) von JAmpelPanel, wird private int phase (von JAmpelPanel_4)  auf 0-4 (5 ampelzustände) gesetzt setzen, 
  *	  				-> der repaint() wird auch gleich in setPhase() (von JAmpelPanel_3) erledigt
  *	  
  *			 		BSP:	private void jRBAusActionPerformed(ActionEvent evt) {													// handsteuerung: radiobutton aus: 
@@ -200,10 +239,7 @@
  *					
  *						}  
  * 
- *
- * 				=> REST-PROBLEMCHEN:	-> bei ausschalten der automatik werden die ampelphasen noch bis zur 4. phase abgearbeitet.
- * 										-> perfektes abbrechen der phasen: 		SIEHE:	 	4.2.2.e. 	Thread_ImplementsRunnable_Run_Perfekte_Ampelsteuerung4	&	JAmpelPanel_4	s.353  
- * 
+ * 	]]]
  */
 
 package uebungen14;
@@ -213,12 +249,12 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 
-public class JAmpelPanel_3 extends JPanel {
+public class JAmpelPanel_4 extends JPanel {
 
 	int phase = 0;																												// variable für die ampel-phasen für den switch (5 mögliche zustände: rot, gelb-rot, grün, gelb + aus)
 	Color cOben, cMitte, cUnten;																								// farb-variablen für die 3 ampel-kreise oben, mitte, unten
 	
-	public JAmpelPanel_3() {																									// standard-construktor ohne parameter
+	public JAmpelPanel_4() {																									// standard-construktor ohne parameter
 		super();								
 	}
 	

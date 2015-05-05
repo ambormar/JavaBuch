@@ -1,12 +1,12 @@
-/* TODO .5.2.3,   s.175, 
+/* TODO .5.2.3.   s.175, 
  * class Variabeln_LokaleV_InstanzV_KlassenV_Gültigkeitsbereich_Lebensdauer
  * 
- * - LOKALE VARIABELN:	- sind immer in einem block (kann auch sein:  main-methode oder konstruktor)
- * 						- gültigkeitsbereich: 	im block in dem sie erzeugt wurden
- * 						- lebensdauer: 			bis block abgearbeitet ist, können auch mehrmals erzeugt und wieder gelöscht werden	
+ * - LOKALE VARIABELN:			- sind immer in einem block (kann auch sein:  main-methode oder konstruktor)
+ * 								- gültigkeitsbereich: 	im block in dem sie erzeugt wurden
+ * 								- lebensdauer: 			bis block abgearbeitet ist, können auch mehrmals erzeugt und wieder gelöscht werden	
  * 
- * - INSTANZVARIABELN:	- gültigkeitbereich innerhalb der gesammten klasse, egal wo sie definiert wurden
- * 	(ATTRIBUTE)			- lebensdauer: attribute eines objekts existieren immer so lange wie das objekt selber existiert
+ * - INSTANZVARIABELN:			- gültigkeitbereich innerhalb der gesammten klasse, egal wo sie definiert wurden
+ * 	(ATTRIBUTE / FIELDS)		- lebensdauer: attribute eines objekts existieren immer so lange wie das objekt selber existiert
  * 
  * - KLASSENVARIABELN (static):	- gültigkeitsbereich: 	programm / package
  * 								- lenbensdauer: 		programm-laufzeit

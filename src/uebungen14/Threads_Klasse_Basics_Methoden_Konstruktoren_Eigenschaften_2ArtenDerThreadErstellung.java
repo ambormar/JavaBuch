@@ -1,11 +1,13 @@
-/* TODO 14.2.2.a.   s.447, 2 Arten Threads zu erstellen 
+/* TODO 14.2.2.a.   s.447, 2 Arten Threads zu erstellen  !!!!!!!!!!!
  * class Threads_Klasse_Basics_Methoden_Konstruktoren_Eigenschaften_2ArtenDerThreadErstellung
  * 
- * 		SIEHE AUCH BASICS:		14.1.1. (+14.1.2.)   MultiTasking_MultiThreading_Basics		s.438/439 
+ * 		SIEHE AUCH BASICS:		14.1.1. (+14.1.2.)   MultiTasking_MultiThreading_Basics									s.438/439 
  * 
- * 		SIEHE ANGEWANDT:		14.2.2.d.		Thread_ImplementsRunnable_Run_Ampelsteuerung3	& 	JAmpelPanel	_3			s.451
+ * 					&:			14.2.3.   		Synchronisation_VonThreads_Problematik_Begriff							s.453
  * 
- * 					&:			14.2.2.b.		class StoppuhrTest	&	Thread_Stoppuhr			s.450				
+ * 		SIEHE ANGEWANDT:		14.2.2.d.		Thread_ImplementsRunnable_Run_Ampelsteuerung3	& 	JAmpelPanel	_3		s.451
+ * 
+ * 					&:			14.2.2.b.		class StoppuhrTest	&	Thread_Stoppuhr									s.450				
  * 
  * 
  * THREAD BASICS:		=> ein Tread ist ein programmteil, der parallel zum übrigen programm abläuft			
@@ -116,6 +118,27 @@
  * 																			(kann je nach betriebssystem erforderlich sein).
  * 								void sleep(long m)							erzwingt eine pause in der ausführung des Threads von m millisekunden
  * 
+ * 
+ * 	SYNCHRONISATION VON THREADS:	
+ * 		
+ * 		SIEHE AUCH:			14.2.3.   		Synchronisation_VonThreads_Problematik_Begriff							s.453
+ * 
+ * 		BEGRIFF:	=> möglichkeiten zur vorbeugung von konflikten, die durch die gleichzeitigkeit von anweisungen beim einsatz von Threads entstehen können
+ * 
+ * 		PROBLEMATIK BSPe:
+ * 
+ * 					-> 2 oder mehr Threads bearbeiten die gleiche datei:			-> ein thread versucht in die Datei zu löschen
+ * 																					-> gleichtzeitig versucht ein anderer in die datei zu schreiben
+ * 			
+ * 					-> 2 threads bearbeiten zeitgleich dieselbe boolsche variable: 	-> beide gehen davon aus, dass der zustand der variable (true/false) so ist, wie sie im jeweiligen thread gesetzt wurde 
+ * 
+ * 		LÖSUNGEN:	=> SYNCHRONISATION VON THREADS 
+ * 						-> unter dem stichwort SYNCHRONISATION VON THREADS findet man bei java jede menge information 
+ * 				
+ * 					=> konkretes angewandtes BSP:	SIEHE:		14.2.4.		Thread_Synchronisation_..		s.454		!!!!!!!!!!!
+ * 
+ * 
+ * 		
  * 
  * 
  */
