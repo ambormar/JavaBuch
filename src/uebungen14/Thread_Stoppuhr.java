@@ -1,8 +1,10 @@
-/* TODO 14.2.2.   s.450, 1. Art Thread zu erstellen (=> extends Thread) 
+/* TODO 14.2.2.b.   s.450, 1. Art Thread zu erstellen (=> extends Thread) 
  * class Thread_Stoppuhr	&	StoppuhrTest
  * 
  * 
- * 		SIEHE (2 MÖGLICHKEITEN ZUR ERSTELLUNG VON THREADS):		14.2.2.   Threads_Klasse_Basics_Methoden_Konstruktoren_Eigenschaften_2ArtenDerThreadErstellung			s.447, 2 Arten Threads zu erstellen 
+ * 		SIEHE (2 MÖGLICHKEITEN ZUR ERSTELLUNG VON THREADS):		14.2.2.a.   Threads_Klasse_Basics_Methoden_Konstruktoren_Eigenschaften_2ArtenDerThreadErstellung	s.447, 2 Arten Threads zu erstellen 
+ *  
+ * 		VERGLEICHE AUCH:										14.2.2.d.	Thread_ImplementsRunnable_Run_Ampelsteuerung3	& 	JAmpelPanel	_3						s.451, 2.Art mit implements Runnable
  *  
  * 
  * 	K&K:	Klasse Thread_Stoppuhr (von der Klasse Thread abgeleitet):

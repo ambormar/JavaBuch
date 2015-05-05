@@ -1,11 +1,11 @@
-/* TODO 14.2.2.   s.447, 2 Arten Threads zu erstellen  !!!!!!
+/* TODO 14.2.2.a.   s.447, 2 Arten Threads zu erstellen 
  * class Threads_Klasse_Basics_Methoden_Konstruktoren_Eigenschaften_2ArtenDerThreadErstellung
  * 
  * 		SIEHE AUCH BASICS:		14.1.1. (+14.1.2.)   MultiTasking_MultiThreading_Basics		s.438/439 
  * 
- * 		SIEHE ANGEWANDT:		14.2.2.		Thread_.._Ampelsteuerung3		s.452 (ab 447)		!!!!!!!!!! klassenname evtl. noch anpassen
+ * 		SIEHE ANGEWANDT:		14.2.2.d.		Thread_ImplementsRunnable_Run_Ampelsteuerung3	& 	JAmpelPanel	_3			s.451
  * 
- * 					&:			14.2.2.		class StoppuhrTest	&	Thread_Stoppuhr			s.450				
+ * 					&:			14.2.2.b.		class StoppuhrTest	&	Thread_Stoppuhr			s.450				
  * 
  * 
  * THREAD BASICS:		=> ein Tread ist ein programmteil, der parallel zum übrigen programm abläuft			
@@ -56,21 +56,26 @@
  *	 		|___________________________________|											|___________________________________________________________|
  *	  	
  *
- *			=> zum ableiten einer eigenen klasse von thread muss man run() überschreiben 		
+ *			=> zum ableiten einer eigenen klasse von thread muss man run() überschreiben 		=> Runnable von Thread für die klasse implementieren	
  *
- *					BSP: 	Stoppuhr extends Thread {
+ *					BSP: 	Stoppuhr extends Thread {												BSP:	XyKlasse extends JFrame implements Runnable {..}
  *								public void run {						// überschreiben
- *									gewünschte anweisungen für den 2. thread
- *								}
- *							}
- *								
- *			=> verwenden eines eigenen Threads durch erzeugen mit Konstruktor-aufruf
- *				&  starten mit methode start
- *	
+ *									gewünschte anweisungen für den 2. thread			
+ *								}																=> Run()-methode von Thread überschreiben inkl. den nötigen anweisungen für den neuen Thread
+ *							}																	
+ *																									BSP:	@Override												
+ *			=> verwenden eines eigenen Threads durch erzeugen mit Konstruktor-aufruf						public void run() {
+ *				&  starten mit methode start																	Anweisungen für den neuen Threads;
+ *																											}
  *					BSP: 	Stoppuhr stoppuhr = new Stoppuhr();
- *							stoppuhr.start();
+ *							stoppuhr.start();													=> Thread-objekt für neuen thread dort erstellen wo er beginnen soll & starten
  *			
- * 			BSP SIEHE:		14.2.2.	class  StoppuhrTest   &   Thread_Stoppuhr   s.450		BSP SIEHE:		14.2.2.	Thread_.._Ampelsteuerung3		s.452 (ab 447)		!!!!!!!!!!
+ * 						 																			BSP:	Thread t = new Thread(this, "Automatik");
+ *																											t.start();
+ *
+ *
+ * 			BSP SIEHE:   14.2.2.b.	class  StoppuhrTest   &   Thread_Stoppuhr   s.450			BSP SIEHE:   14.2.2.d.   Thread_ImplementsRunnable_Run_Ampelsteuerung3	& JAmpelPanel_3	  s.451
+ *
  *
  *
  * 	PACKAGE:					=>	java.lang.Thread

@@ -1,10 +1,11 @@
-/* TODO 14.2.2.   s.451, 2. Art Thread zu erstellen für GUI-klassen (verwendet JAmpelPanel_3)  
- * class 	Thread_Ampelsteuerung3		&	JAmpelPanel_3
+/* TODO 14.2.2.d.   s.451, 2. Art Thread zu erstellen für GUI-klassen (verwendet JAmpelPanel_3)    !!!!!!!!!!!!!!!!!!!!!
+ * class 	Thread_ImplementsRunnable_Run_Ampelsteuerung3		&	JAmpelPanel_3
  * 
- * 		SIEHE BASICS:			14.2.2.   Threads_Bsics_Methoden_Konstruktoren_Eigenschaften_2MethodenderDerThreadErstellung									s.447
+ * 		SIEHE BASICS:			14.2.2.a.   Threads_Bsics_Methoden_Konstruktoren_Eigenschaften_2MethodenderDerThreadErstellung									s.447
  * 
  * 		VERGLEICHE AUCH:		14.2.1.   PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2		&	JAmpelPanel			s.440, (verwendet JAmpelPanel) 
  * 
+ * 		&:						14.2.2.b.		class StoppuhrTest	&	Thread_Stoppuhr																			s.450, 1. Art mit extends Thread
  * 
  * 	K&K:	Klasse JAmpelPanel_3:		(von der Komponente JPanel abgeleitet) 			(( ist ausser dem namen identisch mit der klasse JAmpelPanel von PaintImmediately_.._Ampelsteuerung2 ))
  * 										Die Klasse dient der Darstellung einer Ampel mit den vier Ampelphasen.
@@ -20,6 +21,36 @@
  * 										Das Programm nutzt die Klasse JAmpelPanel_3. Die Ampel kann manuell in die vier Ampelphasen geschaltet und ausgeschaltet werden.
  * 										Der Automatikmodus funktioniert (mittels zusätzlichem thread), aber das Beenden der Automatik erfolgt offensichtlich nicht ganz korrekt. 
  * 										Es werden noch die Ampelphasen bis zur Gelbphase weiter durchlaufen. Erst danach endet der Schleifendurchlauf. 
+ * 
+ * 
+ * 	ZWEITE ART DER ERSTELLUNG VON THREADS:		MIT IMPEMENTS RUNNABLE	&	ÜBERSCHREIBEN DER RUN()-METHODE:	(
+ * 
+ *			OBJEKT DER ALLGEMEINEN KLASSE THREAD WIRD ERZEUGT, DEREN RUN()-METHODE
+ *			VERWEISTAUF EINE RUN()-METHODE, DIE WOANDERS (IN EINER ANDEREN KOMPONENTE ??) IMPLEMENTIERT IST
+ *		 
+ *			=> für klassen die bereits von einer anderen klasse abgeleitet wurden
+ *				-> bsp.:	von gui-komponenten abgeleiteteten klassen 
+ *		
+ *				 ___________________________________________________________
+ *				|															|
+ *				|	EigenKlasse extends andereKlasse implements Runnable	|							
+ *				|															|
+ *				| --->	run()			-> überschreiben (@override)		|
+ *				|_¦_________________________________________________________|
+ *				  ¦
+ *				  ¦				&
+ *				 _¦_________________________________________________________
+ *				| ¦ 														|
+ *				| ¦ Anwendung (kann auch in der obigen/gleichen Klasse sein)|
+ *				| ¦	 ___________________________							|
+ *				| ¦	|	Thread t = new Thread	|							|
+ *				| ¦	|							|							|
+ *				| --|---run()					|							|
+ *				|	|___________________________|							|
+ *				|___________________________________________________________|
+ *	  	
+ *				SIEHE AUCH:		14.2.2.a.	Threads_Basics_Methoden_Konstruktoren_Eigenschaften_2MethodenderDerThreadErstellung		s.447
+ * 
  * 
  * 	METHODEN (besondere):	
  * 				
@@ -78,20 +109,22 @@
  *							repaint();									// neuzeichnen der komponente
  *						}  	
  *											
- *										
+ * 	VORGEHEN: 	
+ * 
  *		PROGRAMM Ampelsteuerung3:		(ACHTUNG: bei ausschalten der automatik läuft werden die ampelphasen noch bis zur 4. phase abgearbeitet: perfektes abbrechen der phasen: siehe 4.2.2. .._Ampelsteuerung4 s.353)
  *		
  *				THREAD-SPEZIEFISCHE HAUPT-VORGEHENSWEISE VORWEG K&K :
  *
- *						=> 	Klasse extends JFrame implements Runnable {..}			Runnable von Thread für die klasse implementieren 
+ *					=> 	Klasse extends JFrame implements Runnable {..}			Runnable von Thread für die klasse implementieren 
  *
- *						=> 	@Override												Run()-methode von Thread überschreiben inkl. den nötigen anweisungen für den neuen Thread
- *						   	public void run() {
- *								Anweisungen für den neuen Threads;
- *							} 	
+ *					=> 	@Override												Run()-methode von Thread überschreiben inkl. den nötigen anweisungen für den neuen Thread
+ *						   public void run() {
+ *							Anweisungen für den neuen Threads;
+ *						} 	
  *
- *						=> 	Thread t = new Thread(this, "Automatik");				Thread-objekt für neuen thread dort erstelen wo er beginnen soll & starten
- *							t.start();											
+ *					=> 	Thread t = new Thread(this, "Automatik");				Thread-objekt für neuen thread dort erstelen wo er beginnen soll & starten
+ *						t.start();											
+ *
  *
  *				-> mit zusätzlichem Thread durch implementieren von Runnable für diese klasse (erfordert überschreiben der run()-methode)
  *	  
@@ -168,9 +201,8 @@
  * 
  *
  * 				=> REST-PROBLEMCHEN:	-> bei ausschalten der automatik werden die ampelphasen noch bis zur 4. phase abgearbeitet.
- * 										-> perfektes abbrechen der phasen: 		SIEHE:	 	4.2.2. 			Thread_.._Ampelsteuerung4 		s.353 			!!!!!!!!!!!!!!!!!!
+ * 										-> perfektes abbrechen der phasen: 		SIEHE:	 	4.2.2.e. 		Thread_.._Ampelsteuerung4 		s.353 			!!!!!!!!!!!!!!!!!!
  * 
- * 		!!!!!!!!!! HIER WEITER, EVTL. NOCH SCHEMA FÜR 2. ART DER THREAD-ERSTELLUNG REINKOPIEREN
  * 
  */
 
@@ -194,7 +226,7 @@ import javax.swing.border.TitledBorder;			// gui speziefisch (titel der umrandun
 
 import uebungen13Aufgaben.JPanel_KomponenteFuerTextPerMausklick_RadioGroup_Graphics2d_TextZeichner1;
 
-public class Thread_Ampelsteuerung3 extends JFrame implements Runnable {	// Programm-frame implementiert Runnabel, damit es eine run()-methode für einen Thread bereitstellen kann
+public class Thread_ImplementsRunnable_Run_Ampelsteuerung3 extends JFrame implements Runnable {	// Programm-frame implementiert Runnabel, damit es eine run()-methode für einen Thread bereitstellen kann
 	
 	private JAmpelPanel_3 jAmpel;																								// jPanel mit name jAmpel aber typ JPanel durch JAmpelPanel_3 (selbstabgeleitete komponente von JPanel) ersetzen 
 	private JPanel jPanel1;																										// zusätzliches panel wo die radio-buttons drin sind (gui vereinfachung) 
@@ -225,7 +257,7 @@ public class Thread_Ampelsteuerung3 extends JFrame implements Runnable {	// Prog
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				Thread_Ampelsteuerung3 inst = new Thread_Ampelsteuerung3();
+				Thread_ImplementsRunnable_Run_Ampelsteuerung3 inst = new Thread_ImplementsRunnable_Run_Ampelsteuerung3();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
@@ -233,7 +265,7 @@ public class Thread_Ampelsteuerung3 extends JFrame implements Runnable {	// Prog
 	}
 	
 	
-	public Thread_Ampelsteuerung3() {
+	public Thread_ImplementsRunnable_Run_Ampelsteuerung3() {
 		super();
 		initGUI();
 	}

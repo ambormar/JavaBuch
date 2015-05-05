@@ -1,9 +1,9 @@
-/* TODO 14.2.1.   s.440, (verwendet JAmpelPanel)  !!!!!!!
+/* TODO 14.2.1.   s.440, (verwendet JAmpelPanel)  
  * class 	PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2		&	JAmpelPanel	
  * 
- * 		SIEHE BASICS:			14.2.2.		Threads_Klasse_Basics_Methoden_Konstruktoren_Eigenschaften_2ArtenDerThreadErstellung		s.447
+ * 		SIEHE BASICS:			14.2.2.a.		Threads_Klasse_Basics_Methoden_Konstruktoren_Eigenschaften_2ArtenDerThreadErstellung		s.447
  * 
- * 		VERGLEICHE AUCH:		14.2.2.		Thread_.._Ampelsteuerung3 	s.451		!!!!!!!!!!!!
+ * 		VERGLEICHE AUCH:		14.2.2.d.		Thread_ImplementsRunnable_Run_Ampelsteuerung3	& 	JAmpelPanel	_3							s.451		
  * 
  * 
  * 	K&K:	Klasse JAmpelPanel:			(von der Komponente JPanel abgeleitet)
@@ -148,8 +148,7 @@
  * 									=> die anweisungen der while-schleife (Thread.sleep(rotPhase) etc.) müssen in einem 2. Thread ausgeführt werden
  * 										-> damit sie den restlichen programm-ablauf (initGUI()) nicht mit-unterbrechen
  * 
- * 									SIEHE:		14.2.2.		Thread_.._Ampelsteuerung3 	s.447		!!!!!!!!!!!!
-
+ * 									SIEHE:		14.2.2.d.		Thread_ImplementsRunnable_Run_Ampelsteuerung3			s.451
  * 
  * 
  */
