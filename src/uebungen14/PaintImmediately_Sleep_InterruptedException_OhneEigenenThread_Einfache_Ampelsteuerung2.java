@@ -1,4 +1,4 @@
-/* TODO 14.2.1.   s.440, (verwendet JAmpelPanel)  
+/* TODO 14.2.1.   s.440, (verwendet JAmpelPanel)  ?????????
  * class 	PaintImmediately_Sleep_InterruptedException_OhneEigenenThread_Einfache_Ampelsteuerung2		&	JAmpelPanel	
  * 
  * 		SIEHE BASICS:			14.2.2.a.		Threads_Klasse_Basics_Methoden_Konstruktoren_Eigenschaften_2ArtenDerThreadErstellung		s.447
@@ -38,6 +38,12 @@
  *																	-> bei einsatz von Threads, alleine durch verwendung der methode sleep(..) 
  *																		-> muss ein exception-handling für InterruptedExceptions erfolgen 
  *																				->  Throws oder try-catch-block
+ *			manchmal mit BREAK:										-> manchmal mit break-anweisung im catch-teil von try-catch-block (wann??)		???????????????????????????????
+ *																					try {
+ *																						Thread spezifische Anweisung;
+ *																						z.b. Thread.sleep(1000);
+ *																					} catch (InterruptedException e) {
+ *																						break;						
  * 
  * 	VORGEHEN: 	
  * 
