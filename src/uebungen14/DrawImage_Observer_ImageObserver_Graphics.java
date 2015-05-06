@@ -1,9 +1,10 @@
-/* TODO 14.2.3.  -> !!!!
- * ImageObserver_drawImage_Graphics
+/* TODO 14.2.4.  -> !!!!!!!!!!!
+ * DrawImage_Observer_ImageObserver_Graphics
  * 
- * 		SIEHE:		14.2.3.		Synchronisation_VonThreads_Problematik_Begriff		  s.453,		!!!!!!!!!!!
- * 								=> BESONDERES
  * 
+ * 		SIEHE:		14.2.4.   JBallPanel_Synchronized_Therads & 		_..BallAnimation		s.454, (extends JPanel implements	Runnable) !!!!!!!!!!!!!!!!!
+ * 							  => BESONDERES
+ *  
  */
 
 package uebungen14;
