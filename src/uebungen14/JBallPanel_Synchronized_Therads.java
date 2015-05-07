@@ -1,11 +1,51 @@
 /* TODO 14.2.4.   s.454, (extends JPanel implements	Runnable) ?????????????? !!!!!!!!!!!!!
- * class JBallPanel_Synchronized_Therads & 		_..BallAnimation
+ * class	JBallPanel_Synchronized_Therads		& 	Threads_Synchronized_Interrupt_Bewegungsablauf_BallAnimation
  * 		
  * 			SIEHE:
  * 
  * 
  * 
  * 	K&K:
+ * 
+ * 
+ * 	SYNCHRONIZED MODIFIER: 
+ * 
+ * 		=> der modifier synchronized ist eine massname von java gegen probleme bei parallel ablaufenden Anweisungsfolgen bei Threads
+ * 
+ * 		=> mit synchronized kann man sicherstellen, dass die dadurch geschützten bereiche, zu einem zeitpunkt nur von einem Thread ausgeführt werden.
+ * 		   		-> dies gilt aber nur, wenn sie für das gleiche objekt (hier instanz der klasse JBallPanel_.. ) aufgerufen werden.
+ * 				-> der erste thread, der den zugriff erhält, setzt eine sperre, der allfällige zweite thread muss warten bis die sperre wieder aufgehoben ist
+ * 
+ * 				=> es müssen alle bereiche mit synchronized geschützt werden die nicht zeitgleich von verschiedenen threads bearbeitet werden dürfen (hier am bsp. variable x)
+ * 
+ * 					-> BSP hier:	=> 2 bereiche in denen auf die gleiche variable x zugegriffen wird:
+ * 
+ * 										Attribut-deklaration:		public int x;			
+ * 
+ * 										1. für die gesammte paintComponent-methode()						=> gehört zum normalen (ersten) programm-ablaufs-thread 
+ * 
+ *											 	public synchronized void paintComponent(Graphics g) {			// synchronized für ganze methode 
+ *													..						
+ *													g.drawImage(img, x, ..);									// auf variable x soll nur von einem thread auf's mal zugegriffen werden
+ *												}
+ * 
+ * 										2. in der metode run() vor einem einfachen anweisungsblock			=> run() wird ja von zusätzlichen (zweiten) thread verwendet
+ * 
+ *												public void run() {												// methode run() auf die der zusätzliche Thread zurückgreift
+ *													while (..) {									
+ *														synchronized (this) {									// synchronized (this)  -> nur für den anweisungs-block wo x bearbeitet wird		
+ *															if (x > getWidth() - img.getWidth(this)) {			// .. wieso (this) ?, weiss nicht							
+ *																..							
+ *															}
+ *														}														// synchronized fertig 
+ *														..														// die folgenden abweisungen bearbeiten x nicht, müssen also nicht synchronized werden
+ *													}
+ *												} 
+ * 
+ *  
+ * 								
+ * 											
+ *  
  * 
  * 	BESONDERES: 
  * 
@@ -62,7 +102,7 @@ public class JBallPanel_Synchronized_Therads extends JPanel implements Runnable 
 				"." + File.separator + "images" + File.separator + "Ball.jpg"); 	// .. getDefaultToolkit() der komponente Toolkit
 	}
 
-	public synchronized void paintComponent(Graphics g) {	// überschreiben von paintComponent(..) damit auf dem panel das bild gezeichnet werden kann
+	public synchronized void paintComponent(Graphics g) {	// überschreiben von paintComponent(..) damit auf dem panel das bild gezeichnet werden kann, synchronized für ganze methode
 		super.paintComponent(g);							// aufruf der superclss methode paintComponent unter mitgabe des graphic-objekts g
 		g.drawImage(img, x, 								// via methode drawImage von Graphics-objekt g: bild zeichnen mit parameter: image-variable, koordinaten-position x (= variable x von ..
 					getHeight()/2 - img.getHeight(this)/2,  // .. oben), position y (halbe panel-höhe minus halbe bild-höhe), breite des bildes, höhe des bildes, 
@@ -77,7 +117,7 @@ public class JBallPanel_Synchronized_Therads extends JPanel implements Runnable 
 															// .. sorgt dafür dass die paintComponent-methode für die zeichenvorgänge ständig neue positionskoordinaten erhält ..
 															// .. (bewegung nur für die x-koordinate vorgesehen, y-koordinate wird nicht bearbeitet)
 		while (true) {										// enlosschleife
-			synchronized (this) {							// synchronized kommentieren !!!!!!!!!!!!!!!
+			synchronized (this) {							// synchronized (this) für den anweisungs-block wo x bearbeitet wird		wieso (this) ?, weiss nicht		?????????????? 
 				if (x > getWidth() - img.getWidth(this)) {	// wenn x (li oben horizontal koordinate des bildes) grösser als panelbreite - bildbreite (=> li rand des panelsvcwird erreicht)..
 					vor = false;							// .. wird der boolsche wert auf false, bzw. auf rückwärtsbewegen umgestellt
 				} else if (x <= 0) {						// sonst wenn x kleiner gleich 0 ist ..
@@ -88,7 +128,7 @@ public class JBallPanel_Synchronized_Therads extends JPanel implements Runnable 
 				} else {									// sonst
 					x -= 2;									// wird x um 2 px verkleinert
 				}
-			}
+			}												// synchronized fertig 
 			repaint();										// sobald das jeweils neue x bekannt ist kann das bild ge-repainted werden (via paintComponent wo das x für drawImage(..) verwendet wird)
 			try {											// therad-speziefische anweisungen immer innerhalb von try-catch
 				Thread.sleep(20);							// Thread schlafen legen hier für 20 milisekunden, je nach wert ergeben sich flüssige bewegungsabläufe => ausprobieren 

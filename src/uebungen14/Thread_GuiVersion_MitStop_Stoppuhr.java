@@ -100,7 +100,43 @@
  *									}
  *  
  *  
- *  	THREAD SAUBER STOPPEN MITTELS WHILE-SCHLEIFE im run() & BOOLEAN VARIABEL:
+ *  	THREAD SAUBER UNTERBRECHEN MIT INTERRUPT(), EGAL IN WELCHEM STATUS DER THREAD GERADE IST (SLEEP() ETC.):
+ *  
+ *  			=> Thread beenden innerhalb eines programms:		t.interrupt()			=> um Thread-objekt t anzuhalten (Thread t = new Thread(..))
+ *  																						=> ist wie t.stop() was es aber für thread nicht gibt (bzw. nicht erlaubt ist)
+ * 		
+ * 				=> PROBLEM:		Falls der Thread z.b. mittels eines Buttons mit event-handling gestoppt werden soll & dann der button nicht betätigt wird, das frame aber geschlossen:
+ * 								-> ein gestarteter zusätzlicher thread der nicht angehalten wurde, läuft beim schliessen eines frames einfach weiter
+ * 								-> siehe console: roter stop-knopf der leuchtet weiter,  also läuft das programm im hintergrund noch
+ * 
+ * 				=> LÖSUNG:		thread anhalten mittels EventHandling / WindowListener beim schliessen des frames
+ * 
+ * 								=> im JIGLOO:					Frame selber anwählen > Outline > Events > WindowListener > windowClosed > auf handler method 
+ * 
+ * 								=> in der handler method: 		t.interrupt();							// um Thread-objekt t anzuhalten
+ * 	
+ * 				=> BSP:
+ * 
+ *					 	private void initGUI() {
+ *							try {
+ *								..
+ *								this.addWindowListener(new WindowAdapter() {		// neuer WindowListener fürs frame..
+ *									public void windowClosed(WindowEvent evt) {		// .. mit handler methode für EventHandling bei windowClosed (wenn fenster geschlossen)
+ *										thisWindowClosed(evt);
+ *									}
+ *								});
+ *			 			
+ *			  			
+ *						private void thisWindowClosed(WindowEvent evt) {			// event handler method für wenn das frame geschlossen wurde ohne dass zuvor der Thread angehalten ist.
+ *							t.interrupt();											// thread sicher anhalten (nach fensterschliessen) (falls er nicht schon vorher	angehalten wurde)	
+ *						}
+ *						
+ *						
+ *						SIEHE:		14.2.4.   Threads_Synchronized_Interrupt_Bewegungsablauf_BallAnimation		s.454, (verwendet JBallPanel_..) 
+ *						
+ *						
+ *  
+ *  	THREAD SAUBER STOPPEN MITTELS WHILE-SCHLEIFE im run() & BOOLEAN VARIABEL, NACH ABARBEITEN ALLER ANWEISUNGEN DER SCHLEIFE:
  *  
  *  			=> es gibt keine erlaubte methode stop() für Threads:	-> eine einfache möglichkeit Threads sauber zu stoppen ist:
  *  
@@ -128,9 +164,7 @@
  *
  *										threadObjekt.setStartstop(false);				// so wird while-schleife beendet und ..
  *																						// .. => run() und somit auch der Thread kann nach abarbeiten aller anweisungen beendet werden
- *					
- *					
- *					
+ *							
  *  
  */
 

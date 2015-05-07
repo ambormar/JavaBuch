@@ -117,6 +117,10 @@
  * 								void yield()								erzwingt eine pause, damit andere Threads gelegenheit zur ausführung erhalten
  * 																			(kann je nach betriebssystem erforderlich sein).
  * 								void sleep(long m)							erzwingt eine pause in der ausführung des Threads von m millisekunden
+ * 								start()										starten des Threads
+ * 								interrupt()									anhalten des Threads (= stoppen) (stop() gibt's nicht, bzw. ist nicht erlaubt)
+ * 																				-> ACHTUNG:  SIEHE:		14.2.2.c.		StoppuhrTest_GuiVersion_MitStop	& 	Thread_VersionFuerGuiProgramme_Stoppuhr		s.450,
+ *  																													=> THREAD SAUBER UNTERBRECHEN MIT INTERRUPT(), EGAL IN WELCHEM STATUS DER THREAD GERADE IST (SLEEP() ETC.):
  * 
  * 
  * 	SYNCHRONISATION VON THREADS:	
