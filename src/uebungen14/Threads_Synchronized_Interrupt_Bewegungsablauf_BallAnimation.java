@@ -3,7 +3,7 @@
  * 
  * 
  * 
- * 
+ * ALLE KOMMENTAR REINKOPIEREN VON JBALLPANEL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * 
  * 
  * 			
@@ -13,36 +13,6 @@
  * 
  * 
  * 
- * 		THREAD SAUBER BEENDEN NACH FENSTERSCHLIESSEN MIT INTERRUPT():
- * 
- *  		=> Thread beenden innerhalb eines programms:		t.interrupt()			=> um Thread-objekt t anzuhalten (Thread t = new Thread(..))
- *  																					=> ist wie t.stop() was es aber für thread nicht gibt (bzw. nicht erlaubt ist)
- * 		
- * 			=> PROBLEM:		Falls der Thread z.b. mittels eines Buttons mit event-handling gestoppt werden soll & dann der button nicht betätigt wird, das frame aber geschlossen:
- * 							-> ein gestarteter zusätzlicher thread der nicht angehalten wurde, läuft beim schliessen eines frames einfach weiter
- * 							-> siehe console: roter stop-knopf der leuchtet weiter,  also läuft das programm im hintergrund noch
- * 
- * 			=> LÖSUNG:		thread anhalten mittels EventHandling beim schliessen des frames
- * 
- * 							=> im JIGLOO:					Frame selber anwählen > Outline > Events > WindowListener > windowClosed > auf handler method 
- * 
- * 							=> in der handler method: 		t.interrupt();							// um Thread-objekt t anzuhalten
- * 	
- * 			=> BSP:
- * 
- *			 	private void initGUI() {
- *					try {
- *						..
- *						this.addWindowListener(new WindowAdapter() {		// neuer WindowListener fürs frame..
- *							public void windowClosed(WindowEvent evt) {		// .. mit handler methode für EventHandling bei windowClosed (wenn fenster geschlossen)
- *								thisWindowClosed(evt);
- *							}
- *						});
- *	 			
- *	  			
- *				private void thisWindowClosed(WindowEvent evt) {			// event handler method für wenn das frame geschlossen wurde ohne dass zuvor der Thread angehalten ist.
- *					t.interrupt();											// thread sicher anhalten (nach fensterschliessen) (falls er nicht schon vorher	angehalten wurde)	
- *				}		
  * 
  * 
  */
@@ -137,17 +107,22 @@ public class Threads_Synchronized_Interrupt_Bewegungsablauf_BallAnimation extend
 	}
 	
 	private void jBtnStartActionPerformed(ActionEvent evt) {	// handler method jBtn Start
-		t = new Thread(jPanel1);								// thread-objekt erzeugen mit parameter Runnable Target (jPanel1) (=> konstruktor erzeugt einen Thread, der die run-methode von target ausführt)
+		if (t == null) {										// fehlerbehebung (der buchversion): vom zusätzlichen thread soll sich nur EINE INSTANZ erzeugen lassen
+																// ..keine weiteren instanzen (die dazu führten, dass sich der ball immer mehr verschnellert & nicht mehr stoppen lässt)
+			t = new Thread(jPanel1);							// thread-objekt erzeugen mit parameter Runnable Target (jPanel1) (=> konstruktor erzeugt einen Thread, der die run-methode von target ausführt)
+		}
 		t.start();												// thread starten
 	}
 	
 	private void jBtnStopActionPerformed(ActionEvent evt) {		// handler methode JBtn stopp 
-			t.interrupt();											// thread anhalten (stop() gibt's nicht bzw. ist nicht erlaubt)
-	}
+		t.interrupt();											// thread anhalten (stop() gibt's nicht bzw. ist nicht erlaubt)
+		t = null;												// fehlerbehebung (buchversion) EINZIGE INSTANZ vom zusätzlichen thread auf null setzen (= löschen), sodass man.. 
+	}															// .. mit dem startbutton immer nur wieder EINE INSTANZ vom zusätzlichen thread erzeugen
 	
 	// event handler method für wenn das frame geschlossen wurde ohne dass zuvor der Thread angehalten ist. sonst läuft der thread einfach weiter (siehe console roter knopf) 
 	private void thisWindowClosed(WindowEvent evt) {			
-			t.interrupt();											// thread anhalten (nach fensterschliessen) falls er nicht schon vorher	angehalten wurde	
+		t.interrupt();											// thread anhalten (nach fensterschliessen) falls er nicht schon vorher	angehalten wurde
+		t = null;												// wäre nicht mal unbedingt nötig
 	}
 
 }

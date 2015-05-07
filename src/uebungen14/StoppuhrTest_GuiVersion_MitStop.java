@@ -101,7 +101,7 @@
  *									}
  *  
  *  
- *  	THREAD SAUBER BEENDEN MIT INTERRUPT(), (EINFACHER & SAUBERER ALS MIT DER WHILE-SCHLEIFE):
+ *  	THREAD SAUBER UNTERBRECHEN MIT INTERRUPT(), EGAL IN WELCHEM STATUS DER THREAD GERADE IST (sleep() etc.) & SPÄTESTENS BEI FRAME-SCHLIESSEN MITTELS WINDOWLISTENER:
  *  
  *  			=> Thread beenden innerhalb eines programms:		t.interrupt()			=> um Thread-objekt t anzuhalten (Thread t = new Thread(..))
  *  																						=> ist wie t.stop() was es aber für thread nicht gibt (bzw. nicht erlaubt ist)
@@ -137,7 +137,7 @@
  *						
  *						
  *  
- *  	THREAD SAUBER STOPPEN MITTELS WHILE-SCHLEIFE im run() & BOOLEAN VARIABEL:
+ *  	THREAD SAUBER STOPPEN MITTELS WHILE-SCHLEIFE im run() & BOOLEAN VARIABEL, NACH ABARBEITEN ALLER ANWEISUNGEN DER SCHLEIFE:
  *  
  *  			=> es gibt keine erlaubte methode stop() für Threads:	-> eine einfache möglichkeit Threads sauber zu stoppen ist:
  *  

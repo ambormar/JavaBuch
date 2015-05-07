@@ -100,7 +100,7 @@
  *									}
  *  
  *  
- *  	THREAD SAUBER UNTERBRECHEN MIT INTERRUPT(), EGAL IN WELCHEM STATUS DER THREAD GERADE IST (SLEEP() ETC.):
+ *  	THREAD SAUBER UNTERBRECHEN MIT INTERRUPT(), EGAL IN WELCHEM STATUS DER THREAD GERADE IST (sleep() etc.) & SPÄTESTENS BEI FRAME-SCHLIESSEN MITTELS WINDOWLISTENER:
  *  
  *  			=> Thread beenden innerhalb eines programms:		t.interrupt()			=> um Thread-objekt t anzuhalten (Thread t = new Thread(..))
  *  																						=> ist wie t.stop() was es aber für thread nicht gibt (bzw. nicht erlaubt ist)

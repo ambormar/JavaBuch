@@ -1,4 +1,4 @@
-/* TODO 14.2.2.a.   s.447, 2 Arten Threads zu erstellen  !!!!!!!!!!!
+/* TODO 14.2.2.a.   s.447, 2 Arten Threads zu erstellen 
  * class Threads_Klasse_Basics_Methoden_Konstruktoren_Eigenschaften_2ArtenDerThreadErstellung
  * 
  * 		SIEHE AUCH BASICS:		14.1.1. (+14.1.2.)   MultiTasking_MultiThreading_Basics									s.438/439 
@@ -139,7 +139,7 @@
  * 		LÖSUNGEN:	=> SYNCHRONISATION VON THREADS 
  * 						-> unter dem stichwort SYNCHRONISATION VON THREADS findet man bei java jede menge information 
  * 				
- * 					=> konkretes angewandtes BSP:	SIEHE:		14.2.4.		Thread_Synchronisation_..		s.454		!!!!!!!!!!!
+ * 					=> konkretes angewandtes BSP:	SIEHE:		14.2.4.   JBallPanel_Synchronized_Threads		& 	Threads_Synchronized_Interrupt_Bewegungsablauf_BallAnimation		s.454,
  * 
  * 
  * 		
