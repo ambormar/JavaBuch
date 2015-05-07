@@ -3,7 +3,7 @@
  * 		
  * 			SIEHE:			14.2.3.   		Synchronisation_VonThreads_Problematik_Begriff_Synchronized_Modifier		s.453,
  * 
- * 
+ * 			!!!!! HIER WEITER ALLES KOMMENTIEREN	!!!!!!!!!!!!!!!!!!
  * 
  * 
  * 	K&K:	KLASSE JBallPanel_..:	 
