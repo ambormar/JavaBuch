@@ -15,8 +15,8 @@
  * 
  * 			PROGRAMM .._BallAnimation:		
  * 
-			 * Programm Ballanimation (verwendet die Komponente JBallPanel)
-			 * Das Programm demonstriert die Erstellung von
+ *			 * Programm Ballanimation (verwendet die Komponente JBallPanel)
+ *			 * Das Programm demonstriert die Erstellung von
 			 * Bewegungsabläufen. Der Ball als JBallPanel eingebunden.
 			 * eingebunden.
  * 
