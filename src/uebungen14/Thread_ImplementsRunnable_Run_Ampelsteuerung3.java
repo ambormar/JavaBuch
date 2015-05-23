@@ -403,7 +403,7 @@ public class Thread_ImplementsRunnable_Run_Ampelsteuerung3 extends JFrame implem
 	private void jCBAutomatikActionPerformed(ActionEvent evt) {
 		if (jCBAutomatik.isSelected()){																							// wenn checkbox (automatik) angewählt ist:
 			jRBAus.setEnabled(false);																							// alle readiobuttons (der handsteuerung) inaktiv setzen
-			jRBRot.setEnabled(false);						
+			jRBRot.setEnabled(false);	
 			jRBRotGelb.setEnabled(false);
 			jRBGruen.setEnabled(false);
 			jRBGelb.setEnabled(false);
