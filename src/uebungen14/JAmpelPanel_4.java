@@ -251,8 +251,8 @@ import javax.swing.JPanel;
 
 public class JAmpelPanel_4 extends JPanel {
 
-	int phase = 0;																												// variable für die ampel-phasen für den switch (5 mögliche zustände: rot, gelb-rot, grün, gelb + aus)
-	Color cOben, cMitte, cUnten;																								// farb-variablen für die 3 ampel-kreise oben, mitte, unten
+	private int phase = 0;																										// variable für die ampel-phasen für den switch (5 mögliche zustände: rot, gelb-rot, grün, gelb + aus)
+	private Color cOben, cMitte, cUnten;																						// farb-variablen für die 3 ampel-kreise oben, mitte, unten
 	
 	public JAmpelPanel_4() {																									// standard-construktor ohne parameter
 		super();								
