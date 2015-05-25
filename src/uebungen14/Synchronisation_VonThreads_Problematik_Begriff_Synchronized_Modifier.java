@@ -20,19 +20,19 @@
  * 					=> konkretes angewandtes BSP:	SIEHE:		14.2.4.   	JBallPanel_Synchronized_Therads		& 	Threads_Synchronized_Interrupt_Bewegungsablauf_BallAnimation		s.454,  
  * 
  * 
- * 	SYNCHRONIZED THREADS, MODIFIER: 
+ * 	SYNCHRONIZED (THREADS), MODIFIER: 
  * 
  * 		=> der modifier synchronized ist eine massname von java gegen probleme bei parallel ablaufenden Anweisungsfolgen bei Threads
  * 
  * 		=> mit synchronized kann man sicherstellen, dass die dadurch geschützten bereiche, zu einem zeitpunkt nur von einem Thread ausgeführt werden.
- * 		   		-> dies gilt aber nur, wenn sie für das gleiche objekt / instanz (hier der klasse JBallPanel_.. ) aufgerufen werden.
+ * 		   		-> dies gilt aber nur, wenn sie für die gleiche objekt-instanz (hier der klasse JBallPanel_.. ) aufgerufen werden.
  * 				-> der erste thread, der den zugriff erhält, setzt eine sperre, der allfällige zweite thread muss warten bis die sperre wieder aufgehoben ist
  * 
  * 				=> es müssen alle bereiche mit synchronized geschützt werden die nicht zeitgleich von verschiedenen threads bearbeitet werden dürfen (hier am bsp. variable x)
  * 
  * 					-> BSP hier:	=> 2 bereiche in denen auf die gleiche variable x zugegriffen wird:
  * 
- * 										[ NB:	Attribut-deklaration:		public int x;							=> warum nicht private; evtl. spezieller umgang wegen synchronized ???????????? ]
+ * 										[ NB:	Attribut-deklaration:		public int x;					=> warum nicht private; evtl. spezieller umgang wegen synchronized ???????????? ]
  * 
  * 
  * 										1. für die gesammte paintComponent-methode()						=> gehört zum normalen (ersten) programm-ablaufs-thread 
@@ -48,18 +48,23 @@
  * 												SCHEMA:  synchronized (this) {..}							=> wenn der modifier nicht im kopf einer methode benutzt wird
  * 
  *												public void run() {												// methode run() auf die der zusätzliche Thread zurückgreift
- *													while (..) {									
+ *													..									
  *														synchronized (this) {									// synchronized (this)  -> nur für den anweisungs-block wo x bearbeitet wird		
  *															if (x > getWidth() - img.getWidth(this)) {			// .. (this) => für das instanz-objekt dieser klasse 							
  *																..							
  *															}
  *														}														// synchronized fertig 
  *														..														// die folgenden abweisungen bearbeiten x nicht, müssen also nicht synchronized werden
- *													}
+ *													..
  *												}
  *							
  * 									=> SIEHE: 		14.2.4.   	JBallPanel_Synchronized_Therads		& 	Threads_Synchronized_Interrupt_Bewegungsablauf_BallAnimation		s.454,  
- *
+ * 
+ *		=> 	METHODEN (von der Klasse Object vererbt) für Threads zur kommunikation + konfliktlösung über sperrzustände, innerhalb von Anweisungsblöcken, die mit synchronized geschützt sind
+ *				
+ *				wait(); 				beschreibung ausstehend
+ *				notify();				beschreibung ausstehend
+ *				notifyAll();			beschreibung ausstehend
  * 
  */
 
