@@ -1,4 +1,4 @@
-/* TODO 14.3.   Aufgabe 2,   s.459, verwendet JAmpelPanel_5
+/* TODO 14.3.   Aufgabe 2,   s.459, verwendet JAmpelPanel_5	!!!!!!!!!!!!!!!!!! thread mehrfach-erzeugungs-problem im jbtnStart noch lösen !!!!!!!!!!
  * class 	Threads_ZweiAmpelnGleichzeitigAutomatik_ZweiAmpelSteuerung		&		JAmpelPanel_5	
  * 
  * K&K:		
@@ -316,6 +316,7 @@ public class Threads_ZweiAmpelnGleichzeitigAutomatik_ZweiAmpelSteuerung extends 
 	private void jBtnStopActionPerformed(ActionEvent evt) {
 		jAmpel1.automatik = false;							// einfachste möglichkeit um die ampel zu unterbrechen, ohne den Thread ausserhalb der beiden start-stop methoden erzeugen zu müssen
 		jAmpel2.automatik = false;							// einfachste möglichkeit um die ampel zu unterbrechen, ohne den Thread ausserhalb der beiden start-stop methoden erzeugen zu müssen
+	
 	}
 	
 	private void jBtnEndeActionPerformed(ActionEvent evt) {	
