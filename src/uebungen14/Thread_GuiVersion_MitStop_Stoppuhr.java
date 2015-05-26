@@ -144,6 +144,8 @@
  *					-> variable nach belieben auf true oder false setzen
  *					-> evtl. mittels zusätzlichem setter für die variable, um von aussen drauf zugreifen zu können
  *					
+ *			BSP 1: diese klasse:		
+ *
  *					EigeneThread extends Thread: 	
  *					
  *							Bsp:		private boolean startstop = true;				// anfangswert auf true dann kann man den Thread einfach starten mit ThreadXY.start()
@@ -166,6 +168,41 @@
  *										threadObjekt.setStartstop(false);				// so wird while-schleife beendet und ..
  *																						// .. => run() und somit auch der Thread kann nach abarbeiten aller anweisungen beendet werden
  *							
+ *
+ * 			BSP 2:		SIEHE:		14.3.   	JAmpelPanel_5	&	Threads_ZweiAmpelnGleichzeitigAutomatik_ZweiAmpelSteuerung			Aufgabe 1+2,   s.459,
+ *  			
+ *					
+ *					class JAmpelPanel_5 extends JPanel implements Runnable: 		(14.3.	Aufgabe 1)
+ *					
+ *							Bsp:		public boolean automatik = false;				// anfangswert auf false, so dann kann man die Thread-Anweisungen blockieren
+
+ *							&:			public void run(){								// überschreiben
+ *											..
+ *											while (automatik){							// Thread-anweisungen sind nur zugänglich wenn automatik = true gesetzt ist
+ *												..
+ *												Thread.sleep(..);						// beliebige anweisungen mit Thread-funktionen
+ *											}
+ *										}
+ *							
+ *						[auch mögl.:	public void setAutomatik(boolean automatik) {	// alternativ mit setter für die boolean-variable				
+ *											this.automatik = automatik;										
+ *										}																											]
+ *									
+ *
+ *					Programm .._ZweiAmpelSteuerung: 			(14.3.	Aufgabe2)
+ *	
+ *
+ *										private void jBtnStart..(..) { 				// start-button zum erzeugen und starten des Threads 
+ *											Thread ampel1 = new Thread(jPanel1);	// erzeugen des Threads mit parameter jAmpel1 (= target 1. ObjektInstanz von JAmpelPanel_5)
+ *											jPanel1.automatik = true;				// zugriff auf public automatik von jAmpel1, voraussetzung um die ampel nacher im stop einfach wieder abzustellen
+ *											ampel1.start();							// thread starten
+ *										}
+ *								
+ *										private void jBtnStop..(..) {				// stop-button nur um die thread-funktionen zu stoppen via boolean variabel der whil-schleife im run() von JAmpelPanel
+ *											jPanel1.automatik = false;				// einfachste möglichkeit um die ampel zu unterbrechen, ohne den Thread ausserhalb der beiden start-stop methoden erzeugen zu müssen
+ *											..
+ *										}
+ *  
  *  
  */
 

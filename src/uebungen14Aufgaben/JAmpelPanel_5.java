@@ -1,7 +1,7 @@
 /* TODO 14.3.   Aufgabe 1,   s.459, MIT zusätzlichem THREAD, (extends JPanel implements Runnable) (=> JAmpelPanel2 im Buch)
  * class 	JAmpelPanel_5		&		Threads_ZweiAmpelnGleichzeitigAutomatik_ZweiAmpelSteuerung
  * 
- * K&K:	
+ * K&K:		
  * 		Klasse JAmpelPanel_5: 		(Musterlösung zu Kapitel 14 Aufgabe 1)
  * 				Die Klasse dient der Darstellung einer Ampel mit den vier Ampelphasen.
  * 				- NEU: Die klasse soll einen konstruktor besitzen, dem die dauer der einzelnen Ampelphasen übergeben wird. der konstruktor soll diese werte in einem array ablegen
@@ -9,7 +9,19 @@
  * 				- wieder mit einer methode setPhase(), um von aussen die phasen zu setzen
  * 				- NEU: die komponente selbst soll hier auch eine run()-methode für Threads bereitstellen
  * 
- * VORGEHEN:		
+ * 
+ * 		Programm .._ZweiAmpelSteuerung:		 (Musterlösung zu Kapitel 14 Aufgabe 2)
+ * 			Das Programm nutzt die Klasse JAmpelPanel_5. Zwei Ampeln wechseln ihre Phasen mit unterschiedlicher Phasendauer.
+ * 			Da 2 Instanzen des JAmpelPanel_5 als jeweilige zusätzliche Threads laufengelassen werden müssen sie nicht synchronized werden.
+ * 
+ * 					- zweiampelsteuerung stellt 2 objekte der klasse JAmpelPanel nebeneinander dar
+ * 					- jede ampel soll andere phasenzeiten verwenden
+ * 					- mit start sollen beide ampeln anfangen zu laufen in ihren jeweiligen phasen
+ * 					- mit stop sollen sie anhalten *
+ *
+ *
+ * 
+ * 	VORGEHEN:
  * 
  * 		JAmpelPanel_5:		
  *
@@ -85,7 +97,105 @@
  *								}
  *						} 
  *
+ * 	VORGEHEN:		
+ * 
+ *		Programm .._ZweiAmpelSteuerung:
+ * 
+ *			=> Das Programm nutzt die Klasse JAmpelPanel_5. Zwei Ampeln wechseln ihre Phasen mit unterschiedlicher Phasendauer.
+ * 					
+ * 			=> Da 2 Instanzen des JAmpelPanel_5 als jeweilige zusätzliche Threads laufengelassen werden müssen sie nicht synchronized werden
+ * 				-> nur wenn auf variabeln etc. von 2 Threads aus dem selben instanzobjekt zugegriffen wird braucht's synchronized				SIEHE: SYNCHRONIZED unten
+ * 
+ * 			=> zweiampelsteuerung stellt 2 objekte der klasse JAmpelPanel nebeneinander dar
+ * 
+ * 				Fields:		private JAmpelPanel_5 jAmpel1;							// 1. instanz des abgeleiteten JAmpelPanels_5
+ *							private JAmpelPanel_5 jAmpel2;							// 2. instanz des abgeleiteten JAmpelPanels_5
+ *							...
+ *				
+ *			=>	jede ampel verwendet unterschiedliche phasenzeiten, durch verwenden des konstruktors mit parameterwerten (von JAmpelPanel_5) beim erzeugen im initGUI()
+ *				
+ *				jAmpel2 = new JAmpelPanel_5(3000, 800, 3000, 800);			// instanzieren mittels Konstruktor mit Parameter für die Phasendauer-wert
+ *				jAmpel1 = new JAmpelPanel_5(4000, 1000, 4000, 1000);		// instanzieren mittels Konstruktor mit anderen Parametern für die Phasendauer-wert
  *
+ *			
+ *			=> 	start-button zum erzeugen und starten der 2 parallelen Threads -> Da 2 Instanzen des JAmpelPanel_5 als jeweilige zusätzliche Threads laufengelassen werden müssen sie nicht synchronized ..
+ *																		//.. werden -> nur wenn auf variabeln etc. von 2 Threads aus dem selben instanzobjekt zugegriffen wird braucht's synchronized
+ *				private void jBtnStartActionPerformed(ActionEvent evt) { 
+ *					Thread t1 = new Thread(jAmpel1);				// erzeugen des 1. zusätzlichen Threads mit parameter jAmpel1 (= target 1. ObjektInstanz von JAmpelPanel_5)
+ *					jAmpel1.automatik = true;						// zugriff auf public automatik von jAmpel1, voraussetzung um die ampel nacher im stop einfach wieder abzustellen
+ *					t1.start();										// thread starten
+ *					Thread t2 = new Thread(jAmpel2);				// erzeugen des 2. zusätzlichen Threads mit parameter jAmpel2 (= target 2. ObjektInstanz von JAmpelPanel_5)
+ *					jAmpel2.automatik = true;						// zugriff auf public automatik von jAmpel2, voraussetzung um die ampel nacher im stop einfach wieder abzustellen
+ *					t2.start();										// thread starten
+ *				}
+ *			
+ *
+ *			=> 	stop-button nur um die thread-funktionen zu stoppen via boolean variabel der whil-schleife im run() von JAmpelPanel
+ *				-> alternativ zu/evtl. einfacher als:  	den konstruktor ausserhalb der methoden zu erzeugen & dann die Threads mit .interrupt() zu stoppen
+ *
+ *				private void jBtnStopActionPerformed(ActionEvent evt) {
+ *					jAmpel1.automatik = false;							// einfachste möglichkeit um die ampel zu unterbrechen, ohne den Thread ausserhalb der beiden start-stop methoden erzeugen zu müssen
+ *					jAmpel2.automatik = false;							// einfachste möglichkeit um die ampel zu unterbrechen, ohne den Thread ausserhalb der beiden start-stop methoden erzeugen zu müssen
+ *				}
+ * 
+ * 
+ * 
+ * 	THREAD-ANWEISUNGEN SAUBER STOPPEN MITTELS WHILE-SCHLEIFE im run() & BOOLEAN VARIABEL, NACH ABARBEITEN ALLER ANWEISUNGEN DER SCHLEIFE:
+ *  
+ *  			=> es gibt die methode interrupt() für Threads:	-> eine andere einfache möglichkeit Thread-funktionen sauber zu stoppen ist:
+ *  
+ *		   		=> im run() eine while-schleife mit boolean variable als bedingung einbauen
+ *					-> variable nach belieben auf true oder false setzen
+ *					-> evtl. mittels zusätzlichem setter für die variable, um von aussen drauf zugreifen zu können
+ *					
+ *					class JAmpelPanel_5 extends JPanel implements Runnable: 		(14.3.	Aufgabe 1)
+ *					
+ *							Bsp:		public boolean automatik = false;				// anfangswert auf false, so dann kann man die Thread-Anweisungen blockieren
+
+ *							&:			public void run(){								// überschreiben
+ *											..
+ *											while (automatik){							// Thread-anweisungen sind nur zugänglich wenn automatik = true gesetzt ist
+ *												..
+ *												Thread.sleep(..);						// beliebige anweisungen mit Thread-funktionen
+ *											}
+ *										}
+ *							
+ *						[auch mögl.:	public void setAutomatik(boolean automatik) {	// alternativ mit setter für die boolean-variable				
+ *											this.automatik = automatik;										
+ *										}																											]
+ *									
+ *
+ *					programm .._ZweiAmpelSteuerung: 			(14.3.	Aufgabe2)
+ *	
+ *
+ *										private void jBtnStart..(..) { 				// start-button zum erzeugen und starten des Threads 
+ *											Thread ampel1 = new Thread(jPanel1);	// erzeugen des Threads mit parameter jAmpel1 (= target 1. ObjektInstanz von JAmpelPanel_5)
+ *											jPanel1.automatik = true;				// zugriff auf public automatik von jAmpel1, voraussetzung um die ampel nacher im stop einfach wieder abzustellen
+ *											ampel1.start();							// thread starten
+ *										}
+ *								
+ *										private void jBtnStop..(..) {				// stop-button nur um die thread-funktionen zu stoppen via boolean variabel der whil-schleife im run() von JAmpelPanel
+ *											jPanel1.automatik = false;				// einfachste möglichkeit um die ampel zu unterbrechen, ohne den Thread ausserhalb der beiden start-stop methoden erzeugen zu müssen
+ *											..
+ *										}
+ * 
+ * 
+ * 
+ * SYNCHRONIZED:		=> Da 2 Instanzen des JAmpelPanel_5 als jeweilige zusätzliche Threads laufengelassen werden müssen sie nicht synchronized werden
+ * 							-> nur wenn auf variabeln etc. von 2 Threads aus dem selben instanzobjekt zugegriffen wird braucht's synchronized	
+ * 
+ * 
+ *								private JAmpelPanel_5 jPanel1;
+ *								private JAmpelPanel_5 jPanel2; 
+ *	
+ *	 							private void jBtnStartActionPerformed(ActionEvent evt) {
+ *									Thread ampel1 = new Thread(jPanel1);
+ *									jPanel1.automatik = true;
+ *									ampel1.start();
+ *									Thread ampel2 = new Thread(jPanel2);
+ *									jPanel2.automatik = true;
+ *									ampel2.start();
+ *								}
  */
 
 package uebungen14Aufgaben;
