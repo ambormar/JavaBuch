@@ -1,0 +1,13 @@
+/* TODO 14.3.  ->
+ * 		
+ * 		SIEHE:		14.3.   Threads_ZweiAmpelnGleichzeitigAutomatik_ZweiAmpelSteuerung			Aufgabe 2,   s.459, verwendet JAmpelPanel_5
+ * 							=> SYNCHRONIZED
+ * 								
+ * 
+ */
+
+package uebungen14Aufgaben;
+
+public class ThreadProInstanzObjekt_SynchronizedNichtNoetig {
+
+}

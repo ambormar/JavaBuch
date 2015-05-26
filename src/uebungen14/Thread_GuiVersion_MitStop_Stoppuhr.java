@@ -151,6 +151,7 @@
  *							&:			run(){											// überschreiben
  *							
  *											while (startstop){
+ *											..
  *											..											// beliebige anweisungen
  *											}
  *										}

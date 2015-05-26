@@ -66,6 +66,30 @@
  *				notify();				beschreibung ausstehend
  *				notifyAll();			beschreibung ausstehend
  * 
+ * 
+ * 		=>  JE EIN THREAD PRO INSTANZOBJEKT EINER KLASSE:		SYNCHRONIZED NICHT NÖTIG:		
+ * 
+ * 				SIEHE:		14.3.   Threads_ZweiAmpelnGleichzeitigAutomatik_ZweiAmpelSteuerung			Aufgabe 2,   s.459, verwendet JAmpelPanel_5
+ * 									=> SYNCHRONIZED
+ * 
+ * 						=> Da 2 Instanzen des JAmpelPanel_5 als jeweilige zusätzliche Threads laufengelassen werden müssen sie nicht synchronized werden
+ * 							-> nur wenn auf variabeln etc. von 2 Threads aus dem selben instanzobjekt zugegriffen wird braucht's synchronized	
+ * 
+ * 							BSP OK: 
+ * 			
+ *								private JAmpelPanel_5 jPanel1;
+ *								private JAmpelPanel_5 jPanel2; 
+ *	
+ *	 							private void jBtnStartActionPerformed(ActionEvent evt) {
+ *									Thread ampel1 = new Thread(jPanel1);
+ *									jPanel1.automatik = true;
+ *									ampel1.start();
+ *									Thread ampel2 = new Thread(jPanel2);
+ *									jPanel2.automatik = true;
+ *									ampel2.start();
+ *								}
+ *
+ *
  */
 
 package uebungen14;
