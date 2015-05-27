@@ -1,4 +1,4 @@
-/* TODO 14.3.   Aufgabe 1,   s.459, MIT zusätzlichem THREAD, (extends JPanel implements Runnable) (=> JAmpelPanel2 im Buch)
+/* TODO 14.3.1.   Aufgabe 1,   s.459, MIT zusätzlichem THREAD, (extends JPanel implements Runnable) (=> JAmpelPanel2 im Buch)
  * class 	JAmpelPanel_5		&		Threads_ZweiAmpelnGleichzeitigAutomatik_ZweiAmpelSteuerung
  * 
  * K&K:		

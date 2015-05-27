@@ -1,4 +1,4 @@
-/* TODO 14.3.   Aufgabe 2,   s.459, verwendet JAmpelPanel_5	!!!!!!!!!!!!!!!!!! thread mehrfach-erzeugungs-problem im jbtnStart noch lösen !!!!!!!!!!
+/* TODO 14.3.2.   Aufgabe 2,   s.459, verwendet JAmpelPanel_5	
  * class 	Threads_ZweiAmpelnGleichzeitigAutomatik_ZweiAmpelSteuerung		&		JAmpelPanel_5	
  * 
  * K&K:		
@@ -196,6 +196,30 @@
  *									jPanel2.automatik = true;
  *									ampel2.start();
  *								}
+ *
+ *
+ * THREAD - UNERWÜNSCHTE MEHRFACHERZEUGUNG VERHINDERN: 
+ * 
+ * 		=> wenn man den startknopf mehrfach clickt, wird bei der buchversion jedesmal ein neuer thread erzeugt und die ampel spinnt
+ * 			-> lösung: nur einen neuen thread starten wenn nicht schon einer existiert	(hat aber auch seine nachteile ?? !!)
+ * 
+ * 				private Thread t1;											// thread bei den eigenschaften initialisieren, damit man vor dem erzeugen überprüfen kann, ob der thread bereits erzeugt wurde
+ * 
+ *				private void jBtnStartActionPerformed(ActionEvent evt) { 	// start-button zum erzeugen und starten der Threads
+ *					if (t1 == null){										// mehrfacherzeugung des threads t1 bei mehrfachem start-clicken verhindern
+ *						t1 = new Thread(jAmpel1);							// erzeugen des 1. zusätzlichen Threads mit parameter jAmpel1 (= target 1. ObjektInstanz von JAmpelPanel_5)
+ *					}
+ *					jAmpel1.automatik = true;								// zugriff auf public automatik von jAmpel1, voraussetzung um die ampel nacher im stop einfach wieder abzustellen
+ *					t1.start();												// thread starten
+ *					..
+ *				}
+ *					
+ *				private void jBtnStopActionPerformed(ActionEvent evt) { // stop-button nur um die thread-funktionen zu stoppen via boolean variabel der whil-schleife im run() von JAmpelPanel
+ *					jAmpel1.automatik = false;							// einfachste möglichkeit um die ampel zu unterbrechen, ohne den Thread ausserhalb der beiden start-stop methoden erzeugen zu müssen
+ *					t1 = null;											// Thread t1 wieder löschen, damit mit start button wieder ein neuer erzeugt werden kann
+ *					..
+ *				}
+ * 							
  */
 
 package uebungen14Aufgaben;
@@ -228,6 +252,8 @@ public class Threads_ZweiAmpelnGleichzeitigAutomatik_ZweiAmpelSteuerung extends 
 	private JButton jBtnStart;
 	private JButton jBtnEnde;
 	private JButton jBtnStop;
+	private Thread t1;										// thread bei den eigenschaften initialisieren, damit man vor dem erzeugen überprüfen kann, ob der thread bereits erzeugt wurde
+	private Thread t2;										// " dito
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
@@ -304,19 +330,24 @@ public class Threads_ZweiAmpelnGleichzeitigAutomatik_ZweiAmpelSteuerung extends 
 	// start-button zum erzeugen und starten der 2 parallelen Threads -> Da 2 Instanzen des JAmpelPanel_5 als jeweilige zusätzliche Threads laufengelassen werden müssen sie nicht synchronized ..
 																		//.. werden -> nur wenn auf variabeln etc. von 2 Threads aus dem selben instanzobjekt zugegriffen wird braucht's synchronized
 	private void jBtnStartActionPerformed(ActionEvent evt) { 
-		Thread t1 = new Thread(jAmpel1);				// erzeugen des 1. zusätzlichen Threads mit parameter jAmpel1 (= target 1. ObjektInstanz von JAmpelPanel_5)
+		if (t1 == null){								// mehrfacherzeugung des threads t1 bei mehrfachem start-clicken verhindern
+			t1 = new Thread(jAmpel1);					// erzeugen des 1. zusätzlichen Threads mit parameter jAmpel1 (= target 1. ObjektInstanz von JAmpelPanel_5)
+		}
 		jAmpel1.automatik = true;						// zugriff auf public automatik von jAmpel1, voraussetzung um die ampel nacher im stop einfach wieder abzustellen
 		t1.start();										// thread starten
-		Thread t2 = new Thread(jAmpel2);				// erzeugen des 2. zusätzlichen Threads mit parameter jAmpel2 (= target 2. ObjektInstanz von JAmpelPanel_5)
+		if (t2 == null){								// mehrfacherzeugung des threads t2 bei mehrfachem start-clicken verhindern
+			t2 = new Thread(jAmpel2);					// erzeugen des 2. zusätzlichen Threads mit parameter jAmpel2 (= target 2. ObjektInstanz von JAmpelPanel_5)
+		}
 		jAmpel2.automatik = true;						// zugriff auf public automatik von jAmpel2, voraussetzung um die ampel nacher im stop einfach wieder abzustellen
 		t2.start();										// thread starten
 	}
-	
+		
 	// stop-button nur um die thread-funktionen zu stoppen via boolean variabel der whil-schleife im run() von JAmpelPanel
 	private void jBtnStopActionPerformed(ActionEvent evt) {
 		jAmpel1.automatik = false;							// einfachste möglichkeit um die ampel zu unterbrechen, ohne den Thread ausserhalb der beiden start-stop methoden erzeugen zu müssen
 		jAmpel2.automatik = false;							// einfachste möglichkeit um die ampel zu unterbrechen, ohne den Thread ausserhalb der beiden start-stop methoden erzeugen zu müssen
-	
+		t1 = null;											// Thread t1 wieder löschen, damit mit start button wieder ein neuer erzeugt werden kann
+		t2 = null;											// Thread t1 wieder löschen, damit mit start button wieder ein neuer erzeugt werden kann
 	}
 	
 	private void jBtnEndeActionPerformed(ActionEvent evt) {	
