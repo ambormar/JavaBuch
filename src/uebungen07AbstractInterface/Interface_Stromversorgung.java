@@ -72,6 +72,31 @@
  *														Stromversorgung stv = new Disko();				Disko d = new Disko();
  *														stv.methode();									d.methode();
  *														// nicht: stv.zusätzlicheMethode();				d.zusätzlicheMethode();
+ *
+ *
+ *		ANONYME OBJEKTE (OBJEKTINSTANZEN VON INTERFACE) ERZEUGEN MIT INTERFACE:				(bei unklarheiten zu anonyme objekte mj fragen)
+ *
+ *					- new Runnabel (vom bsp. unten) erzeugt ein neues anonymes Objekt des Interfaces Runnable.
+ *						-> dieses anonyme Objekt vom typ Runnable():	-> ist wie eine objektinstanz von einer anonymen Klasse ohne namen, ..
+ *																			.. welche innerhalb einer schon vorhandenen klasse erzeugt werden kann, ohne dass man extra eine neue klasse schreiben muss
+ *																		
+ *						-> die methode .invokelater() der klasse SwingUtilities (im bsp. hier) verlangt nach einem anonymen Runnable-objekt (um einen parallelen thread mit GUI laufen zu lassen)
+ *						-> genauso können irgendwelche anonyme Objekte / objektInstanzen von irgendwelchen Interfaces erzeugt werden mit:		
+ *
+ *										new InterfaceName()
+ *
+ *						-> dabei müssen zwangsläufig die, vom jeweiligen interface erforderten, methoden implementiert werden:			
+ *
+ *									-> hier:	 run(){ eigene anweisungen }
+ *	
+ * 		 		 			BSP: 		SwingUtilities.invokeLater(new Runnable() {		// neues Runnabel-objekt
+ *											public void run() {							// methoden die für das jeweilige interface implementiert werden müssen
+ *												eigene anweisungen;
+ *												..
+ *											}
+ *										});
+ *
+ *		
  *												
  * HAUPTUNTERSCHIEDE ABSTRACT-KLASSEN  /  INTERFACE.:
  * 
@@ -98,6 +123,10 @@
  */
 
 package uebungen07AbstractInterface;
+
+import javax.swing.SwingUtilities;
+
+import uebungen14Aufgaben.Uhrzeit_2;
 
 public interface Interface_Stromversorgung {
 	final double pi = Math.PI;			// nur konstanten möglich, variabeln nicht
