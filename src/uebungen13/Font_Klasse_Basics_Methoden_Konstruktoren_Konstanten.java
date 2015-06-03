@@ -44,11 +44,23 @@
  *
  *			Font.ITALIC							schrift-stil: kursiv	
  *
- *			Font.BOLD							schrift-stil: fett																
+ *			Font.BOLD							schrift-stil: fett		
+ *
+ *
+ *	[[	NB:	BSP AUS VORHANDENER SCHRIFT, SCHRIFT IN DER GESAMTGRÖSSE EINES PANELS ZU MACHEN
+ *
+ *			Font oldFont = g.getFont();																	// aktuelle schrift ermitteln und in oldFont speichern
+ *			Font font = new Font(oldFont.getFontName(), Font.PLAIN, (int) this.getSize().getHeight() );	// neue schrift bestimmen mit parameter schrifttyp, schriftschnitt + schriftgrösse (= max. höhe des panels) // setzt die Schriftgröße auf die Höhe des Panels
+ *			g.setFont(font);																			// neue schrift setzen für g														
  * 
+ * 
+ * 				SIEHE: 		14.3.4.  JUhrzeitPanel		 Aufgabe 4,   s.460, 		]]
+ * 	
  */
 
 package uebungen13;
+
+import java.awt.Font;
 
 public class Font_Klasse_Basics_Methoden_Konstruktoren_Konstanten {
 

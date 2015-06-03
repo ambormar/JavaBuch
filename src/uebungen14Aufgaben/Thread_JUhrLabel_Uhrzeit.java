@@ -95,10 +95,21 @@
  * 
  *				SimpleDateFormat sdf = new SimpleDateFormat("HH.mm:ss");		// zeitformatierung  mit der klasse SimppleDateFormate, als Parameter das gewünschte format 
  *				String Uhrzeit = sdf.format(System.currentTimeMillis());		// objekt sdf mit formatierter aktueller uhrzeit dem string zuweisen 
+ *
  * 
  * ZEIT - SYSTEM.CURRENTTIMEMILLIS()
  * 
  * 				System.currentTimeMillis()										// spuckt aktuelle uhrzeit ab system aus
+ * 
+ * 		PAINTCOMPONENT MIT REPAINT() & SYSTEM.CURRENTTIMEMILLIS(..) ANSTELLE EINES ZUSÄTZLICHEN THREADS :
+ * 
+ * 			SIEHE:		 14.3.4.   Aufgabe 4,   	JUhrzeitPanel		&		Thread_JUhrzeitPanel_OhneExtraThread_Uhrzeit2		s.460, 
+ *
+ * 						-> Unter benutzung von repaint() + System.currentTimeMillis(..) in der überschriebenen paintComponent()-methode, ..
+ * 							.. wird die paintComponent()-methode so oft aufgerufen, dass man keinen zusätzlichen thread braucht um eine laufande uhr zu erhalten
+ * 
+ * 			
+ * 
  * 
  */
 

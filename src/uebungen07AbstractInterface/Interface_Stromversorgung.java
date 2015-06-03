@@ -126,7 +126,7 @@ package uebungen07AbstractInterface;
 
 import javax.swing.SwingUtilities;
 
-import uebungen14Aufgaben.Uhrzeit_2;
+import uebungen14Aufgaben.Thread_JUhrzeitPanel_OhneExtraThread_Uhrzeit2;
 
 public interface Interface_Stromversorgung {
 	final double pi = Math.PI;			// nur konstanten möglich, variabeln nicht
