@@ -1,17 +1,17 @@
-/* TODO 15.1.1.a   s.464, ???????????????
+/* TODO 15.1.1.a.   s.464, ??????		!!!!!!!!!!!!!!!!!!!!!!
  * JTable_Tabelle_MitKonstanterZellenZahl_StundenPlan
  * 		
- * !!!!!!!!!!!!!!!!!		HIER WEITERMACHEN	!!!!!!!!!   ALLES KOMMENTIEREN FÜR JTABLE	&  15.1.1.b machen für einlesen & auslesen der TabelleDaten  ab s.467 im buch
- * 																							evtl. 15.1.1.c für METHODEN VON TABLEMODEL ETC.
  * 
+ * 			SIEHE:		15.1.		JTable_Basic_Klasse_Komponente_FuerTabellen					s.463	
  * 
- * 			SIEHE:		15.1.		JTable_Basic_Klasse_Komponente_FuerTabellen					s.463												
+ * 			EIN-AUS-LESEN DER TABELLENDATEN:
+ * 			SIEHE:		15.1.1.c.																								!!!!!!!!!!!!!!!!!!!!!!											
  * 		
  * 			TABELLE MIT VARIABLER ZEILEN- & SPALTEN-ZAHL:
- * 			SIEHE:		15.1.2.		JTable_Tabelle_MitVariablerZeilenUndSpaltenZahl_..			s.470												!!!!!!!!!!!!!!!!!!!!!!!!! 
+ * 			SIEHE:		15.1.2.		JTable_Tabelle_MitVariablerZeilenUndSpaltenZahl_..			s.470							!!!!!!!!!!!!!!!!!!!!!!!!! 
  * 
  * 			TABELLE MIT UNTERSCHIEDLICHEN DATENTYPEN:
- * 			SIEHE:		15.1.3.		JTable_Tabelle_MitUnterschiedlichenDatenTypen_..			s.474												!!!!!!!!!!!!!!!!!!!!!!!!!   
+ * 			SIEHE:		15.1.3.		JTable_Tabelle_MitUnterschiedlichenDatenTypen_..			s.474							!!!!!!!!!!!!!!!!!!!!!!!!   
  * 
  * 
  * JTABLE / TABELLE MIT KONSTANTER ZELLENZAHL:
@@ -28,22 +28,55 @@
  * 
  * 				=> JFrame erzeugen & Layout:	Borderlayout lassen		-> NICHT auf anchor oder absolute umstellen (weiss nicht ob das wirklich wichtig ist oder ob's anders auch geht) ?????	
  * 
- * 				=> JScrollPane ins Frame ziehen
- * 					-> nötig damit die spalten-überschrift (columns) überhaupt angezeigt wird. 		-> grund unklar;	aber ScrollPane ist bei Tabellen eh meist sinnvoll
- * 					-> falls jSctrollPane nachträglich hinzugefügt wird:		-> jSctrollPane ins Frame ziehen & in der outline jTable ins JScrollPane hineinziehen 
- * 					
+ * 				=> JScrollPane ins Frame ziehen			W I C H T I G  
+ * 					-> WICHTIG: damit die spalten-überschrift (columns) überhaupt angezeigt wird. 		-> grund unklar;	aber ScrollPane ist bei Tabellen eh meist sinnvoll
+ * 					-> falls jSctrollPane nachträglich hinzugefügt wird:				-> jSctrollPane ins Frame ziehen & in der outline jTable ins JScrollPane hineinziehen
+ * 
  * 				=> JTable ins JScrollPane ziehen
  * 
+ * 				=> im initGUI() wird ein JTabel & TabelModel erstellt: 
+ * 					-> 1. TABLEMODEL für die Datenerhaltung (= Anzeige + bearbeiten der daten) (jigloo-erzeugt)
+ * 							-> es wird als new DefaultTabelModel* mit 2 STRING-ARRAYS im konstruktor erzeugt:		-> * kann mit daten umgehen die als Array, ArrayList oder Vector vorliegen	
  * 
- * 	TABLEMODEL:	
- * 				=> 
+ * 								-> 2-DIM. String-Array für die:		 ZEILEN-daten (rows)			-> im code wie gewünscht anpassen		-> schema: new String[][] { {"1"}, {"2"} }
+ * 																																			-> jede Klammer in der Klammer steht für eine neue zeile
+ * 								
+ * 								-> 1-dim. String-Array für die:		 SPALTEN-daten (columns)		-> im code wie gewünscht anpassen 		-> new String[] { "Montag", "Dienstag" }
  * 
+ * 					-> 2. JTABLE für die OPTISCHE DARSTELLUNG der daten		(auch jigloo-erzeugt)	-> inkl.:		jTable1.setModel(jTable1Model);
+ * 													
+
+ * 					
+ * 
+ *					{
+ *						jScrollPane1 = new JScrollPane();							// nötig damit die spalten-überschrift überhaupt angezeigt wird. jSctrollPane ins Frame ziehen & in der outline jTable..
+ *						getContentPane().add(jScrollPane1, BorderLayout.CENTER);	// .. ins JScrollPane hineinziehen (wenn nachträglich) sonst : JScrollPane ins Frame & dann JTable aufs JScrollPane ziehen
+ *						{
+ *							TableModel jTable1Model = 								// GETRENNT: 	1. für Datenerhaltung (anzeige + bearbeiten der daten): jTableModel															
+ *																					// TabelModel wird als DefaultTabelModel erzeugt: 	-> kann mit Vector-, Array- und ArrayList-daten umgehen..
+ *									new DefaultTableModel(							// dem konstruktor werden 2 Arrays übergeben, die dabei auch gleich erzeugt werden..			
+ *											new String[][] { {"1"}, {"2"}, .. },	// .. ein zweidim. array für die zeilendaten (rows)
+ *											new String[] { "Stunde", "Montag" });	// .. ein (normaler) array für die spaltendaten (columns)
+ *							jTable1 = new JTable();									// 2. für optische Darstellung der daten:	JTable wird erzeugt
+ *							jScrollPane1.setViewportView(jTable1);					// macht glaub, dass die JScrollPane jTable1 vollständig aufnimmt/umfasst, auch wenn JScrollPane kleiner/woanders wäre als jTable1
+ *							jTable1.setModel(jTable1Model);							// das TableModel wird an die Tabelle (jTabel1) übergeben
+ *						}
+ *					}
+ *						
+ * 
+ * 
+ * 	TABLEMODEL KLASSE / METHODEN:	
+ * 				
+ * 				=> SIEHE:		 15.1.1.b.   	TableModel_Basics_Klasse_Methoden			s.466, 
  * 
  * 
  * 	ABSTRACTTABLEMODEL (s. 465, oben):	
  * 
- * 				=> 
+ * 				=> Klasse AbstractTabelModel 	-> zur ableitung von TableNModels / Modellen, die an eigene spezielle Anforderungen angepasst sind		 
  * 		
+ * 				=> SIEHE AUCH:			15.1.1.b.   TableModel_Basics_Klasse_Methoden		s.466, 
+ * 
+ * 
  */
 
 package uebungen15;

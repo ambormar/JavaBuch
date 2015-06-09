@@ -6,7 +6,7 @@
  * 
  * 		IMPORT:					javax.swing.JTable
  * 
- * 		KONZEPT VON JTabel:		=> striktes Trennen von:				(analog JList)
+ * 		KONZEPT VON JTabel:		=> striktes Trennen von:				(analog JList)			=> SIEHE:	15.1.1.a.	JTable_Tabelle_MitKonstanterZellenzahl_StundenPlan			s.464
  * 
  * 										JTABLE:			=> für DARSTELLUNG der daten
  * 		
@@ -18,11 +18,25 @@
  *								=> Jigloo:			-> Menue	> Components	> JTable 
  * 
  * 
+ * 								=> FUNKTIONALITÄTEN:
+ * 									
+ * 									Durch das zusammenspiel von JTable & TabelModel werden folgende Funktionalitäten der tabellen ermöglicht, ohne zusätzlichen code zu schreiben:
+ * 
+ * 										-> verändern von spaltenbreite
+ * 										-> markieren von zellen
+ * 										-> editieren von zelleninhalten (nach doppelklick)
+ * 										-> copy + paste und ausschneiden von zelleninhalten
+ * 
+ * 				
+ * 
  * 		TABELLE MIT KONSTANTER ZELLENZAHL:
  * 		
- * 				SIEHE:		15.1.1.a.	JTable_Tabelle_MitKonstanterZellenzahl_StundenPlan					s.464										!!!!!!!!!!!!!!!!!!!!!!!!!
+ * 				SIEHE:		15.1.1.a.	JTable_Tabelle_MitKonstanterZellenzahl_StundenPlan			s.464										!!!!!!!!!!!!!!!!!!!!!!!!!
  * 
- * 							15.1.1.b.
+ * 							15.1.1.c.	
+ * 		
+ * 		TABLEMODEL:		
+ * 				SIEHE:		15.1.1.b.		TableModel_Basics_Klasse_Methoden						s.466
  * 		
  * 
  * 		TABELLE MIT VARIABLER ZEILEN- & SPALTEN-ZAHL:
@@ -33,6 +47,7 @@
  * 		TABELLE MIT UNTERSCHIEDLICHEN DATENTYPEN:
  * 		
  * 				SIEHE:		15.1.3.		JTable_Tabelle_MitUnterschiedlichenDatenTypen_..			s.474												!!!!!!!!!!!!!!!!!!!!!!!!! 
+ * 
  * 
  * 
  */
