@@ -37,7 +37,7 @@ import javax.swing.WindowConstants;
 import javax.swing.SwingUtilities;
 
 
-public class JTable_MitVariablerZeilenSpaltenZahl_DatenEinUndAuslesen_StundenPlan3 extends javax.swing.JFrame {
+public class JTable_MitVariablerZeilenSpaltenZahl_DatenEinUndAuslesen_InDatFile_StundenPlan3 extends javax.swing.JFrame {
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -45,14 +45,14 @@ public class JTable_MitVariablerZeilenSpaltenZahl_DatenEinUndAuslesen_StundenPla
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				JTable_MitVariablerZeilenSpaltenZahl_DatenEinUndAuslesen_StundenPlan3 inst = new JTable_MitVariablerZeilenSpaltenZahl_DatenEinUndAuslesen_StundenPlan3();
+				JTable_MitVariablerZeilenSpaltenZahl_DatenEinUndAuslesen_InDatFile_StundenPlan3 inst = new JTable_MitVariablerZeilenSpaltenZahl_DatenEinUndAuslesen_InDatFile_StundenPlan3();
 				inst.setLocationRelativeTo(null);
 				inst.setVisible(true);
 			}
 		});
 	}
 	
-	public JTable_MitVariablerZeilenSpaltenZahl_DatenEinUndAuslesen_StundenPlan3() {
+	public JTable_MitVariablerZeilenSpaltenZahl_DatenEinUndAuslesen_InDatFile_StundenPlan3() {
 		super();
 		initGUI();
 	}
