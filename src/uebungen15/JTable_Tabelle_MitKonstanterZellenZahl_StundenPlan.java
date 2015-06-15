@@ -29,7 +29,7 @@
  * 
  * 			Programm StundenPlan:
  * 
- * 				=> JFrame erzeugen & Layout:	Borderlayout lassen		-> NICHT auf anchor oder absolute umstellen (weiss nicht ob das wirklich wichtig ist oder ob's anders auch geht) ?????	
+ * 				=> JFrame erzeugen & Layout:	in diesm bsp. Borderlayout lassen		
  * 
  * 				=> JScrollPane ins Frame ziehen			W I C H T I G  
  * 					-> WICHTIG: damit die spalten-überschrift (columns) überhaupt angezeigt wird. 		-> grund unklar;	aber ScrollPane ist bei Tabellen eh meist sinnvoll
