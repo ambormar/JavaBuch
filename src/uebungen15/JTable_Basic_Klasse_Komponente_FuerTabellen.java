@@ -31,9 +31,9 @@
  * 
  * 		TABELLE MIT KONSTANTER ZELLENZAHL:
  * 		
- * 				SIEHE:		15.1.1.a.	JTable_Tabelle_MitKonstanterZellenzahl_StundenPlan			s.464										!!!!!!!!!!!!!!!!!!!!!!!!!
+ * 				SIEHE:		15.1.1.a.	JTable_Tabelle_MitKonstanterZellenzahl_StundenPlan			s.464									
  * 
- * 							15.1.1.c.	
+ * 							15.1.1.c.	JTable_MitKonstZellenZahl_DatenEinUndAuslesen_StundenPlan2	s.468
  * 		
  * 		TABLEMODEL:		
  * 				SIEHE:		15.1.1.b.		TableModel_Basics_Klasse_Methoden						s.466

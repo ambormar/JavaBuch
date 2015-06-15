@@ -2,15 +2,13 @@
  * JTable_MitKonstZellenZahl_DatenEinUndAuslesen_StundenPlan2
  * 		
  * 
- * 
- * 
  * 			SIEHE:			15.1.		JTable_Basic_Klasse_Komponente_FuerTabellen					s.463	
  * 
  * 			TABELLE MIT KONSTANTER ZELLEN-ZAHL (JTable):
- * 				SIEHE:		15.1.1.a.	JTable_Tabelle_MitKonstanterZellenZahl_StundenPlan			s.463								!!!!!!!!!!!!!!!!!!!!!!											
+ * 				SIEHE:		15.1.1.a.	JTable_Tabelle_MitKonstanterZellenZahl_StundenPlan			s.463																
  * 		
  * 			JTABELMODEL METHODEN - BASICS:
- * 				SIEHE:		15.1.1.b.   TableModel_Basics_Klasse_Methoden							s.466, !!!!!!!!!!!!!!
+ * 				SIEHE:		15.1.1.b.   TableModel_Basics_Klasse_Methoden							s.466
  * 
  * 			TABELLE MIT VARIABLER ZEILEN- & SPALTEN-ZAHL:
  * 				SIEHE:		15.1.2.		JTable_Tabelle_MitVariablerZeilenUndSpaltenZahl_..			s.470							!!!!!!!!!!!!!!!!!!!!!!!!! 
@@ -29,15 +27,94 @@
  * 					Beim Programmstart wird geprüft, ob eine Stundenplandatei existiert. Ist dies der Fall, werden die Stundenplandaten in die Tabelle eingelesen.
  * 
  * 
- * 
- * 
- * 		!!!!!!!!!!!!!!!!!!!!!!!!!! KOMMENTARE ALLES ÜBERARBEITEN TABELLE NICHT KOMENNTIEREN, NUR DAS EIN UND AUSLESEN !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * 
- * 			Programm Stundenplan2
- * 
  * 		VORGEHEN:
  * 
- * 			Programm StundenPlan:
+ * 			Programm Stundenplan2: 			[erweiterung von Programm StundenPlan VORGEHEN SIEHE in klammern UNTEN]
+ * 
+ * 				=> Fileds:	String-variable für den dateinamen, für das .dat-file, wo die daten aus-&ein-gelesen werden
+ * 
+ *						private String dateiname = "." + File.separator + "stundenplan.dat";
+ * 
+ * 				=> initGUI():	WindowListener (mit handler method) für wenn frame geschlossen wird, um tabellendaten in .dat-file auszulesen		
+ * 
+ * 						this.addWindowListener(new WindowAdapter() {..});		
+ * 
+ * 				=> ende initGUI():	inputstream zum laden von stundenplan-daten aus einem allfällig vorhandnenen .dat-file
+ * 
+ * 					[-> remember: jTable ist nur für optik; daten ein- & auslesen über's JTableModel]
+ * 					-> input-stream erzeugen alles wie gehabt
+ * 					-> daten für TableModel einlesen , welches für den datenerhalt (anzeige + bearbeiten der daten zuständig ist)
+ * 						-> ACHTUNG: zugriff aber via jTable1 (eigtl. für optik zuständig), da nur dieses global (fileds) erstellt wurde, mit:	-> jTable1.getModel()
+ * 					-> verschachtelte schleife um alle zellen durchzugehen mit:		 jTable1.getModel().getRowCount()		& 		jTable1.getModel().getColumnCount()
+ * 						-> durchgehen der schleife für die zeilen mit index 0 beginnen, da die titelzeile von system selber ignoriert wird
+ * 						-> durchgehen der schleife für die spalten mit index 1 beginnen, falls man die vorderste spalte ignorieren will beim ein-/auslesen
+ * 					-> der lokalen String-variablen eintrag den jeweiligen wert der aktuellen zeile (im file) zuweisen:			eintrag = in.readLine();									 
+ * 					-> mit setValueAt(i,j) jeden eintrag (wert) in die jeweilige zelle schreiben:			jTable1.getModel().setValueAt(eintrag, i, j);				
+ * 					-> fehlerbehandlung & stream schliessen wie gehabt
+ * 
+ *					{
+ *						BufferedReader in = null;																								// inputstream-objekt mit null initialisieren
+ *						File datei = new File(dateiname);																						// vergleichsfile erzeugen mit namen dateiname
+ *						if (!datei.exists()) {																									// wenn kein file mit namen dateiname vorliegt..
+ *							datei.createNewFile();																								// .. eine solche erzeugen
+ *						} else {																												// falls es schon eine datei mit dateinamen hat: ..(einlesen)
+ *							try {																	
+ *								String eintrag;														// lokale String-variable für die einträge
+ *								in = new BufferedReader(new FileReader(dateiname));					// eingabestream "in":  BufferedReader-objekt unter mitgabe & erzeugen von FileReader-objekt mit dem argument dateiname 
+ *								for (int i = 0; i < jTable1.getModel().getRowCount(); i++) {		// schleife: alle zeilen durchgehen (ab index 0, titelzeile wird vom TableModel ignoriert), auf's TableModel zugreifen via jTable1.getModel(), da nur jTable1 bei den globalen eigenschaften des frames erstellt ist, .getRowCount() für anzahl zeilen
+ *									for (int j = 1; j < jTable1.getModel().getColumnCount(); j++) {	// schleife: alle spalten durchgehen (ab index 1, um absichtlich die erste spalte zu ignorieren), .getColumnCount() für anzahl spalten
+ *										eintrag = in.readLine();									// der lokalen String-variablen eintrag den jeweiligen wert der aktuellen zeile (im file) zuweisen
+ *										jTable1.getModel().setValueAt(eintrag, i, j);				// via jTable1 auf's TableModel zugreifenun + mit setValueAt(i,j) jeden eintrag (wert) in die jeweilige zelle schreiben
+ *									}
+ *								}
+ *							} catch (Exception e) {																								// falls es fehler gibt beim file einlesen / file erzeugen
+ *								..
+ *							} finally {																											// finally => auf jeden fall (auch wenn oben fehler aufgetreten sind wird stream geschlossen)
+ *								..
+ *							}
+ *						}
+ *					} 
+ * 
+ * 				=> WindowListener-handler-method mit outputstream, um daten aus dem JTableModel der tabelle (jTable) in ein .dat-file auszulesen
+ * 	
+ * 					[-> remember: jTable ist nur für optik; daten ein- & auslesen über's JTableModel]
+ *					-> output-stream erzeugen alles wie gehabt
+ * 					-> daten für TableModel auslesen , welches für den datenerhalt (anzeige + bearbeiten der daten zuständig ist)
+ * 						-> ACHTUNG: zugriff via jTable1 (eigtl. für optik zuständig), da nur dieses global (fileds) erstellt wurde, mit:	-> jTable1.getModel()
+ * 					-> verschachtelte schleife um alle zellen durchzugehen mit:		 jTable1.getModel().getRowCount()		& 		jTable1.getModel().getColumnCount()
+ * 						-> durchgehen der schleife für die zeilen mit index 0 beginnen, da die titelzeile von system selber ignoriert wird
+ * 						-> durchgehen der schleife für die spalten mit index 1 beginnen, falls man die vorderste spalte ignorieren will beim ein-/auslesen
+ * 					-> wenn der jeweilige zellenwert nicht null ist: 															-> if (jTable1.getModel().getValueAt(i, j) != null)
+ * 						-> ausschreiben des objekts mit zugriff aufs TableModel & mit .getValueAt(i,j) auf die zellenwerte, 	-> out.write(jTable1.getModel().getValueAt(i, j).toString());
+ *							-> A C H T U N G : werte sind immer von typ Object, darum toString() um in eine textdatei zu speichern (jede von Object abgeleitete klasse besitzt toString())
+ *						-> oder falls der zellenwert leer ist:	einen leeren string ausschreiben								-> } else {out.write("");}
+ *						-> + nach jedem wert einen zeilenumbruch schreiben														-> out.newLine();					
+ * 					-> fehlerbehandlung & stream schliessen wie gehabt
+ *	
+ *	
+ *					private void thisWindowClosed(WindowEvent evt) {
+ *						BufferedWriter out = null;																										// BufferedWriter-Objekt out wird erzeugen und  mit null initialisieren
+ *						try {
+ *							out = new BufferedWriter(new FileWriter(dateiname));																		// remember: mit FileWriter wird anscheinend (?) real auf dem datenträger eine datei mit dateiname erzeugt
+ *							for (int i= 0; i < jTable1.getModel().getRowCount();	i++) {			// schleife: alle zeilen durchgehen (ab index 0, titelzeile wird vom TableModel ignoriert), auf's TableModel zugreifen via jTable1.getModel(), da nur jTable1 bei den globalen eigenschaften des frames erstellt ist, .getRowCount() für anzahl zeilen
+ *								for (int j = 1; j < jTable1.getModel().getColumnCount(); j++ ) {	// schleife: alle spalten durchgehen (ab index 1, um absichtlich die erste spalte zu ignorieren), .getColumnCount() für anzahl spalten
+ *									if (jTable1.getModel().getValueAt(i, j) != null) {				// wenn der betreffende zellenwert nicht null ist ..
+ *										out.write(jTable1.getModel().getValueAt(i, j).toString());	// ..ausschreiben der objekte mit zugriff aufs TableModel & mit .getValueAt(i,j) auf die zellenwerte, werte ..
+ *									} else {														// ..sind immer von typ Object, darum toString() um in eine textdatei zu speichern (jede von Object abgeleitete klasse besitzt toString())
+ *										out.write("");												// .. sonst leeren string ausschreiben
+ *									} 
+ *									out.newLine();													// .. + nach jedem wert einen zeilenumbruch schreiben
+ *								}
+ *							}
+ *						} catch (Exception e) {																											// falls es fehler gibt beim file ausschreiben / file erzeugen
+ *							..																										
+ *						} finally {																														// finally => auf jeden fall (auch wenn oben fehler aufgetreten sind wird stream geschlossen)
+ *							..
+ *						}
+ *					}  
+ * 
+ * 
+ * 		[[[	Programm StundenPlan:					(15.1.1.a.   JTable_Tabelle_MitKonstanterZellenZahl_StundenPlan		s.464)
  * 
  * 				=> JFrame erzeugen & Layout:	Borderlayout lassen		-> NICHT auf anchor oder absolute umstellen (weiss nicht ob das wirklich wichtig ist oder ob's anders auch geht) ?????	
  * 
@@ -89,7 +166,7 @@
  * 		
  * 				=> SIEHE AUCH:			15.1.1.b.   TableModel_Basics_Klasse_Methoden		s.466, 
  * 
- * 
+ * 		]]]
  */
 
 package uebungen15;
@@ -174,13 +251,13 @@ public class JTable_MitKonstZellenZahl_DatenEinUndAuslesen_StundenPlan2 extends 
 								jTable1.getModel().setValueAt(eintrag, i, j);				// via jTable1 auf's TableModel zugreifenun + mit setValueAt(i,j) jeden eintrag (wert) in die jeweilige zelle schreiben
 							}
 						}
-					} catch (Exception e) {
+					} catch (Exception e) {													// falls es fehler gibt beim file einlesen / file erzeugen
 						e.printStackTrace();
-					} finally {
-						if (in != null)	{
+					} finally {																// finally => auf jeden fall (auch wenn oben fehler aufgetreten sind wird stream geschlossen)
+						if (in != null)	{													// wenn in NICHT null ist, also wirklich ein bufferedWriter-objekt erzeugt wurde (wenn in null wäre, ist close() überflüssig!!)
 							try {
-								in.close();
-							} catch (IOException e) {
+								in.close();													// schliessen des streams mit close() auch bei fehlern/ evtl. gebufferte einträge werden fertig ausgeschrieben
+							} catch (IOException e) {										// zusätzlich wird auf fehler beim schliessen selber (des streams) reagiert
 								e.printStackTrace();
 							}
 						}
@@ -204,15 +281,15 @@ public class JTable_MitKonstZellenZahl_DatenEinUndAuslesen_StundenPlan2 extends 
 				for (int j = 1; j < jTable1.getModel().getColumnCount(); j++ ) {	// schleife: alle spalten durchgehen (ab index 1, um absichtlich die erste spalte zu ignorieren), .getColumnCount() für anzahl spalten
 					if (jTable1.getModel().getValueAt(i, j) != null) {				// wenn der betreffende zellenwert nicht null ist ..
 						out.write(jTable1.getModel().getValueAt(i, j).toString());	// ..ausschreiben der objekte mit zugriff aufs TableModel & mit .getValueAt(i,j) auf die zellenwerte, werte ..
-					} else {															// ..sind immer von typ Object, darum toString() um in eine textdatei zu speichern (jede von Object abgeleitete klasse besitzt toString())
+					} else {														// ..sind immer von typ Object, darum toString() um in eine textdatei zu speichern (jede von Object abgeleitete klasse besitzt toString())
 						out.write("");												// .. sonst leeren string ausschreiben
 					} 
 					out.newLine();													// .. + nach jedem wert einen zeilenumbruch schreiben
 				}
 			}
 		} catch (Exception e) {																											// falls es fehler gibt beim file ausschreiben / file erzeugen
-			e.printStackTrace();																										// finally => auf jeden fall (auch wenn oben fehler aufgetreten sind wird stream geschlossen)
-		} finally {												
+			e.printStackTrace();																										
+		} finally {																														// finally => auf jeden fall (auch wenn oben fehler aufgetreten sind wird stream geschlossen)
 			if (out != null) {																											// wenn out NICHT null ist, also wirklich ein bufferedWriter-objekt erzeugt wurde (wenn out null wäre, ist close() überflüssig!!)
 				try {
 					out.close();																										// schliessen des streams mit close() auch bei fehlern/ evtl. gebufferte einträge werden fertig ausgeschrieben
@@ -222,12 +299,6 @@ public class JTable_MitKonstZellenZahl_DatenEinUndAuslesen_StundenPlan2 extends 
 			}
 		}
 	}
-
-	
-	
-	
-	
-	
 
 }
 

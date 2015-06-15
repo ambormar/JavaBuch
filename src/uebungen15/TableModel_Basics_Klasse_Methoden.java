@@ -1,4 +1,4 @@
-/* TODO 15.1.1.b.   s.466, !!!!!!!!!!!!!!
+/* TODO 15.1.1.b.   s.466, 
  * TableModel_Basics_Klasse_Methoden
  * 
  * 			ZUSAMMENSPIEL TABLEMODEL & JTABLE:			SIEHE:		15.1.  	 	JTable_Basic_Klasse_Komponente_FuerTabellen							s.463,
@@ -6,7 +6,8 @@
  * 																	15.1.1.a.   JTable_Tabelle_MitKonstanterZellenZahl_StundenPlan					s.464, 
  * 	
  * 
- * 			METHODEN ANGEWANDT:							SIEHE:		15.1.1.c.	JTable_MitKonstZellenZahl_DatenEinUndAuslesen_StundenPlan2			s.468																			!!!!!!!!!!!!!
+ * 			METHODEN ANGEWANDT / DATEN EIN- & AUSLESEN:							
+ * 														SIEHE:		15.1.1.c.	JTable_MitKonstZellenZahl_DatenEinUndAuslesen_StundenPlan2			s.468																			
  * 
  * 
  * 
@@ -25,7 +26,9 @@
  * 				=> wenn die methode getColumnClass(..) nicht überschrieben ist		-> geht die table-Komponente davon aus dass es sich um STRINGS handelt & formatiert entsprechend 
  * 																												-> desshalb werden alle daten standardmässig linksbündig dargestellt
  * 					-> getColumnClass(..) um der Table-Komponente die DATENTYPEN EINER SPALTE mitzuteilen
- * 					
+ * 
+ * 				=> A C H T U N G : werte sind immer von typ Object, darum toString() um in eine textdatei zu speichern (jede von Object abgeleitete klasse besitzt toString())
+ * 
  * 
  * 
  * 		METHODEN** - DIE JEDES TABLEMODEL ZUR VERFÜGUNG STELLEN MUSS:

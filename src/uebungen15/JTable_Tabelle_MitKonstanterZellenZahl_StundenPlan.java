@@ -5,7 +5,7 @@
  * 			SIEHE:			15.1.		JTable_Basic_Klasse_Komponente_FuerTabellen							s.463	
  * 
  * 			JTABELMODEL METHODEN - BASICS:
- * 				SIEHE:		15.1.1.b.   TableModel_Basics_Klasse_Methoden									s.466, 
+ * 				SIEHE:		15.1.1.b.   TableModel_Basics_Klasse_Methoden									s.466 
  * 
  * 			EIN-AUS-LESEN DER TABELLENDATEN:
  * 				SIEHE:		15.1.1.c.	JTable_MitKonstZellenZahl_DatenEinUndAuslesen_StundenPlan2			s.468																							!!!!!!!!!!!!!!!!!!!!!!											
