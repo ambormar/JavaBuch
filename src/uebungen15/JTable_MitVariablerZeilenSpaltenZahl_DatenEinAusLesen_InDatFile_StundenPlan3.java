@@ -35,11 +35,16 @@
  */
 
 package uebungen15;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.JButton;
 
 import com.cloudgarden.layout.AnchorConstraint;
 import com.cloudgarden.layout.AnchorLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -56,9 +61,10 @@ import javax.swing.SwingUtilities;
 public class JTable_MitVariablerZeilenSpaltenZahl_DatenEinAusLesen_InDatFile_StundenPlan3 extends javax.swing.JFrame {
 	private JScrollPane jScrollPane1;
 	private JTable jTable1;
+	private JButton jBtnNeueZeile;												// button für zusätzliche zeilen in der tabelle
+	private JButton jBtnSamstag;												// button um spalte für samstag hinzuzufügen
 	private String dateiname = "." + File.separator + "stundenplan3.dat";		// String-variable für den dateinamen, für das .dat-file, wo die daten aus-&ein-gelesen werden
-	private JButton jBtnNeueZeile;
-	private JButton jBtnSamstag;
+	
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -112,40 +118,46 @@ public class JTable_MitVariablerZeilenSpaltenZahl_DatenEinAusLesen_InDatFile_Stu
 				});
 			}
 			{
-				jScrollPane1 = new JScrollPane();
-				getContentPane().add(jScrollPane1, new AnchorConstraint(1, 1001, 839, 1, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-				jScrollPane1.setPreferredSize(new java.awt.Dimension(472, 248));
+				jScrollPane1 = new JScrollPane();																							// nötig damit die spalten-überschrift überhaupt angezeigt wird. jSctrollPane ins Frame ziehen & in der outline jTable..
+				getContentPane().add(jScrollPane1, new AnchorConstraint(1, 1001, 833, 1, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL)); // .. ins JScrollPane hineinziehen (wenn nachträglich) sonst : JScrollPane ins Frame & dann JTable aufs JScrollPane ziehen
+				jScrollPane1.setPreferredSize(new java.awt.Dimension(472, 403));
 				{
-					TableModel jTable1Model = 
-							new DefaultTableModel(
-									new String[][] { },							// damit die tabelle beim programmstart keine datenzeilen enthält: array-literal für das datenstring-array leeren	
-									new String[] { "Stunde", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag" });	// .. ein (normaler) array für die spaltendaten (columns)
-					jTable1 = new JTable();
-					jScrollPane1.setViewportView(jTable1);
-					jTable1.setModel(jTable1Model);
-					jTable1.setPreferredSize(new java.awt.Dimension(206, 32));
+					TableModel jTable1Model = 																								// GETRENNT: 	1. für Datenerhaltung (anzeige + bearbeiten der daten): jTableModel															
+																																			// TabelModel wird als DefaultTabelModel erzeugt: 	-> kann mit Vector-, Array- und ArrayList-daten umgehen..
+							new DefaultTableModel(																							// dem konstruktor werden 2 Arrays übergeben, die dabei auch gleich erzeugt werden..
+									new String[][] { },		// damit die tabelle beim programmstart keine datenzeilen enthält: array-literal für das datenstring-array leeren	// .. ein zweidim. array für die zeilendaten (rows)
+									new String[] { "Stunde", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag" });					// .. ein (normaler) array für die spaltendaten (columns)
+					jTable1 = new JTable();																									// 2. für optische Darstellung der daten:	JTable wird erzeugt
+					jScrollPane1.setViewportView(jTable1);																					// macht glaub, dass die JScrollPane jTable1 vollständig aufnimmt/umfasst, auch wenn JScrollPane kleiner/woanders wäre als jTable1
+					jTable1.setModel(jTable1Model);																							// das TableModel wird an die Tabelle (jTabel1) übergeben
 				}
 			}
 			pack();
-			this.setSize(488, 335);
+			this.setSize(488, 523);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
 		}
 	}
 	
+	// WindowListener handler method für auslesen der daten aus dem JTableModel der tabelle (jTable) in ein .dat-file	(remember: jTable ist nur für optik; daten ein- & auslesen über's JTableModel)
 	private void thisWindowClosed(WindowEvent evt) {
+		
+	}
 
+	// button-handler-method zum hinzufügen von zeilen in der tabelle (inkl. eintrag der stunde in der ersten zelle)
+	private void jBtnNeueZeileActionPerformed(ActionEvent evt) {		
+		int neueZeilenZahl = jTable1.getModel().getRowCount() + 1;			// ermitteln des stunden-eintrags in der ersten zelle: via jTable model erfragen, zeilenzahl erfragen + 1 mehr für nächste zeile
+		DefaultTableModel model = (DefaultTableModel) jTable1.getModel();	// TableModel via jTable1.getModel() hat keine methode addRow(..), DefaultTableModel schon -> desshalb das model von jTable1 typcasten + einem lokalen variabel-objekt model vom typ DefaultTableModel zuweisen
+		model.addRow(new String[]{ String.valueOf(neueZeilenZahl) });		// dem DefaultTableModel-objekt model mit addRow(..) eine zeile hinzufügen & als tabelleneinträge ein neu erzeugtes String-array inkl. dem element stunden-eintrag in der ersten spalte
+	}
+
+	// button-handler-method zum hinzufügen einer spalte samstag in der tabelle
+	private void jBtnSamstagActionPerformed(ActionEvent evt) {						
+		((DefaultTableModel) jTable1.getModel()).addColumn(new String("Samstag"));	// via jTable1 das lokale TableModel erfragen & typcasten in einer einzigen anweisung & addColumn mit einem neuen string-eintrag samstag (als zusätzlicher spalten-titel) 
+		jBtnSamstag.setEnabled(false);												// button deaktivieren (damit man ihn nur einmal hinzufügen kann)
 	}
 	
-	private void jBtnSamstagActionPerformed(ActionEvent evt) {
-
-	}
-	
-	private void jBtnNeueZeileActionPerformed(ActionEvent evt) {
-
-	}
-
 }
 
 /**
