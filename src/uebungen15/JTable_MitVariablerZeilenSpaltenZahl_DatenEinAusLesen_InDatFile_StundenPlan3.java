@@ -30,7 +30,7 @@
  * 						-> der anwender kann mittels button beliebig viele neue zeilen erstellen			-> jBtnNeueZeile
  * 
  * 
- * 		VORGEHEN:
+ * 		VORGEHEN:	!!!!!!! NOCH MACHEN ALLES !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * 
  */
 
@@ -258,7 +258,7 @@ public class JTable_MitVariablerZeilenSpaltenZahl_DatenEinAusLesen_InDatFile_Stu
 	// button-handler-method zum hinzufügen einer spalte samstag in der tabelle		A C H T U N G: hat einen bug zusammen mit der methode OhneSamstag	-> siehe oben SPALTE ENTFERNEN / HINZUFÜGEN: MIT BUG
 	private void jBtnSamstagActionPerformed(ActionEvent evt) {
 		((DefaultTableModel) jTable1.getModel()).addColumn(new String("Samstag"));		// methode addColumn(..) mit String-mitgabe gibt's nur bei DafaultTableModel, desshalb der typecast
-		jBtnOhneSamstag.setEnabled(true);												// 
+		jBtnOhneSamstag.setEnabled(true);												// HIER WEITER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		jBtnSamstag.setEnabled(false);
 	}
 	
