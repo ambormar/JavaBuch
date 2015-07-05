@@ -53,6 +53,11 @@
  * 
  * 				void fireTableDateChanged()								informiert alle TableListener, dass sich tabellen-daten geändert haben
  * 		
+ * 	
+ * 	VERWANDTE KLASSEN: 		- interface AbstractTableModel		(siehe oben: TableModel)
+ * 							- TableColumnModel 					SIEHE:		15.1.2.   	JTable_MitVariablerZeilenSpaltenZahl_DatenEinAusLesen_InDatFile_StundenPlan3		s.470, 
+ * 							- DefaultTableModel					SIEHE:		15.1.2.   	JTable_MitVariablerZeilenSpaltenZahl_DatenEinAusLesen_InDatFile_StundenPlan3		s.470, 
+ * 
  * 
  */
 
