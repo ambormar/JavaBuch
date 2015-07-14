@@ -58,8 +58,8 @@
  *							TableModel jTable1Model = 								// GETRENNT: 	1. für Datenerhaltung (anzeige + bearbeiten der daten): jTableModel															
  *																					// TabelModel wird als DefaultTabelModel erzeugt: 	-> kann mit Vector-, Array- und ArrayList-daten umgehen..
  *									new DefaultTableModel(							// dem konstruktor werden 2 Arrays übergeben, die dabei auch gleich erzeugt werden..			
- *											new String[][] { {"1"}, {"2"}, .. },	// .. ein zweidim. array für die zeilendaten (rows)
- *											new String[] { "Stunde", "Montag" });	// .. ein (normaler) array für die spaltendaten (columns)
+ *											new String[][] { {"1"}, {"2"}, .. },	// .. ein zweidim. array(-literal) für die zellendaten jeder zeile (rows)
+ *											new String[] { "Stunde", "Montag" });	// .. ein (normaler) array für die zellendaten (spaltentitel) (columns) der tiltelzeile 
  *							jTable1 = new JTable();									// 2. für optische Darstellung der daten:	JTable wird erzeugt
  *							jScrollPane1.setViewportView(jTable1);					// macht glaub, dass die JScrollPane jTable1 vollständig aufnimmt/umfasst, auch wenn JScrollPane kleiner/woanders wäre als jTable1
  *							jTable1.setModel(jTable1Model);							// das TableModel wird an die Tabelle (jTabel1) übergeben
@@ -126,8 +126,8 @@ public class JTable_Tabelle_MitKonstanterZellenZahl_StundenPlan extends javax.sw
 					TableModel jTable1Model = 							// GETRENNT: 	1. für Datenerhaltung (anzeige + bearbeiten der daten): jTableModel															
 																		// TabelModel wird als DefaultTabelModel erzeugt: 	-> kann mit Vector-, Array- und ArrayList-daten umgehen..
 							new DefaultTableModel(						// dem konstruktor werden 2 Arrays übergeben, die dabei auch gleich erzeugt werden..			
-									new String[][] { {"1"}, {"2"}, {"3"}, {"4"}, {"5"}, {"6"}, {"7"}, {"8"}, {"9"}, {"10"} },		// .. ein zweidim. array für die zeilendaten (rows)
-									new String[] { "Stunden", "Dienstag", "Mittwoch", "Donnerstag", "Freitag" });					// .. ein (normaler) array für die spaltendaten (columns)
+									new String[][] { {"1"}, {"2"}, {"3"}, {"4"}, {"5"}, {"6"}, {"7"}, {"8"}, {"9"}, {"10"} },		// .. ein zweidim. array(-literal) für die zellendaten jeder zeile (rows)
+									new String[] { "Stunden", "Dienstag", "Mittwoch", "Donnerstag", "Freitag" });					// .. ein (normaler) array für die zellendaten (spaltentitel) (columns) der tiltelzeile 
 					jTable1 = new JTable();								// 2. für optische Darstellung der daten:	JTable wird erzeugt
 					jScrollPane1.setViewportView(jTable1);				// macht glaub, dass die JScrollPane jTable1 vollständig aufnimmt/umfasst, auch wenn JScrollPane kleiner/woanders wäre als jTable1
 					jTable1.setModel(jTable1Model);						// das TableModel wird an die Tabelle (jTabel1) übergeben

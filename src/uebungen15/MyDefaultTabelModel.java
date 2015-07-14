@@ -1,4 +1,4 @@
-/* TODO 15.1.3.   s.474, (extends DefaultTableModel) Tabelle m. unterschiedlichen Datentypen,			???		???		???
+/* TODO 15.1.3.   s.474, (extends DefaultTableModel) Tabelle m. unterschiedlichen Datentypen,			???		???		
  * class MyDefaultTabelModel	& 	JTable_TabelleMitVerschiedenenDatentypen_.._Notentabelle
  *
  * !!!!!!!!!!!!!!!! ALLES NOCH MACHEN, AUCH ALLE SUCHBEGRIFFE (implements TableModelListener, ListSelectionListener ) !!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -67,7 +67,7 @@ public class MyDefaultTabelModel extends DefaultTableModel {	// eigenes MyDefaul
 		return gewichtung;
 	}
 	
-	// getter mit return: gewichtung*note für alle in der tabelle vorhandenen zeilen zusammengezählt ()							(????????????? ^)			
+	// getter mit return: gewichtung*note für alle in der tabelle vorhandenen zeilen zusammengezählt 								
 	public double getNotenGewichtet() {
 		int max = getRowCount();					// variable für anzahl aller zeilen der tabelle
 		double gesamt = 0;
@@ -77,7 +77,7 @@ public class MyDefaultTabelModel extends DefaultTableModel {	// eigenes MyDefaul
 		return gesamt;
 	}
 	
-	// getter mit return: gewichtung für alle in der tabelle vorhandenen zeilen zusammengezählt ()								(????????????? ^)
+	// getter mit return: gewichtung für alle in der tabelle vorhandenen zeilen zusammengezählt								
 	public int getGewichtung() {
 		int max = getRowCount();					// variable für anzahl aller zeilen der tabelle
 		int gewichtung = 0;							// autor implementiert hier double-wert; meinereiner ist überzeugt, dass int-wert logischer wäre
@@ -86,6 +86,7 @@ public class MyDefaultTabelModel extends DefaultTableModel {	// eigenes MyDefaul
 		}
 		return gewichtung;
 	}
+	
 }
 
 
