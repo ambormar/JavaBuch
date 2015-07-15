@@ -19,6 +19,7 @@ import java.text.DecimalFormat;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -38,6 +39,7 @@ public class JTable_FuerVerschiedeneDatentypen_MyDefaultTableModel_Notentabelle 
 	private JScrollPane jScrollPane1;
 	private JLabel jLPruefungsart;
 	private JTextField jTFPruefungsart;
+	private JLabel jLSelectedNotenschnitt;
 	private JButton jBtnNeu;
 	private JLabel jLNotenschnitt;
 	private JTextField jTFNote;
@@ -45,7 +47,8 @@ public class JTable_FuerVerschiedeneDatentypen_MyDefaultTableModel_Notentabelle 
 	private JTextField jTFGewichtung;
 	private JLabel jLGewichtung;
 	private JTable jTableNoten;
-	private DecimalFormat df;
+	private DecimalFormat df;				// NIE vergessen: df auch zu initialisieren und definieren -> siehe ende initGUI():	df = new DecimalFormat("#0.##"); sonst spinnts
+	
 
 	/**
 	* Auto-generated main method to display this JFrame
@@ -81,6 +84,11 @@ public class JTable_FuerVerschiedeneDatentypen_MyDefaultTableModel_Notentabelle 
 						jBtnNeuActionPerformed(evt);
 					}
 				});
+			}
+			{
+				jLSelectedNotenschnitt = new JLabel();
+				getContentPane().add(jLSelectedNotenschnitt, new AnchorConstraint(709, 970, 782, 483, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
+				jLSelectedNotenschnitt.setPreferredSize(new java.awt.Dimension(187, 23));
 			}
 			{
 				jLNotenschnitt = new JLabel();
@@ -139,6 +147,7 @@ public class JTable_FuerVerschiedeneDatentypen_MyDefaultTableModel_Notentabelle 
 			}
 			pack();
 			setSize(400, 350);
+			df = new DecimalFormat("#0.##");											// NIE vergessen: df auch zu initialisieren und definieren
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
@@ -147,7 +156,7 @@ public class JTable_FuerVerschiedeneDatentypen_MyDefaultTableModel_Notentabelle 
 	
 	// methode zum hinzufügen einer neuen note
 	private void jBtnNeuActionPerformed(ActionEvent evt) {
-		try {																				// try-catch warscheinlich: für den fall, dass die zeile nicht hinzugefügt werden könnte
+		try {																				// try-catch warscheinlich: für wenn textfelder nicht korrekt ausgefüllt werden
 			String text = jTFPruefungsart.getText();										
 			int gewichtung = Integer.parseInt(jTFGewichtung.getText());						
 			double note = Double.parseDouble(jTFNote.getText());							
@@ -155,6 +164,7 @@ public class JTable_FuerVerschiedeneDatentypen_MyDefaultTableModel_Notentabelle 
 			model.addRow(new Object[] {text, new Integer(gewichtung), new Double(note)});	// via lokales model eine zeile hinzufügen mit parammeter object, welches per array-literal die daten übergibt
 		} catch (Exception e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Bitte Felder korrekt ausfüllen, du mongo!");
 		}
 	}
 
@@ -164,12 +174,18 @@ public class JTable_FuerVerschiedeneDatentypen_MyDefaultTableModel_Notentabelle 
 		MyDefaultTabelModel model = (MyDefaultTabelModel)jTableNoten.getModel();	// lokales objekt für das model der tabelle (getypcastet zuweisen)
 		double schnitt = model.getNotenGewichtet() / model.getGewichtung();			// schnitt aus getter via model für Noten*gewichtung gesamt aller zeilen, geteilt durch: getter via model für gewichtung gesamt aller zeilen von MyDefaultTableModel 
 		jLNotenschnitt.setText("Notenschnitt: " + df.format(schnitt));				// formatierte ausgabe von schnitt im label mitttels DecimalFormat-objekt df
-		//jLSelectedNotenschnitt.setText("");
+		jLSelectedNotenschnitt.setText("");											// label notenschnitt der ausgewählten zeilen auf leer setzen
 	}
 	
 	@Override	// zwangsläufiges überschreiben der methode valueChanged(..) vom oben implementierten interface ListSelectionListener
+				// methode als reaktion auf anwählen von zeilen: nutzt die im MydefaultTableModel implementierten methoden zur berechung der durchschnitts-note über die angewählten zeilen
 	public void valueChanged(ListSelectionEvent e) {
-		// Auto-generated method stub
+		int[] rows = jTableNoten.getSelectedRows();												// indexe der angewälten zeilen in rows-array speichern
+		if (rows.length > 0) {																	// wenn länge des rows-arrays grösser als 0
+			MyDefaultTabelModel model = (MyDefaultTabelModel)jTableNoten.getModel();			// lokales objekt für das model der tabelle (getypcastet zuweisen)
+			double schnitt = model.getNotenGewichtet(rows) / model.getGewichtung(rows);			// schnitt aus getter via model für Noten*gewichtung der angewählten zeilen, geteilt durch: getter via model für gewichtung der angewählten zeilen von MyDefaultTableModel
+			jLSelectedNotenschnitt.setText("Notenschnitt der Auswahl: " + df.format(schnitt));	// im label schnitt der noten der angewählten zeilen ausgeben
+		}
 	}
 
 

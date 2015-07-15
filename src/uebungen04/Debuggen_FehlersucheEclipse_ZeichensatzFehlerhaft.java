@@ -52,7 +52,7 @@ public class Debuggen_FehlersucheEclipse_ZeichensatzFehlerhaft {	// programm spi
 		String zeichensatz = "";
 		while(zahl < 128){							// breakpoin setzen -> debugen bis vor while -> variabelwerte oben kontrollieren, bis dahin ok ...
 			zeichensatz = zeichensatz + (char) zahl;// ..=> mit Grünpfeiltaste (= bis näxt breakpoint): 127-mal die while-schleife ausführen	 
-			zahl++;									// ..=> beim 128sten mal springt der wert von zahl nicht auf 128, sondern auf -127 
+			zahl++;									// ..=> beim 128sten mal springt der wert von zahl nicht auf 128, sondern auf -128 
 			System.out.println(zeichensatz);		// ..=> ist ein zahlenüberlauf und führt zu endlosschleife !!!
 		}											// .. -> korrektur: int zahl statt byte zahl	
 		JOptionPane.showMessageDialog(null, zeichensatz);	

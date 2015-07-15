@@ -1,4 +1,4 @@
-/* TODO 15.1.3.   s.474, (extends DefaultTableModel) Tabelle m. unterschiedlichen Datentypen,			???		???		
+/* TODO 15.1.3.   s.474, (extends DefaultTableModel) Tabelle m. unterschiedlichen Datentypen,			??? , ??? , !!!
  * class MyDefaultTabelModel	& 	JTable_TabelleMitVerschiedenenDatentypen_.._Notentabelle
  *
  * !!!!!!!!!!!!!!!! ALLES NOCH MACHEN, AUCH ALLE SUCHBEGRIFFE (implements TableModelListener, ListSelectionListener ) !!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -18,7 +18,7 @@ public class MyDefaultTabelModel extends DefaultTableModel {	// eigenes MyDefaul
 		super();
 	}
 
-	public MyDefaultTabelModel(Object[][] d, Object[] n) {		// custom-konstruktor der klasse DefaultTableModel, parameter: 				???
+	public MyDefaultTabelModel(Object[][] d, Object[] n) {		// custom-konstruktor der klasse DefaultTableModel, parameter: 2dim array für alle zellendaten, array für spaltenTitel-daten
 		super(d, n);
 	}
 
@@ -49,7 +49,7 @@ public class MyDefaultTabelModel extends DefaultTableModel {	// eigenes MyDefaul
 		return gewichtung;
 	}
 	
-	// getter mit return: gewichtung*note für alle angewählten (glaub ?) zeilen zusammengezählt (int[] rows)					???????????? für alle in der tabelle angewählten zeilen oder für alle zeilen??
+	// getter mit return: gewichtung*note für alle angewählten zeilen zusammengezählt (int[] rows)			??? versteh zwar dass die richtige anzahl zeilen bearbeitet wird, aber nicht warum die richtigen zeilen indexe aufgerufen werden können ????
 	public double getNotenGewichtet(int[] rows) {
 		double gesamt = 0;
 		for (int i = 0; i < rows.length; i++) {		// für jede zeile ..
@@ -58,7 +58,7 @@ public class MyDefaultTabelModel extends DefaultTableModel {	// eigenes MyDefaul
 		return gesamt;								// geamt-wert der noten * gewichtung aller zeilen
 	}
 	
-	// getter mit return: gewichtungen für alle angewählten (glaub ?) zeilen zusammengezählt (int[] rows)						???????????? für alle in der tabelle angewählten zeilen oder für alle zeilen??
+	// getter mit return: gewichtungen für alle angewählten zeilen zusammengezählt (int[] rows)				??? versteh zwar dass die richtige anzahl zeilen bearbeitet wird, aber nicht warum die richtigen zeilen indexe aufgerufen werden können ????
 	public int getGewichtung(int[] rows) {
 		int gewichtung = 0;
 		for (int i = 0; i < rows.length; i++){		// für jede zeile ..
